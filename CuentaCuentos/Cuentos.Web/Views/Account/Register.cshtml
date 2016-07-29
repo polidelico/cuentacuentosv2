@@ -1,0 +1,206 @@
+﻿@model Cuentos.Models.view.RegisterModel
+@using CodeFirstAltairis.Models
+
+@{
+    ViewBag.Title = "Regístrate para crear tu cuenta";
+}
+
+
+
+<div class="content registro">
+    <div class="wp">
+        <h1>Regístrate para crear tu cuenta</h1>
+        <h2>Entra tus datos para crear tu cuenta.</h2>
+
+        @*<div class="col-izq">*@
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm" })) {
+                @Html.ValidationSummary(true, AccountValidation.ErrorSummary)
+                <div class="line"></div>
+                
+                @Html.LabelFor(m => m.User.UserName)
+                @Html.TextBoxFor(m => m.User.UserName, new { @class = "large first" })
+                @Html.ValidationMessageFor(m => m.User.UserName)
+
+                <div class="fila">
+                    <div class="box full-width">
+                        @Html.LabelFor(m => m.User.Owner)
+                        @Html.DropDownListFor(m => m.User.Owner, (List<SelectListItem>)ViewBag.OwnerTypesSelectList)
+                        @Html.ValidationMessageFor(m => m.User.Owner)
+                    </div>
+                </div>
+                
+                <div class="fila">                    
+                    <div class="box">
+                        @Html.LabelFor(m => m.User.Name)
+                        @Html.TextBoxFor(m => m.User.Name)
+                        @Html.ValidationMessageFor(m => m.User.Name)
+                    </div>
+
+                    <div class="box">
+                        @Html.LabelFor(m => m.User.LastName)
+                        @Html.TextBoxFor(m => m.User.LastName)
+                        @Html.ValidationMessageFor(m => m.User.LastName)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                
+                @Html.LabelFor(m => m.SchoolId)
+                @Html.DropDownListFor(m => m.SchoolId, (SelectList)ViewBag.Schools, "Selecciona una Escuela", new { @class = "large" })
+                @Html.ValidationMessageFor(m => m.SchoolId)
+
+                <div class="fila">
+                    <div class="box">
+ 
+                        @Html.LabelFor(m => m.GradeId)
+                        @Html.DropDownListFor(m => m.GradeId, (SelectList)ViewBag.Grades, "Selecciona un Grado", new { @name = "grado"})
+                        @Html.ValidationMessageFor(m => m.GradeId)
+                    </div>
+
+                    <div class="box">
+                        @Html.LabelFor(m => m.User.Age)
+                        @Html.TextBoxFor(m => m.User.Age)
+                        @Html.ValidationMessageFor(m => m.User.Age)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                
+                @Html.LabelFor(m => m.User.Email)
+                @Html.TextBoxFor(m => m.User.Email, new { @class = "large" })
+                @Html.ValidationMessageFor(m => m.User.Email)
+
+                <div class="fila">
+                    <div class="box">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+                    <div class="box">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword)
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="intereses">
+                    <h3>INTERESES</h3>
+                    <div class="checkboxes fila">
+                        @{
+                            var leftOrRight = true;
+                        }
+                        @foreach (var interest in ViewBag.Interests)
+                        {
+                            <label for="interest-@interest.Id" class="@(leftOrRight ? "left":"right")"><input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id" /> @interest.Name</label>
+                            if (leftOrRight == false) { leftOrRight = true; } else { leftOrRight = false; }
+
+                        }
+                        <div class="clearfix"></div>
+                     </div>
+                    </div>
+
+
+                <label class="terminos" for="TermsConditions"><input type="checkbox" id="TermsConditions" name="TermsConditions" value="true" />Aceptos los <a href="@Url.RouteUrl("Terminos")" target="_blank">Términos y Condiciones</a></label>
+
+
+                @Html.ValidationMessageFor(m => m.TermsConditions)
+
+                <input type="submit" class="btn_naranja btn_registro" value="REGISTRARSE" />
+            }
+        @*</div>*@
+
+@*        <div class="col-der">
+            <div class="title"><h3>Ventajas al registrarte</h3></div>
+
+            <div class="ventajas">
+                <div class="vent">
+                    <img src="~/Content/img/basura/vent1.jpg" />
+                    <h5>Ventaja #1</h5>
+                    <p>Lorem ipsum odor.</p>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="vent">
+                    <img src="~/Content/img/basura/vent2.jpg" />
+                    <h5>Ventaja #2</h5>
+                    <p>Probo sapientem adversarium</p>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="vent">
+                    <img src="~/Content/img/basura/vent1.jpg" />
+                    <h5>Ventaja #3</h5>
+                    <p>Vim saepe eirmod aliquid.</p>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="vent">
+                    <img src="~/Content/img/basura/vent2.jpg" />
+                    <h5>Ventaja #4</h5>
+                    <p>Mazim forensibus nec, diorem accumus refordans.</p>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="adicional">
+                <h4>Información adicional</h4>
+                <img src="~/Content/img/cuento-thumb.png" width="224" height="169"/>
+                <div class="text">
+                    <p>Todas las personas registradas deben pertenecer alguna escuela. Los padres deben registrarse bajo la escuela donde asista su hijo.</p>
+                    <p>Lorem ipsum dolor sit amet, ut his alterum inciderint, no his tale voluptatum, an probo volumus per.</p>
+                </div>
+            </div>
+        </div>*@
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@section scripts {
+<script src="@Url.Content("~/Scripts/vendor/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/vendor/additional-methods.js")" type="text/javascript"></script>
+<script>
+
+    $(document).ready(function () {
+        $.validator.addMethod("valueNotEquals", function(value, element, arg){
+            return arg != value;
+        }, "Value must not equal arg.");
+
+        var onoff = 0;
+
+        $("#MyForm").validate({
+            rules: {
+                "User.UserName" : { required: true },
+                "User.Name": { required: true },
+                "User.LastName" : { required: true },
+                "SchoolId" : { required: true },
+                "GradeId" : { required: true },
+                "User.Age" : { required: true },
+                "User.Email" : { required: true, email:true },
+                "Password" : { required: true },
+                "ConfirmPassword": { required: true, equalTo : "#Password" },
+                "TermsConditions" : { required: true }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("class")) {
+                    element.addClass("error");
+                    onoff = 1;
+                } else {
+                    element.attr("class", "error");
+                }
+                
+            },
+            success: function (element) {
+                if(onoff == 1) {
+                    element.removeClass('error')
+                } else {
+                    element.removeAttr("class");
+                }
+                
+            }
+        });
+
+    });
+
+
+
+</script>
+}

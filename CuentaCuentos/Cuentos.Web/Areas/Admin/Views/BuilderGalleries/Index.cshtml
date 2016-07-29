@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Cuentos.Models.BuilderGallery>
+
+@{
+    ViewBag.Title = "Galerías";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-3">
+        <!-- find me in partials/action_nav_normal -->
+        <!--big normal buttons-->
+        <div class="action-nav-normal">
+
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Create")" title="Añadir Galería">
+                        <i class="icon-picture"></i>
+                        <span>Añadir Galería</span>
+                    </a>
+                    <span class="triangle-button red"><i class="icon-plus"></i></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header"><span class="title"> Galerías </span></div>
+            <div class="box-content">
+                <!-- find me in partials/data_tables_custom -->
+
+                <div id="dataTables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Nombre de Galería </div></th>
+                                <th><div> Descripción </div></th>
+                                <th> Activo </th>
+                                <th style="width: 80px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var gallery in Model)
+                            {
+                                <tr id="item-@gallery.Id" data-id="@gallery.Id">
+                                    <td class="hidden">@gallery.Id</td>
+                                    <td class="confirmName">@gallery.Name</td>
+                                    <td>@gallery.Description</td>
+                                    <td>
+                                        @if (gallery.Active)
+                                        {
+                                            <i class="icon-eye-open"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="icon-eye-close"></i>
+                                        }
+                                    </td>
+                                    <td align="center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-xs btn-default" href="@Url.Action("Edit", new { id = gallery.Id })"><i class="icon-cog"></i></a>
+                                            @if (string.IsNullOrEmpty(gallery.UserName))
+                                            {
+                                                <a class="btn btn-xs btn-default confirmDelete" data-toggle="modal" data-url="@Url.Action("Delete", "BuilderGalleries", new { id = gallery.Id })" href="#confirmDelete"><i class="icon-remove"></i></a>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_DeleteConfirm")

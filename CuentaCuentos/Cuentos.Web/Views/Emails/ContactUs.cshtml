@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Contáctanos";
+    Layout = null;
+}
+Content-Type: text/html; charset=utf-8
+Subject: Contact Us - @ViewBag.Name
+From: @ViewBag.Email
+To: contactus@cuentacuentos.com
+
+
+<html>
+<body>
+    <p>Nombre: @ViewBag.Name </p>
+    <p>Email: @ViewBag.Email </p>
+    <p>Teléfono: @ViewBag.Phone </p>
+    <p>Escuela: @ViewBag.School </p>
+    <p>Asunto: @ViewBag.Subject </p>
+    <p>Comentarios: @ViewBag.Comments </p>
+</body>
+</html>

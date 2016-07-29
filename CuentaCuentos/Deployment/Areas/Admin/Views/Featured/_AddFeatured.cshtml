@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Story>
+
+<div id="modal-tables-story" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 id="modal-tablesLabel">Cuentos</h6>
+            </div>
+
+            @using (Html.BeginForm("Edit", "Featured"))
+            {
+            <div class="modal-body nopadding">
+
+                <div id="dataTables">
+                    
+                    <table id="tableStory" cellpadding="0" cellspacing="0" border="0" class="dTable-small responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Nombre </div></th>
+                                <th><div> Autor </div></th>
+                                <th>Destacar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var story in Model.Where(s => s.Status == StatusStory.Published))
+                            {
+
+                                <tr id="item-@story.Id" data-id="@story.Id">
+                                    <td class="hidden">@story.Id</td>
+                                    <td class="confirmName">@story.Name</td>
+                                    <td class="">
+                                        @story.UserName
+                                    </td>
+
+                                    <td class="">
+
+                                        <input type="checkbox" value="@story.Id" name="selectedFeatured" id="featured-@story.Id" @(story.Featured ? "checked" : "") />
+
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                    
+                
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="Submit" class="btn btn-blue" value="Guardar" />
+            </div>
+
+            }
+        </div>
+    </div>
+</div>
+

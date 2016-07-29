@@ -1,0 +1,80 @@
+﻿<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Cuentos de " + ViewBag.UserName;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div style="padding:8px;" class="box-header">
+                <input style="width:250px;" placeholder="Nombre del Cuento" id="searchStory" type="text" />
+            </div>
+            <div class="box-content">
+                <div id="StoryListGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var gridElement = $("#StoryListGrid");
+
+    function showLoading(e) {
+        kendo.ui.progress(gridElement, true);
+    }
+
+    function restoreSelection(e) {
+        kendo.ui.progress(gridElement, false);
+    }
+
+
+    $("#StoryListGrid").kendoGrid({
+        dataSource: {
+            requestStart: showLoading,
+            transport: {
+                read: {
+                    url: "/Admin/Stories/GetUserStories/?username=@ViewBag.UserName",
+                }
+            },
+            pageSize: 15,
+        },
+
+        groupable: false,
+        sortable: true,
+        pageable: { refresh: true, pageSizes: true, },
+        dataBound: restoreSelection,
+        columns: [{
+            field: "StoryName",
+            title: "Nombre del cuento",
+            template: "<a href=\"/Stories/Edit/#: StoryID #\">#: StoryName #</a>"
+        }, {
+            field: "Author",
+            title: "Autor"
+        }, {
+            field: "Status",
+        }, {
+            title: "Acciones",
+            width: "100px",
+            template: "<a class=\"btn btn-xs btn-default\" href=\"/Admin/Stories/Edit/#:StoryID#\"><i class=\"icon-cog\"></i></a></div>"
+        }],
+
+        editable: false,
+    });
+
+
+    $("#searchStory").keyup(function () {
+        var val = $('#searchStory').val();
+        $("#StoryListGrid").data("kendoGrid").dataSource.filter({
+            logic: "or",
+            filters: [
+                {
+                    field: "StoryName",
+                    operator: "contains",
+                    value: val
+                },
+            ]
+        });
+    });
+
+</script>

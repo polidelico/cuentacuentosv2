@@ -1,0 +1,57 @@
+﻿@model IEnumerable<User>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header"><span class="title"> Usuarios </span></div>
+            <div class="box-content">
+                <!-- find me in partials/data_tables_custom -->
+
+                <div id="dataTables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Nombre de Usuario </div></th>
+                                <th><div> Rol </div></th>
+                                <th><div> Nombre </div></th>
+                                <th><div> Escuela </div></th>
+                                <th class="recived-date-column"><div> Recibido </div></th>
+                                <th width="200">Aprobado </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr id="item-@user.UserName" data-id="@user.UserName">
+                                    <td class="hidden">@user.DateCreated</td>
+                                    <td class="confirmName">@user.UserName</td>
+                                    <td class="">@user.Roles.FirstOrDefault().RoleName</td>
+                                    <td class="">@user.Name</td>
+                                    
+                                    <td class="">
+                                        @(user.School != null ? user.School.Name : "")
+                                    </td>
+                                    <td class="">@user.DateCreated.ToString("MM/dd/yyyy")</td>
+
+                                    <td class="approve-col">
+                                        @if (!user.IsApproved)
+                                        {
+                                            <a href="#confirmApprove" class="btn btn-blue approve-btn" data-toggle="modal" data-url="@Url.Action("Approve", "Users", new { username = user.UserName })">Aprobar</a>
+                                        }
+                                        else
+                                        {
+                                            <span>Si</span>
+                                        }
+
+                                        @*<a href="#user-info-modal" class="btn btn-default" data-toggle="modal" data-username="@user.UserName" data-name="@user.Name" data-lastname="@user.LastName" data-age="@user.Age" data-user-role="@user.Roles.FirstOrDefault().RoleName" data-grade="@user.Grade.Name" data-school="@(user.School != null ? user.School.Name : "")" data-owner="@user.Owner" data-email="@user.Email" data-picture-url="@user.AvatarImage" data-interests="@user.InterestsByComma" data-edit-url="@Url.Action("Edit", "Users", new { id = user.UserName })">Ver mas</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

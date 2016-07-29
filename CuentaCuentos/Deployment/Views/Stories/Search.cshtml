@@ -1,0 +1,97 @@
+﻿@model Cuentos.Models.view.SearchModel
+@using PagedList.Mvc;
+@using Cuentos.Models;
+@using Cuentos.Lib;
+@using Cuentos.Lib.Helpers;
+@{
+    ViewBag.Title = "Cuentos creados por los estudiantes";
+}
+
+@section Header {
+    @Html.Partial("~/Views/Shared/_Header.cshtml") 
+}
+
+
+<div class="content galcuentos">
+    <div class="wp clearfix">
+        <h1>Cuentos creados por los estudiantes.</h1>
+        <h2>Con esta magnífica herramienta podrás tener la oportunidad de leer los cuentos que hayan escrito tus compañeros de escuela y de otras escuelas en Puerto Rico. Busca en las diversas categorías según tu interés. Es importante tener tu cuenta y pedirle a tu maestro que te registre. ¡Cuando compartas tus cuentos, aparecerán aquí!</h2>
+
+        <aside>
+            @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-horizontal fill-up validatable" }))
+            {
+                <div class="search">
+                    <label for="search">PALABRA CLAVE</label>
+                    @Html.TextBoxFor(model => model.q)
+                </div>
+                <div class="checks clearfix">
+                    <h4>GRADO</h4>
+                    @foreach (var grade in ViewBag.Grades)
+                    {
+                        <label for="grade-@grade.Id"><input type="checkbox" value="@grade.Id" name="selectedGrades" id="grade-@grade.Id" @(Array.Find(Model.selectedGrades, e => e.Equals(grade.Id.ToString())) != null ? "checked" : "") /> @grade.Name </label>
+
+                    }
+                </div>
+                <div>
+                    <label for="reset">PUEBLO</label>
+                    @Html.DropDownListFor(model => model.CityId, (SelectList)ViewBag.Cities, "Selecciona un Pueblo")
+                </div>
+                <div>
+                    <label for="reset">ESCUELA</label>
+                    @Html.DropDownListFor(model => model.SchoolId, (SelectList)ViewBag.Schools, "Selecciona una Escuela")
+                </div>
+                <div>
+                    <label for="reset">CATEGORIAS</label>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <label for="category-@category.Id"><input type="checkbox" value="@category.Id" name="selectedCategories" id="category-@category.Id" @(Array.Find(Model.selectedCategories, e => e.Equals(category.Id.ToString())) != null ? "checked" : "") /> @category.Name</label>
+
+                    }
+                </div>
+                <div>
+                    <input class="btn_naranja" type="submit" name="" value="BUSCAR">
+                </div>
+            }
+        </aside>
+        <section>
+            <div class="wrcuentos clearfix">
+
+
+                @if (Model.Stories != null && Model.Stories.Count() > 0)
+                {
+                    foreach (Cuentos.Models.Story story in Model.Stories)
+                    {
+                        <div class="cuento main-image">
+
+                            <div class="center-outer">
+                                <div class="shade"></div>
+                                <div class="center-inner">
+                                    <figure>
+                                        <img src="@story.CoverImage" alt="@story.Name" />
+                                    </figure>
+                                </div>
+                            </div>
+
+                            <div class="top">
+                                <h2>@story.Name</h2>
+                                <p>@TextHelpers.Truncate(story.Summary, 255)</p>
+                                <div class="btn_naranja btn_leer"><a href="@Url.RouteUrl("VerCuento", new { id = story.Id})">Leer este cuento</a></div>
+                            </div>
+                        </div>
+                    }
+                }
+
+
+                <div class="clearfix"></div>
+            </div>
+            <nav class="navpagination">
+                @Html.PagedListPager(Model.Stories, page => Url.Action("Search", "Stories", new { model = Model, pageNum = page }), new PagedListRenderOptions { LinkToPreviousPageFormat = "<<", LinkToNextPageFormat = ">>" })
+            </nav>
+        </section>
+
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/fixImagesSize.js"></script>
+}

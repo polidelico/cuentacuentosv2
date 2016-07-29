@@ -1,0 +1,21 @@
+﻿@model ImageCategory
+@{
+    ViewBag.Title = "Editar Categoría";
+    ViewBag.TitleIcon = "edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="box">
+            <div class="box-header">
+                <span class="title">Información de categoría</span>
+            </div>
+
+            <div class="box-content">
+                @Html.Partial("_Form")
+            </div>
+        </div>
+    </div>
+</div>

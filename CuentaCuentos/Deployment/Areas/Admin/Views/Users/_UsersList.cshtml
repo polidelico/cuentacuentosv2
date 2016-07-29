@@ -1,0 +1,106 @@
+﻿<div class="row">
+    <div class="col-md-12">
+
+        <div style="background-color:#F8F8F8;" class="panel panel-bordered">
+            <div style="background-color:#333333; border-left:solid 6px #096cd8; color:#FFFFFF; padding:15px;" class="panel-heading">
+                Usuarios
+                <div class="pull-right">
+                    <input id="searchUser" name="searchUser" style="width:200px; margin-top:-5px;" type="text" class="form-control input-sm" placeholder="Nombre de usuario o email">
+                </div>
+            </div>
+
+            <div style="padding:0" class="panel-body">
+
+                <div id="userslist"></div>
+
+            </div>
+        </div>
+
+        <script>
+
+            var gridElement = $("#userslist");
+
+            function showLoading(e) {
+                kendo.ui.progress(gridElement, true);
+            }
+
+            function restoreSelection(e) {
+                kendo.ui.progress(gridElement, false);
+            }
+
+
+            $("#userslist").kendoGrid({
+                dataSource: {
+                    requestStart: showLoading,
+                    transport: {
+                        read: {
+                            url: "/Admin/Users/getallusers",
+                        }
+                    },
+                    pageSize: 15,
+                },
+
+                groupable: false,
+                sortable: true,
+                pageable: { refresh: true, pageSizes: true, },
+                dataBound: restoreSelection,
+                columns: [{
+                    field: "Name",
+                    title: "Nombre Completo",
+                    template: "<a href=\"/Admin/Users/Edit/#:UserName#\">#: Name # #: LastName #</a>"
+                }, {
+                    field: "UserName",
+                    title: "Nombre de Usuario",
+                    template: "<a href=\"/Admin/Users/Edit/#:UserName#\">#: UserName #</a>"
+                }, {
+                    field: "Email"
+                }, {
+                    field: "CreatedDate",
+                    title: "Creado",
+                    template: "#= kendo.toString(new Date(parseInt(CreatedDate.substr(6))),'MM/dd/yyyy hh:mm tt')#"
+                }, {
+                    field: "UserName",
+                    title: "Acciones",
+                    width: "100px",
+                    template: "<a class=\"btn btn-xs btn-default\" href=\"/Admin/Users/Edit/#:UserName#\"><i class=\"icon-cog\"></i></a> <a class=\"btn btn-xs btn-default\" onclick=\"DeleteUser('#:UserName#')\"><i class=\"icon-trash\"></i></a></div>"
+                }],
+
+                editable: false,
+            });
+
+
+            $("#searchUser").keyup(function () {
+                var val = $('#searchUser').val();
+                $("#userslist").data("kendoGrid").dataSource.filter({
+                    logic: "or",
+                    filters: [
+                        {
+                            field: "Email",
+                            operator: "contains",
+                            value: val
+                        }, {
+                            field: "UserName",
+                            operator: "contains",
+                            value: val
+                        },
+                    ]
+                });
+            });
+
+            function DeleteUser(uname) {
+
+                var r = confirm("Estas seguro que quieres borrar el usuario " + uname);
+
+                if (r == true) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/Admin/Users/Delete",
+                        data: { username: uname }
+                    }).done(function (msg) {
+                        $('#userslist').data('kendoGrid').dataSource.read();
+                    });
+                } 
+            }
+        </script>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿<div id="html5Loader" style="font-size:100px;"></div>
+<!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="header">
+    <div class="wp">
+        <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" class="logo" /></a>
+
+        <nav>
+            <ul>
+                <li><a href="@Url.RouteUrl("CreaTuCuento")">Crea Tu Cuento</a></li>
+                <li><a href="@Url.RouteUrl("BuscarCuento")">Lee Cuentos</a></li>
+                <li><a href="@Url.RouteUrl("Educadores")"> Educadores </a></li>
+                <li><a href="@Url.RouteUrl("Padres")"> Padres </a></li>
+                <li><a href="@Url.RouteUrl("SobreNosotros")"> Sobre Nosotros </a></li>
+            </ul>
+        </nav>
+
+        @Html.Partial("_LoginPartial")
+
+        <div class="clearfix"></div>
+    </div>
+</div>

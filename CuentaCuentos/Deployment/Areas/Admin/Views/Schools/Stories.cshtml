@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Cuentos.Models.Story>
+@{
+    ViewBag.Title = "Cuentos";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("~/Areas/Admin/Views/Stories/_StoriesList.cshtml")
+
+
+@Html.Partial("_DeleteConfirm")
+@Html.Partial("_ApproveConfirm")

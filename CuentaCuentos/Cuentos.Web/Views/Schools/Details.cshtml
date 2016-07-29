@@ -1,0 +1,102 @@
+﻿@model Cuentos.Models.School
+@using Cuentos.Models
+@using Cuentos.Lib
+@{
+    ViewBag.Title = "Perfíl de la Escuela";
+    ViewBag.BodyId = "school-profile";
+}
+
+<div class="content perfil perfil_escuela">
+    <div class="wp">
+        <div class="tabs">
+            <div>PERFIL DE LA ESCUELA</div>
+        </div>
+        <div class="tab">
+            <div>
+                <h1>@Model.Name</h1>
+                <span>DETALLES</span>
+                <p>@Model.Details</p>
+                <span>DIRECCIÓN</span>
+                <p>@Model.Address1</p>
+                <p>@Model.Address2</p>
+            </div>
+            <div>
+                <img id="schhoolImage" src="@Model.GetFirstImagePath(ImageTarget.MAIN)">
+            </div>
+        </div>
+        <h2 class="left">Cuentos más populares en esta escuela</h2>
+        <h2 class="right" style="margin-right: 35px;">Estudiantes sobresalientes</h2>
+        <div class="clearfix" style="background: none repeat scroll 0% 0% #fff"></div>
+        <div class="cuentos">
+            @if (ViewBag.Stories.Count > 0)
+            {
+                foreach (Story story in ViewBag.stories)
+                {
+
+                    <article class="cuento">
+
+                        <div class="main-image">
+                            <div class="center-outer">
+                                <div class="shade"></div>
+                                <div class="center-inner">
+                                    <figure>
+                                        <img src="@story.CoverImage" alt="@story.Name" />
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        @*<img src="@story.CoverImage" width="303" height="313">*@
+
+                        <h3>@story.Name</h3>
+                        <p>@String.Format("{0: dd 'de' MMMM 'de' yyyy}", @story.CreatedAt)</p>
+                        <p><div class="btn_naranja btn_leer"><a href="@Url.RouteUrl("VerCuento", new { id = story.Id })">Leer este cuento</a></div></p>
+                    </article>
+                }
+
+            }
+            else
+            {
+                <div class="no-content">
+                    <div class="circle">
+                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                    </div>
+                    <p>
+                        No hay cuentos en estos momentos
+                    </p>
+                </div>
+            }
+
+        </div>
+        <div class="estudiantes">
+            
+            @if (ViewBag.Users.Count > 0)
+            {
+                foreach (var user in ViewBag.users)
+                {
+
+                    <div>
+                        <img src="@user.ImageHolders.GetFirstImagePath(ImageTarget.MAIN)" style="width: 45%; height:auto;"/>
+                        <a href="@Url.RouteUrl("VerPerfilUsuario", new { id = user.UserName } )"><span>@user.UserName</span></a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-content">
+                    <div class="circle">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    </div>
+                    <p>
+                        No hay estudiantes en estos momentos
+                    </p>
+                </div>
+            }
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/fixImagesSize.js"></script>
+}

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Cuentos.Models.Story>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header"><span class="title"> Cuentos </span></div>
+            <div class="box-content">
+                <!-- find me in partials/data_tables_custom -->
+
+                <div id="dataTables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Nombre del Cuento </div></th>
+                                <th><div> Autor </div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var story in Model)
+                            {
+                                if(@story.Featured == true)
+                                {
+                                    <tr id="item-@story.Id" data-id="@story.Id">
+                                        <td class="hidden">@story.Id</td>
+                                        <td class="confirmName">@story.Name</td>
+                                        <td class="">
+                                            @story.UserName
+                                        </td>
+
+                                       
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,435 @@
+/** CREA TU CUENTO **/
+
+.crea .section1{
+    background: url('../img/bg_crea_section1.jpg');
+    border-bottom: solid 3px #9CC2C3;
+    height: 576px;
+    padding-top: 15px;
+}
+
+.crea .section2{
+    background: url('../img/bg_crea_section2.jpg');
+    border-bottom: solid 3px #9CC2C3;
+    height: 492px;
+    padding-top: 75px;
+}
+
+.crea .section3{
+    background: url('../img/bg_crea_section3.jpg');
+    border-bottom: solid 3px #9CC2C3;
+    height: 465px;
+    padding-top: 75px;
+}
+
+.crea h1{
+    font: 700 48px/120% 'Open Sans', sans-serif;
+    color: #33ACAC;
+    letter-spacing: -2px;
+    text-align: center;
+    margin: 0px;
+}
+
+.crea h2{
+    font: 300 26px/120% 'Open Sans', sans-serif;
+    color: #1F6868;
+    text-align: center;
+}
+
+.crea .boxes{
+    margin-bottom: 17px;
+}
+
+.crea .boxes .box{
+    float: left;
+    width: 412px;
+    margin-left: 8px;
+}
+
+.crea .boxes .box:first-child{
+
+}
+
+.crea .boxes .box img{
+    padding: 5px;
+    background: #33AEAE;
+}
+
+.crea .boxes .box p{
+    background: #FFF url("../img/arrow_h3.jpg") top center no-repeat;
+    padding: 25px 25px 20px 25px;
+    margin: 0;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Open Sans';
+    border-top: #33AEAE solid 3px;
+}
+
+.crea .boxes .box p strong{
+    font-weight: 700;
+}
+
+.crea .section1 .tools{
+    text-align: center;
+}
+
+.crea .section1 .tools .btn_blue{
+    font-size: 25px;
+    font-weight: 700;
+    background: #DFB922;
+    border-color: #C6A41C;
+    line-height: 60px;
+    width: 412px;
+    padding: 0;
+    text-align: center;
+}
+
+.crea .panel-section{
+    border-top: #33AEAE solid 9px;
+    background: #FFF;
+    overflow: hidden;
+}
+
+.crea .panel-section div{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.crea .panel-section div img{
+    float: none !important;
+    margin: 0 auto !important;
+    display: block;
+}
+
+.crea .panel-section h1{
+    text-align: left;
+    padding: 0;
+    margin: 0 0 25px 0;
+}
+
+.crea .panel-section p{
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    margin: 0 0 30px 0;
+}
+
+.crea .panel-section.panel-left img{
+    float: left;
+    margin-right: 35px;
+}
+
+.crea .panel-section.panel-right{
+    float: none;
+    padding-left: 30px;
+}
+
+.crea .panel-section.panel-right img{
+    float: right;
+    margin-left: 35px;
+}
+
+/* Info padres */
+.info h1{
+    font: 700 48px/120% 'Open Sans', sans-serif;
+    color: #33ACAC;
+    letter-spacing: -2px;
+    text-align: center;
+    margin: 0px;
+}
+
+.info h2{
+    font: 300 26px/120% 'Open Sans', sans-serif;
+    color: #1F6868;
+    text-align: center;
+}
+
+.info .boxes{
+    background: #FFF;
+    padding-top: 40px;
+    overflow: hidden;
+}
+
+.info .boxes .box{
+    float: left;
+    width: 500px;
+    margin-left: 88px;
+    margin-bottom: 35px;
+}
+
+.info .boxes .box img{
+    display: block;
+    margin-bottom: 25px;
+}
+
+.info .boxes .box h2, .info .panel-info h2{
+    padding: 0;
+    color: #33ACAC;
+    font-family: 'Open Sans';
+    font-size: 18px;
+    font-weight: 700;
+    text-align: left;
+    line-height: 26px;
+}
+
+.info .boxes .box p, .info .panel-info p{
+    padding: 0;
+    margin: 0; 
+    color: #444;
+    font-family: 'Open Sans';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.info .boxes .box:first-child{
+    margin-left: 88px;
+}
+
+.info .panel-info{
+    width: 956px;
+    margin: 0 auto;
+    background: #FFF;
+    border-top: #33AEAE solid 9px;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.info .panel-info img{
+    margin-bottom: 60px;
+    display: block;
+}
+
+.info .panel-info div{
+    padding-left: 20px;
+}
+
+.info .panel-info article{
+    float: left;
+    width: 380px;
+    margin-left: 60px;
+    margin-bottom: 30px;
+}
+
+/* PERFIL */
+.perfil .wp{
+    padding-top: 25px;
+}
+
+.perfil .tabs{
+    background: #33AEAE;
+    padding-top: 6px;
+    overflow: hidden;
+}
+
+.perfil .tabs div{
+    float: left;
+    line-height: 50px;
+    color: #666666;
+    font-size: 13px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    padding: 0 60px;
+
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #fbfbfb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#fbfbfb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#fbfbfb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#fbfbfb 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#fbfbfb 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#fbfbfb 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fbfbfb',GradientType=0 ); /* IE6-9 */
+}
+
+.perfil .tab{
+    overflow: hidden;
+    padding: 20px 0;
+    border-bottom: #33AEAE solid 1px;
+
+    background: #fbfbfb; /* Old browsers */
+    background: -moz-linear-gradient(top,  #fbfbfb 0%, #eeeeee 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fbfbfb 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fbfbfb 0%,#eeeeee 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fbfbfb 0%,#eeeeee 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #fbfbfb 0%,#eeeeee 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+}
+
+.perfil .tab div{
+    float: left;
+    border-left: #CCCCCC solid 1px;
+    padding: 0px 55px;
+    max-width: 355px;
+}
+
+.perfil_escuela .tab div{
+    border: none;
+    max-width: 405px;
+}
+
+.perfil .tab div:first-child{
+    border: 0;
+}
+
+.perfil .tab div img{
+    margin-right: 15px;
+}
+
+.perfil .tab div span{
+    color: #33AEAE;
+    font-size: 25px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+}
+
+.perfil_escuela .tab div h1{
+    color: #33AEAE;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-size: 29px;
+    display: block;
+    margin-top: 35px;
+    padding-left: 0px;
+    background: none;
+    line-height: 29px;
+}
+
+.perfil .tab div h2{
+    color: #33ACAC;
+    font-size: 13px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    text-align: left;
+    margin: 0 0 10px 0;
+}
+
+.perfil_escuela .tab div span{
+    color: #33ACAC;
+    font-size: 13px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    text-align: left;
+    margin-top: 30px;
+    display: block;
+}
+
+.perfil .tab div p{
+    color: #444444;
+    font-size: 13px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    margin: 0;
+}
+
+.perfil h1{
+    color: #666666;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    text-align: left;
+    background: #FFF;
+    line-height: 70px;
+    margin: 0;
+    padding-left: 55px;
+    letter-spacing: 0;
+    padding-top: 0;
+}
+
+.perfil_escuela h2{
+    color: #666666;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    text-align: left;
+    background: #FFF;
+    line-height: 70px;
+    margin: 0;
+    padding-left: 55px;
+    letter-spacing: 0;
+    padding-top: 0;
+}
+
+.perfil .left{
+    float: left;
+}
+
+.perfil .right{
+    float: right;
+}
+
+.perfil .cuentos{
+    background: #FFF url("../img/arrow_h3.jpg") 1050px 0px no-repeat;
+    overflow: hidden;
+    border-top: #33AEAE solid 3px;
+    padding-top: 25px;
+}
+
+.perfil_escuela .cuentos{
+    background: #FFF url("../img/arrow_h3.jpg") 735px 0px no-repeat;
+    width: 950px;
+    float: left;
+}
+
+.perfil_escuela .estudiantes{
+    background: #FFF url("../img/arrow_h3.jpg") 185px 0px no-repeat;
+    border-top: #33AEAE solid 3px;
+    width: 295px;
+    float: right;
+    padding-top: 25px;
+}
+
+.perfil_escuela .estudiantes div{
+    margin-bottom: 10px;
+}
+
+/*.perfil_escuela .estudiantes div span{
+    color: #33AEAE;
+    font-size: 18px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    margin-left: 20px;
+}*/
+
+.perfil .cuentos article{
+    float: left;
+    border: #33AEAE solid 1px;
+    margin: 0 5px 35px 5px;
+}
+
+.perfil .cuentos article h2{
+    color: #33ADAD;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    text-align: left;
+    margin: 0;
+    line-height: 26px;
+    padding: 15px 20px;
+}
+
+.perfil_escuela .cuentos article h3{
+    color: #33ADAD;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    text-align: left;
+    margin: 0;
+    line-height: 26px;
+    padding: 15px 20px;
+}
+
+.perfil .cuentos article p{
+    color: #444444;
+    font-size: 12px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    margin: 0;
+    padding: 15px 20px;
+    padding-top: 0;
+}
+
+.perfil .aftertabs{
+    background: #FFF;
+    padding-top: 25px;
+}

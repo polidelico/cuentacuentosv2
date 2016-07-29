@@ -1,0 +1,66 @@
+﻿@using Cuentos.Models
+@{
+    ViewBag.Title = "Editar Cuento";
+    var imageCategoriesList = (List<ImageCategory>)ViewBag.ImageCategories;
+}
+
+@Html.Partial("_Builder")
+
+@section scripts{
+    <script>var storyId = @Model.Id;</script>
+    <script src="~/Scripts/vendor/handlebars-v2.0.0.js"></script>
+    <script src="~/Scripts/vendor/underscore-min.js"></script>
+    <script src="~/Scripts/vendor/backbone-min.js"></script>
+    <script src="~/Scripts/vendor/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/vendor/ckeditor/adapters/jquery.js"></script>
+    @*<script src="~/Scripts/vendor/slick/slick.min.js"></script>*@
+    <script src="~/Scripts/vendor/jquery-sortable-min.js"></script>
+    <script src="~/Scripts/vendor/fancybox/jquery.fancybox.js"></script>
+    <script src="~/Scripts/vendor/jquery.loadingdotdotdot.js"></script>
+    
+
+    <script src="~/Scripts/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/vendor/jquery.iframe-transport.js"></script>
+    <script src="~/Scripts/vendor/jquery.fileupload.js"></script>
+
+    <script src="~/Scripts/builder.js"></script>
+    <script src="~/Scripts/builder-models.js"></script>
+    <script src="~/Scripts/builder-collections.js"></script>
+    <script src="~/Scripts/builder-views.js"></script>
+
+    <script>
+        App.StoryJson = @Html.Raw(Json.Encode(Model));
+        App.CategoriesJson = @Html.Raw(Json.Encode(ViewBag.Categories));
+        App.GradesJson = @Html.Raw(Json.Encode(ViewBag.Grades));
+        App.InterestsJson = @Html.Raw(Json.Encode(ViewBag.Interests));
+        App.PageTypesJson = @Html.Raw(Json.Encode(ViewBag.PageTypes));
+        App.ImagesJson = @Html.Raw(Json.Encode(ViewBag.Images));
+        App.ImagesCategoriesJson = @Html.Raw(Json.Encode(ViewBag.ImageCategories));
+        App.UserId = '@HttpContext.Current.User.Identity.Name';
+    //console.table(App.PageTypesJson);
+    </script>
+    <script src="~/Scripts/builder-main.js"></script>
+
+    <script>
+        Handlebars.registerHelper('isChecked', function(selectedArray, currentId) {
+            var result = '';
+            $.each(selectedArray, function(i,e){
+                if(e.Id == currentId){
+                    result = 'checked';
+                }
+            });
+            return result;
+        });
+
+        Handlebars.registerHelper('showDeleteButton', function(index) {
+            
+            var result = '';            
+            if(index > 1){
+                result = '<div class="delete"></div>';
+            }
+            
+            return result;
+        });
+    </script>
+
+}

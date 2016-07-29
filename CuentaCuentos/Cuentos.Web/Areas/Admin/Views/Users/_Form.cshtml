@@ -1,0 +1,152 @@
+﻿@using Cuentos.Lib.Helpers
+@using Cuentos.Lib
+@model Cuentos.Models.view.CreateUserModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatable" }))
+{
+    @Html.AntiForgeryToken()
+    
+    @Html.ValidationSummary(true)
+
+    <div class="padded">
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.UserName, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @if (ViewBag.Edit == true)
+                {
+                    @Html.TextBoxFor(model => model.User.UserName, new { @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.User.UserName)
+                }
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.UserName) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Name, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.User.Name)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.Name) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.LastName, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.User.LastName)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.LastName) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Age, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.User.Age)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.Age) </span>
+            </div>
+        </div>
+        @*Show roles based on User Role*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Role, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.Roles, "Selecciona un Rol")
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Role) </span>
+            </div>
+        </div>
+        @*Show only if school admin*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.GradeId, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownListFor(model => model.User.GradeId, (SelectList)ViewBag.Grades, "Selecciona un Grado")
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.GradeId) </span>
+            </div>
+        </div>
+        @*Dont show if super admin*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.SchoolId, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @if (ViewBag.IsSuperAdmin)
+                {
+                    @Html.DropDownListFor(model => model.User.SchoolId, (SelectList)ViewBag.Schools, "Selecciona una Escuela")
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.User.SchoolId, (SelectList)ViewBag.Schools)
+                }
+
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.SchoolId) </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Owner, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownListFor(model => model.User.Owner, (List<SelectListItem>)ViewBag.OwnerTypesSelectList)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.GradeId) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Email, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.User.Email)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.Email) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Contraseña" })
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(m => m.Password) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Verificar Contraseña" })
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(m => m.ConfirmPassword) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.IsApproved, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.User.IsApproved)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.IsApproved) </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Interests, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @foreach (var interest in ViewBag.Interests)
+                {
+                    if (ViewBag.Edit == true)
+                    {
+                        <input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id"
+                               @(Model.User.Interests.Where(i => i.Name == interest.Name).Count() > 0 ? "checked" : "") />
+                    }
+                    else
+                    {
+                        <input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id" />
+                    }
+
+                    <label for="interest-@interest.Id">@interest.Name</label>
+                    <br />
+                }
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-blue">Guardar cambios</button>
+            <a class="btn btn-default" href="@Url.Action("Index", "Users")">Cancelar</a>
+        </div>
+    </div>
+}
+
+<script>
+    $('#User_UserName').bind('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+</script>

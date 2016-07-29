@@ -1,0 +1,271 @@
+﻿@model Cuentos.Models.Story
+@using Cuentos.Lib
+@using Cuentos.Lib.Helpers
+@{
+    ViewBag.Title = "Detalles del Cuento";
+}
+
+
+@Styles.Render("~/Content/css/font-awesome.min.css")
+
+@section Header {
+    @Html.Partial("~/Views/Shared/_Header.cshtml")
+}
+
+@Html.Partial("_FBappSDK")
+
+<div class="content cuentos">
+    <div class="wp">
+        <div class="cont-cuento">
+            <h1>@Model.Name <a href="#" id="request-full-screen" class="btn_blue right">Full Screen</a></h1>
+            <div id="pages-designer" class="slide-cuento">
+                <a href="#" id="butt_prev" class="btn_prev"></a>
+                <a href="#" id="butt_next" class="btn_next"></a>
+                <a href="#" id="close-fullscreen" class=""></a>
+                <ul id="book" class="pages "></ul>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="aside-desc">
+            <div class="opiniones">
+                <span>OPINIONES</span>
+                <span class="stars-container @(ViewBag.LoggedUser != null ? "logged" : "")" data-average="@ViewBag.Average" data-storyid="@Model.Id" data-url="@Url.Action("RateStory", "Stories")">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        string cssClass = "";
+                        if (ViewBag.Average > 0)
+                        {
+                            cssClass = i <= ViewBag.Average ? "iconStar" : (ViewBag.Average > i - 1 ? "iconStarHalf" : "iconStarZero");
+                        }
+                        else
+                        {
+                            cssClass = "iconStarZero";
+                        }
+                        <i class="fa star @cssClass" data-star-num="@i"></i>
+                    }
+                </span>
+            </div>
+            <div class="autor">
+                <h2>AUTOR</h2>
+                <img src="@Model.User.AvatarImage">
+                <span><a href="@Url.RouteUrl("VerPerfilUsuario", new { id = Model.User.UserName})">@Model.User.UserName</a></span>
+            </div>
+            <div class="desc">
+                <h2>RESUMEN</h2>
+                <p>@Model.Summary</p>
+                <h2>DETALLES</h2>
+                <p>
+                    Vistas: @Model.Views<br>
+                    Número de Páginas: <span id="quantity_pages"></span><br>
+                    Publicado: @String.Format("{0: dd 'de' MMMM 'de' yyyy}", @Model.ApprovedDate)<br>
+                    Escuela: @if (@Model.User.School != null)
+                    {
+                        <a href="@Url.RouteUrl("VerEscuela", new { id = Model.User.SchoolId })">@Model.User.School.Name</a>
+
+                    }<br>
+
+                    Grados:
+
+                    @if (@Model.Grades != null)
+                    {
+                        for (var i = 0; i < Model.Grades.Count; i++)
+                        {
+                            <span class="grades">@Model.Grades.ElementAt(i).Name</span>
+                            @( i == Model.Grades.Count - 2 ? "y" : (i == Model.Grades.Count - 1 ? "" : ","))
+                        }
+                    }
+
+
+
+
+                </p>
+                <h2>CATEGORIAS</h2>
+                <ul>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li>@category.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="comments">
+            <div class="social">
+                <span class="left">COMPARTE</span>
+                <div class="icons left">
+                    <a href="#" id="fb-share" data-title="@Model.Name por @Model.User.Fullname - En Cuenta Cuentos" data-description="¡Libera tu imaginación y atrévete a soñar! Imagina tu cuento, constrúyelo y comparte con otros." data-img="@Model.CoverImage.ToAbsoluteUrl()"><img src="~/Content/img/ico_fb.jpg"></a>
+                    <a href="#" id="tw-share" data-text="Leyendo &quot;@Model.Name&quot; por @Model.User.Fullname"><img src="~/Content/img/ico_tw.jpg"></a>
+                    @*<a href="#"><img src="~/Content/img/ico_gp.jpg"></a>*@
+                    <a href="https://www.pinterest.com/pin/create/button/?url=@(HttpContext.Current.Request.Url.AbsolutePath)&media=@(Model.CoverImage.ToAbsoluteUrl())&description=@(Model.Name)%20por%20@(Model.User.Fullname)%20-%20En%20Cuenta%20Cuentos" data-pin-do="buttonPin" data-pin-config="above"><img src="~/Content/img/ico_pt.jpg"></a>
+                    @if (ViewBag.LoggedUser != null)
+                    {
+                        <a href="#share-via-email" data-toggle="modal">
+                            <img src="~/Content/img/ico_mail.jpg" alt="Email" />
+                        </a>
+                    }                    
+                </div>
+                <div class="visitas right">
+                    <span>VISITAS</span> <span class="numero">@Model.Views</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <ul class="com">
+
+                @if (ViewBag.LoggedUser != null)
+                {
+                    using (Html.BeginForm("AddComment", "Stories", FormMethod.Post, new { @class = "form-horizontal fill-up validatable" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <li class="add">
+                            <h2>Únete a la conversación</h2>
+                            <img src="@ViewBag.Loggeduser.AvatarImage" width="63" height="58">
+                            <div>
+                                <textarea id="newComment" name="newComment" palceholder="Haz un comentario"></textarea>
+                                <input name="storyId" type="hidden" value="@Model.Id" />
+
+                                <button type="submit" class="btn_blue">Comentar</button>
+                            </div>
+                        </li>
+                    }
+                }
+                else
+                {
+
+                    <li id="offline_comment" class="add">
+                        <h2>Únete a la conversación</h2>
+                        <img src="~/Content/img/user-thumb.png" width="63" height="58">
+                        <div>
+                            <textarea id="newComment" name="newComment" palceholder="Haz un comentario"></textarea>
+                            <input name="storyId" type="hidden" value="@Model.Id" />
+
+                            <button type="submit" class="btn_blue">Comentar</button>
+                        </div>
+                    </li>
+                }
+
+                @foreach (var comment in Model.Comments.Where(c => c.IsApproved == true))
+                {
+                    <li>
+                        <div>
+                            <img src="@comment.User.AvatarImage" width="63" height="58" />
+                            <p><strong>@(comment.ApprovedDate != null ? comment.ApprovedDate.Value.ToString("MM/dd/yyyy") : "")</strong></p>
+                        </div>
+                        <p><strong>@comment.User.Name:</strong> @comment.Text</p>
+                    </li>
+                }
+
+            </ul>
+        </div>
+
+
+
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@Html.Partial("_EmailShare", new Cuentos.Models.view.EmailShare { Story = Model })
+
+@section scripts{
+
+    <script src="~/Scripts/vendor/handlebars-v2.0.0.js"></script>
+    @Html.Partial("_Viewer")
+    <script>
+        Handlebars.registerHelper("everyOther", function (index, amount, scope) {
+            if ( ++index % amount )
+                return scope.inverse(this);
+            else
+                return scope.fn(this);
+        });
+        //Template Viewer Begin
+        var source   = $("#pages-designer-page").html();
+        var template = Handlebars.compile(source);
+        var context = @Html.Raw(Model.Pages);
+        var quantity_pages = context.length;
+        $("#quantity_pages").text(quantity_pages);
+        var html = template({ pages : context});
+        $("#book").html(html);
+        //Template Viewer end
+        var linkToLogin = "@Url.RouteUrl("LoginMiCuenta")";
+        var title = "@Model.Name";
+        var description = "@Model.Summary";
+        var image = "@Model.CoverImage";
+        var storyId = @Model.Id;
+        var isLogged = '@(ViewBag.LoggedUser != null ? "true" : "false")';
+        var alreadyRate = '@(ViewBag.LoggedUser != null && Model.Ratings.Where(r => r.UserName == ViewBag.LoggedUser.UserName).Count() > 0 ? "true" : "false")';
+
+        $(document).ready(function() {
+            $('a#tw-share').click(TwitterShare);
+            $('a#fb-share').click(facebookShare);
+            $("#offline_comment").click(openModalToLogin);
+        });
+    </script>
+
+    <script src="~/Scripts/ratings.js"></script>
+
+    <script type="text/javascript">
+        var sizes = new Array();
+        var lis;
+
+        $(document).ready(function () {
+            setBtns();
+
+        });
+
+        function setBtns() {
+            $('.slide-cuento ul').slick({
+                'slide': 'li',
+                prevArrow: $('.btn_prev'),
+                nextArrow: $('.btn_next'),
+                infinite: false,
+            });
+
+            $('.cuentos .slide-cuento a.btn_prev, .cuentos .slide-cuento a.btn_next').css(
+                    'margin-top', ($('.cuentos .slide-cuento ul').height() / 2) - 40);
+        }
+
+        (function ($) {
+            $.fn.imgLoad = function (callback) {
+                return this.each(function () {
+                    if (callback) {
+                        if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+                            callback.apply(this);
+                        }
+                        else {
+                            $(this).on('load', function () {
+                                callback.apply(this);
+                            });
+                        }
+                    }
+                });
+            };
+        })(jQuery);
+
+
+    </script>
+    <script type="text/javascript" src="~/Scripts/vendor/fullscreen/jquery.fullscreen.js"></script>
+
+    <script>
+        $(function() {
+            $('.cuentos #request-full-screen').click(function() {
+                $('#pages-designer').fullscreen();
+                return false;
+            });
+            $('.cuentos #close-fullscreen').click(function() {
+                $.fullscreen.exit();
+                return false;
+            });
+            $(document).bind('fscreenchange', function(e, state, elem) {
+                if ($.fullscreen.isFullScreen()) {
+                    $("#pages-designer").addClass('fullscreen');
+                } else {
+                    $("#pages-designer").removeClass('fullscreen');
+                }
+                $('#state').text($.fullscreen.isFullScreen() ? '' : 'not');
+            });
+        });
+
+    </script>
+}

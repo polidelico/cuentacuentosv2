@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Story>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div style="padding:8px;" class="box-header">
+                        <input style="width:250px;" placeholder="Nombre del Cuento" id="searchStory" type="text" />
+                    </div>
+                    <div class="box-content">
+                        <div id="storieslist"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            var gridElement = $("#storieslist");
+
+            function showLoading(e) {
+                kendo.ui.progress(gridElement, true);
+            }
+
+            function restoreSelection(e) {
+                kendo.ui.progress(gridElement, false);
+            }
+
+
+            $("#storieslist").kendoGrid({
+                dataSource: {
+                    requestStart: showLoading,
+                    transport: {
+                        read: {
+                            url: "/Admin/Stories/GetStories",
+                        }
+                    },
+                    pageSize: 15,
+                },
+
+                groupable: false,
+                selectable: true,
+                sortable: true,
+                pageable: { refresh: true, pageSizes: true, },
+                dataBound: restoreSelection,
+                columns: [{
+                    field: "StoryName",
+                    title: "Nombre del cuento",
+                    template: "<a href=\"/Stories/Edit/#: StoryID #\">#: StoryName #</a>"
+                }, {
+                    field: "Author",
+                    title: "Autor"
+                }, {
+                    field: "Status",
+                }, {
+                    title: "Acciones",
+                    width: "100px",
+                    template: "<a class=\"btn btn-xs btn-default\" href=\"/Admin/Stories/Edit/#:StoryID#\"> <i class=\"icon-cog\"></i></a><a class=\"btn btn-xs btn-default\ href=\"##\" onclick=\"DeleteStory(#:StoryID#);\"><i class=\"icon-remove\"></i></a></div>"
+                }],
+
+                editable: false,
+            });
+
+
+            $("#searchStory").keyup(function () {
+                var val = $('#searchStory').val();
+                $("#storieslist").data("kendoGrid").dataSource.filter({
+                    logic: "or",
+                    filters: [
+                        {
+                            field: "StoryName",
+                            operator: "contains",
+                            value: val
+                        },
+                    ]
+                });
+            });
+
+
+
+            function DeleteStory(StoryID) {
+
+                var r = confirm("Estas seguro que quieres borrar el cuento");
+
+                if (r == true) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/Admin/Stories/Delete",
+                        data: { id: StoryID }
+                    }).done(function (msg) {
+                        $('#storieslist').data('kendoGrid').dataSource.read();
+                    });
+                }
+            }
+        </script>
+    </div>
+</div>

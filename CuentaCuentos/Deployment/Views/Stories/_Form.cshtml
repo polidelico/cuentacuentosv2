@@ -1,0 +1,51 @@
+﻿@model Cuentos.Models.Story
+@using Cuentos.Lib.Helpers
+@using Cuentos.Lib
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatable" }))
+{
+    <p>
+        @Html.LabelFor(model => model.Name)
+        @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
+    </p>
+
+
+    <p>
+        @Html.LabelFor(model => model.Summary)
+        @Html.EditorFor(model => model.Summary)
+        @Html.ValidationMessageFor(model => model.Summary)
+    </p>
+
+    <div>
+        @foreach (var grade in ViewBag.Grades)
+        {
+            <input type="checkbox" value="@grade.Id" name="selectedGrades" id="grade-@grade.Id"
+                   @(Model.Grades != null && Model.Grades.Where(g => g.Id == grade.Id).Count() > 0 ? "checked" : "") />
+            <label for="grade-@grade.Id">@grade.Name</label>
+        }
+    </div>
+
+    <div>
+        @foreach (var category in ViewBag.Categories)
+        {
+            <input type="checkbox" value="@category.Id" name="selectedCategories" id="category-@category.Id"
+                   @(Model.Categories  != null && Model.Categories.Where(c => c.Id == category.Id).Count() > 0 ? "checked" : "") />
+            <label for="category-@category.Id">@category.Name</label>
+        }
+    </div>
+
+    var image = Model.getImagesByTarget(ImageTarget.MAIN).First();
+
+    <div class="preview-file-upload">
+        <div class="image-preview-back">
+            <img class="image-preview" src="@image.ImagePath" width="200" height="150" />
+        </div>
+        <div class="clear"></div>
+        <input id="uploadMainImage" type="file" name="mainImage" class="img" />
+      
+    </div>    
+    
+    <br />
+    <button type="submit" class="btn btn-blue">Guardar</button>
+}

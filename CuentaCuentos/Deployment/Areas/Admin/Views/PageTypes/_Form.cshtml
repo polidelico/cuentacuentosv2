@@ -1,0 +1,59 @@
+﻿@using Cuentos.Lib.Helpers
+@using Cuentos.Lib
+@model PageType
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatable" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="padded">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name , new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Name)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Name)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Description)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Description)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Active, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Active)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Active)</span>
+            </div>
+        </div>
+
+        @{ 
+            var image = Model.getImagesByTarget(ImageTarget.MAIN).FirstOrDefault(); 
+        }
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Imagen del Template</label>
+            <div class="col-lg-10">
+                @Html.ImageLabel("Subir imagen",
+                    118,
+                    152,
+                    @Html.Partial("_SimpleUploader", Model, new ViewDataDictionary() {
+                        { "IsNewUpload", image.Size == 0},
+                        { "ImageUrl", @Href(image.ImagePath) },
+                        { "ExtraClasses", "" },
+                        { "DataName", "mainImage" } }).ToString())
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-blue">Guardar cambios</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PageTypes")">Cancelar</a>
+    </div>
+}

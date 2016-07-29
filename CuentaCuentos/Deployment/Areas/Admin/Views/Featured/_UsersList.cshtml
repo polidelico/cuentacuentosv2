@@ -1,0 +1,41 @@
+﻿@model IEnumerable<User>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header"><span class="title"> Usuarios </span></div>
+            <div class="box-content">
+                <!-- find me in partials/data_tables_custom -->
+
+                <div id="dataTables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Nombre del Usuario </div></th>
+                                @*<th><div> Rol </div></th>
+                                <th><div> Nombre </div></th>
+                                <th><div> Aprobado </div></th>
+                                <th><div> Escuela </div></th>
+                                <th style="width: 80px"></th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                if (user.Featured == true)
+                                {
+                                    <tr id="item-@user.UserName" data-id="@user.UserName">
+                                        <td class="hidden">@user.DateCreated</td>
+                                        <td class="confirmName">@user.UserName</td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

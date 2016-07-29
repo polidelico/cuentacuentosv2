@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Importar Usuarios";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatablen import-form" }))
+{
+    <div>
+        <label>Escuelas:</label>
+        @Html.DropDownList("id", (SelectList)@ViewBag.Schools, new { @class="uniform" })        
+    </div>
+    <br />
+    <div id="upload-pdf" class="fileupload-buttonbar">
+        <label class="fileinput-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+            <span class="ui-button-text"> Seleccione un archivo csv para importar usuarios:
+            </span>
+            <input id="pdf-upload-btn" type="file" name="postedFile" multiple="" />
+        </label>        
+    </div>
+    <br />
+    <button class="btn btn-blue">Procesar archivo</button>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <p style="margin-top:10px;">Ejemplo de columnas y contenido en documento csv para importar.</p>
+            <img src="~/Areas/Admin/Content/img/import_user_example.jpg" />
+        </div>
+    </div>
+}

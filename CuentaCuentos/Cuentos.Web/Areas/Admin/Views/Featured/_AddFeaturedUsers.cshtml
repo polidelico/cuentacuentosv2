@@ -1,0 +1,52 @@
+﻿@model IEnumerable<User>
+
+<div id="modal-tables-user" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 id="modal-tablesLabel">Usuarios</h6>
+            </div>
+
+            @using (Html.BeginForm("EditUsers", "Featured"))
+            {
+            <div class="modal-body nopadding">
+
+                <div id="dataTables">
+                    
+                    <table id="tableUser" cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Nombre de Usuario </div></th>
+                                <th>Destacar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr id="item-@user.UserName" data-id="@user.UserName">
+                                    <td class="hidden">@user.DateCreated</td>
+                                    <td class="confirmName">@user.UserName</td>
+                                    <td class="">
+
+                                        <input type="checkbox" value="@user.UserName" name="selectedFeatured" id="featured-@user.UserName" @(user.Featured ? "checked" : "") />
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    
+                
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="Submit" class="btn btn-blue" value="Guardar" />
+            </div>
+
+            }
+        </div>
+    </div>
+</div>

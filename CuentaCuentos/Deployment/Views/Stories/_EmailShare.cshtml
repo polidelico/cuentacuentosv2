@@ -1,0 +1,28 @@
+﻿@model Cuentos.Models.view.EmailShare
+
+<div id="share-via-email" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Compartir por correo electrónico</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("SendEmail", null, FormMethod.Post, new { id = "email-share", @class = "clearfix form-horizontal fill-up validatable" }))
+                {
+                    <div>
+                        @Html.LabelFor(m => m.To, new { @class = "modal-label" })
+                        @Html.TextBoxFor(m => m.To, new { @class = "modal-textbox" })
+                        @Html.ValidationMessageFor(m => m.To)
+                    </div>
+                    
+                    @Html.HiddenFor(m=>m.Story.Id)
+                    @Html.HiddenFor(m => m.Story.Name)
+                    @Html.HiddenFor(m => m.Story.User.Name)
+
+                    <button type="submit" class="modal-btn">Enviar</button>
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

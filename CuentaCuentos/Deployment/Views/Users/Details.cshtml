@@ -1,0 +1,81 @@
+﻿@model Cuentos.Models.User
+@using Cuentos.Models
+@using Cuentos.Lib
+@{
+    ViewBag.Title = "Perfíl del Usuario";
+    ViewBag.BodyId = "user-profile";
+}
+
+<div class="content perfil">
+    <div class="wp">
+        <div class="tabs">
+            <div>PERFIL DEL USUARIO</div>
+        </div>
+        <div class="tab">
+            <div>
+                <img src="@Model.ImageHolders.GetFirstImagePath(ImageTarget.MAIN)">
+                <span>@Model.UserName</span>
+            </div>
+            <div id="user-details-section">
+                <h2>DETALLES</h2>
+                <p>
+                    Miembro desde: <strong>@String.Format("{0: dd 'de' MMMM 'de' yyyy}", @Model.DateCreated)</strong><br>
+                    @if (Model.School != null)
+                    {
+                        @:Escuela:
+                        <a href="@Url.RouteUrl("VerEscuela", new { id = Model.SchoolId })">
+                            <strong>@Model.School.Name</strong>
+                        </a>  <br />
+                    }
+
+                    @if (Model.Grade != null)
+                    {
+                        @:Grado: <strong>@Model.Grade.Name</strong>
+                    }
+
+                </p>
+            </div>
+        </div>
+        <h1>Cuentos Publicados</h1>
+        <div class="cuentos">
+            
+
+            
+            @if (ViewBag.Stories.Count > 0)
+            {
+                foreach (Story story in ViewBag.stories)
+                {
+                    <article class="cuento">
+                        <div class="main-image">
+                            <div class="center-outer">
+                                <div class="shade"></div>
+                                <div class="center-inner">
+                                    <figure>
+                                        <img src="@story.CoverImage" alt="@story.Name" />
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<img src="@story.CoverImage" width="303" height="313">*@
+
+
+                        <h2>@story.Name</h2>
+                        <p>@String.Format("{0: dd 'de' MMMM 'de' yyyy}", story.CreatedAt)</p>
+                        <p><div class="btn_naranja btn_leer"><a href="@Url.RouteUrl("VerCuento", new { id = story.Id })">Leer este cuento</a></div></p>
+                    </article>
+                }
+
+            }
+            else
+            {
+                <div>No Results Availables</div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/fixImagesSize.js"></script>
+}

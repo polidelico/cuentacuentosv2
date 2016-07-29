@@ -1,0 +1,38 @@
+﻿@model Story
+@{
+    ViewBag.Title = "Editar Cuento";
+    ViewBag.TitleIcon = "edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="action-nav-normal action-nav-line">
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Details", "Ratings", new { id = Model.Id })" title="Puntuaciones">
+                        <i class="icon-star"></i>
+                        <span>Puntuaciones</span>
+                    </a>
+                </div>
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Index", "Comments", new { id = Model.Id })" title="Comentarios">
+                        <i class="icon-comments"></i>
+                        <span>Comentarios</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <span class="title">Detalles del cuento</span>
+            </div>
+
+            <div class="box-content">
+                @Html.Partial("_Form")
+            </div>
+        </div>
+    </div>
+</div>

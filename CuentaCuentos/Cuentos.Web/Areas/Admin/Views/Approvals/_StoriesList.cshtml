@@ -1,0 +1,73 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div style="padding:8px;" class="box-header">
+                <input style="width:250px;" placeholder="Nombre del Cuento" id="searchStories2" type="text" />
+            </div>
+            <div class="box-content">
+                <div id="Stories2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $("#Stories2").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/Admin/Approvals/GetStoriesForApproval",
+                }
+            },
+            pageSize: 15,
+        },
+
+        groupable: false,
+        sortable: true,
+        pageable: { refresh: true, pageSizes: true, },
+        columns: [{
+            field: "StoryName",
+            title: "Nombre",
+        }, {
+            field: "Author",
+            title: "Autor",
+        }, {
+            field: "School",
+            title: "Escuela",
+        }, {
+            field: "Created",
+            title: "Recibido",
+            template: "#= kendo.toString(new Date(parseInt(Created.substr(6))),'MM/dd/yyyy')#"
+        }, {
+            title: "Acciones",
+            template: "<a id=\"aprobadobtn1#: StoryID #\" style=\"cursor:default; display:none\" class=\"btn btn-xs btn-success\"> Aprobado </a> <a id=\"aprobadononebtn1#: StoryID #\" style=\"cursor:pointer\" onclick=\"AproveStory(#: StoryID #)\" class=\"btn btn-xs btn-primary\" target=\"_blank\"> Aprobar </a> <a class=\"btn btn-xs btn-default\" href=\"/mis-cuentos/#: StoryID #\" target=\"_blank\">Ver cuento</a>"
+        }],
+
+        editable: false,
+    });
+
+
+    $("#searchStories2").keyup(function () {
+        var val = $('#searchStories2').val();
+        $("#Stories2").data("kendoGrid").dataSource.filter({
+            logic: "or",
+            filters: [
+                {
+                    field: "StoryName",
+                    operator: "contains",
+                    value: val
+                },
+            ]
+        });
+    });
+
+    function AproveStory(StoryID) {
+        $.post("/Admin/Stories/Approve/", {
+            Id: StoryID
+        }).done(function (data) {
+            $('#aprobadononebtn1' + StoryID).css("display", "none");
+            $('#aprobadobtn1' + StoryID).css("display", "initial");
+        });
+    }
+
+</script>

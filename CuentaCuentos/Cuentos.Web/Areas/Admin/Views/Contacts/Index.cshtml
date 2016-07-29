@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewBag.Title = "Mensajería";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#unread" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">No leídos</a></li>
+        <li role="presentation" class=""><a href="#read" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Leídos</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div role="tabpanel" class="tab-pane active in" id="unread" aria-labelledby="home-tab">
+            @Html.Partial("_ContactsList", Model.Where(c => c.isRead == false))            
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="read" aria-labelledby="home-tab">
+            @Html.Partial("_ContactsList", Model.Where(c => c.isRead == true))
+        </div>
+
+    </div>
+</div>
+
+
+
+@Html.Partial("_MessageModal")
+@section scripts{
+    <script src="~/Areas/Admin/Content/js/messages.js"></script>
+    <script src="~/Areas/Admin/Content/js/messageModal.js"></script>
+}
+

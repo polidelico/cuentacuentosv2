@@ -1,0 +1,83 @@
+﻿@using Cuentos.Lib.Helpers
+@using Cuentos.Lib
+@model School
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatable" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="padded">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name , new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Name)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Name)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Details, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Details, new { maxLength = 255 })
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Details)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address1, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Address1)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Address1)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address2, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Address2)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Address2)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CityId, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownListFor(model => model.CityId, (List<SelectListItem>)ViewBag.Cities)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.CityId)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Zip, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Zip)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Zip)</span>
+            </div>
+        </div>
+
+        @{ 
+            var image = Model.getImagesByTarget(ImageTarget.MAIN).First(); 
+            }
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Foto de escuela</label>
+            <div class="col-lg-10">
+                @Html.ImageLabel("Subir foto",
+                    image.Dimensions.Width,
+                    image.Dimensions.Height,
+                    @Html.Partial("_SimpleUploader", Model, new ViewDataDictionary() {
+                        { "IsNewUpload", image.Size == 0},
+                        { "ImageUrl", @Href(image.ImagePath) },
+                        { "ExtraClasses", "" },
+                        { "DataName", "mainImage" } }).ToString())
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-blue">Guardar cambios</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Schools")">Cancelar</a>
+    </div>
+}

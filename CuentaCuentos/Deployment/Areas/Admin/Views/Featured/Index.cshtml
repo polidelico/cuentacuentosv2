@@ -1,0 +1,64 @@
+﻿@model Cuentos.Models.view.FeaturedModel
+@{
+    ViewBag.Title = "Destacados";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="action-nav-normal">
+
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a data-toggle="modal" href="#modal-tables-story" class="btn btn-blue" title="Añadir Cuento">
+                        <i class="icon-book"></i>
+                        <span>Añadir Cuento</span>
+                    </a>
+                    <span class="triangle-button red"><i class="icon-plus"></i></span>
+                </div>
+               
+                    <div class="col-sm-6 action-nav-button">
+                        <a data-toggle="modal" href="#modal-tables-user" class="btn btn-blue" title="Añadir Usuario">
+                            <i class="icon-user"></i>
+                            <span>Añadir Usuario</span>
+                        </a>
+                        <span class="triangle-button red"><i class="icon-plus"></i></span>
+                    </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+@Html.Partial("_StoriesList", Model.Stories)
+
+@Html.Partial("_UsersList", Model.Users)
+
+
+@Html.Partial("_AddFeatured", Model.Stories)
+@Html.Partial("_AddFeaturedUsers", Model.Users)
+
+
+@section scripts {
+    <script>
+        $('#modal-tables-story').on('show.bs.modal', function (e) {
+            $('#tableStory').dataTable().fnDestroy();
+            $('#tableStory').css('width', '100%');
+        });
+
+        $('#modal-tables-user').on('show.bs.modal', function (e) {
+            $('#tableUser').dataTable().fnDestroy();
+            $('#tableUser').css('width', '100%');
+        });
+
+    </script>
+    <script src="~/Areas/Admin/Content/js/featured.js"></script>
+}

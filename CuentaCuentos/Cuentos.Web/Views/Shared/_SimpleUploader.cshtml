@@ -1,0 +1,23 @@
+﻿@{
+    string width = (string)ViewData["customwidth"] ?? "200";
+    string height = (string)ViewData["customheight"] ?? "150";
+}
+
+<div class='@ViewData["ExtraClasses"] fileinput fileinput-@((bool)ViewData["IsNewUpload"] == true ? "new" : "exists")' data-provides="fileinput" data-name="@ViewData["DataName"]">
+    <div class="fileinput-new thumbnail" style="width: @(width)px; height: @(height)px;">
+        <img src="http://www.placehold.it/@(width)x@(height)/EFEFEF/AAAAAA&text=sin+imagen" />
+    </div>
+    
+    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: @(width)px; max-height: @(height)px; line-height: 20px;">
+        <img src="@ViewData["ImageUrl"]" />
+    </div>
+    <div>
+        <span class="btn btn-default btn-file">
+            <span class="fileinput-new">Selecciona:</span>
+            <span class="fileinput-exists">Cambiar</span>
+            <input type="file" name="@ViewData["DataName"]">
+        </span>
+        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+    </div>
+</div>
+<br />

@@ -1,0 +1,180 @@
+﻿body {
+}
+
+.alert {
+    margin-bottom: 0;
+}
+.hide{
+    display:none;
+}
+.table-data{
+    position:relative;
+}
+.saving-records{
+    width: 100%;
+    height: 100%;
+    background: rgba(250, 247, 247,0.7);
+    position: absolute;
+    top: -2px;
+    display: none;
+    z-index: 1;
+}
+.saving-records td{
+    width: 3000px;
+    text-align:center;
+}
+
+#breadcrumbs .breadcrumb-button .breadcrumb-label {
+    border-left:1px solid #ccc;
+}
+
+.help-block.error {
+    display: none;
+}
+
+input.input-validation-error + .help-block.error, select.input-validation-error + .help-block.error {
+    display: block;
+}
+
+table .btn-group .btn + .btn {
+    margin-left: 5px;
+}
+
+form.fill-up input[type="checkbox"] {
+    width: auto;
+}
+
+#trim-jato-mapping-modal .form-filters {
+    padding:15px 20px;
+    position:relative;
+}
+
+#trim-jato-mapping-modal .form-filters .spinner {
+    position:absolute;
+    top:50%;
+    right:20%;
+}
+
+#trim-jato-mapping-modal .filterActive {
+    padding-top:20px;
+}
+
+#trim-jato-mapping-modal .filterActive label {
+    margin-left:5px;
+}
+
+#trim-jato-mapping-modal .filterUID input {
+    height:28px;
+    line-height:28px;
+}
+
+#trim-jato-mapping-modal .filterBrand label {
+    display:block;
+}
+
+.spinner {
+    display:none;
+}
+.commentsText{
+    width: 500px;
+    overflow: hidden;
+    max-width: 400px;
+}
+
+
+/*Colors*/
+.simpleColorContainer{
+    width:80px !important;
+    float:left;
+}
+.customColor{
+    width:60px !important;
+    float:left;
+}
+.color{
+    width:23px;
+    height:23px;
+    position:relative;
+}
+.triangle-top{
+    width: 0;
+    height: 0;
+    border-top: 23px solid #000;
+    border-left: 23px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.triangle-bottom {
+    width: 0;
+    height: 0;
+    border-bottom: 23px solid #000;
+    border-right: 23px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.onDrag{
+    background-color: rgb(119, 179, 255) !important;
+    border: solid 2px rgb(157, 157, 216) !important;
+    /*font-weight: bold;*/
+    color:white;
+}
+.multiple-checkbox-container{
+    margin-top:4px;
+}
+.multiple-checkbox{
+    margin-right:14px;
+}
+
+
+.box .box-header .icon-desktop:before {
+    margin-top: 11px;
+}
+
+.recived-date-column{
+    width:130px;
+}
+.import-form{
+    width:300px !important;
+}
+.modal-body{
+    overflow:hidden;
+}
+#user-info-modal .modal-dialog{
+    width: 800px;
+}
+.preview{
+    float:left;
+}
+.preview-picture-wrapper{
+    width:130px;
+    height:112px;
+    border-right:7px solid #64AED4;
+}
+.preview-info-wrapper{
+    width:602px;
+    overflow:hidden;
+}
+.preview-info-wrapper ul{
+    float:left;
+    width:49.5%;
+    list-style:none;
+    margin:6px 0 0 0;    
+}
+.preview-info-wrapper ul:first-child{
+    margin:6px 0 0 4px;    
+}
+.preview-info-wrapper ul li{
+    width:100%;
+    float:left;
+}
+.edit-btn-wrapper{
+    width:100%;
+}
+.edit-btn-wrapper a{
+    width:130px;
+}
+/*.preview-info-wrapper ul li:nth-child(2n){
+    padding-left:4px;
+}*/

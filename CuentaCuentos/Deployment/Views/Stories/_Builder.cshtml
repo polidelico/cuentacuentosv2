@@ -1,0 +1,239 @@
+﻿<div class="content paginas">
+    <div class="wp">
+        <div class="section1">
+            <div id="pages-designer" class="slide-cuento">
+                <a href="#" class="btn_prev"></a>
+                <a href="#" id="btn_next" class="btn_next"></a>
+                <a href="#template-selector-modal" class="fancybox-templates add"></a>
+                <ul class="pages">
+                    <li>
+
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="section2">
+        <div class="wp">
+            <div id="pages-nav" class="slider">
+                <div class="rows">
+                    <a href="#" class="left"><span>Row Left</span></a>
+                    <a href="#" class="right"><span>Row Right</span></a>
+                </div>
+                <ul class="pages"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* Modals *@
+<div id="import-pdf-modal" class="no-show">
+    <h3>Convierte un documento pdf en cuento</h3>
+
+    @using (Html.BeginForm("ConvertPDF", "Stories", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatable" }))
+    {
+        <div id="upload-pdf" class="fileupload-buttonbar">
+            <label class="fileinput-button btn_naranja" role="button">
+                <span class="ui-button-text">
+                    <span>Seleccionar PDF</span>
+                </span>
+                <input id="pdf-upload-input" type="file" name="postedFiles" />
+            </label>
+        </div>               
+        
+        <div class="buttons-wrapper" style="margin-top:24px;">
+            <a href="#" id="remove-file" class="btn-gray">Remover archivo</a>
+            <button class="btn_blue" type="submit">Convertir en cuento</button>
+        </div>
+        
+        <p class="msgs"></p>
+
+        @Html.Hidden("id", (int)ViewBag.Id)
+    }
+
+    
+</div>
+
+<div id="story-details-modal" class="no-show">
+</div>
+
+<div id="template-selector-modal" class="no-show">
+    <h3>SELECCIONE UNA TEMPLATE</h3>
+    <table class="templates-table" border="0"></table>
+</div>
+
+<div id="images-modal" class="no-show" style="width:800px; height:500px">
+    <div class="tabpanel" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li class="active" role="presentation"><a href="#default-images" aria-controls="default-images" role="tab" data-toggle="tab"> Galerías</a></li>
+            <li role="presentation"><a href="#user-images" aria-controls="user-images" role="tab" data-toggle="tab">Tus imágenes</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane images-pane active" id="default-images">
+
+                <div id="default-imgs-wrapper">
+
+                    <ul id="imageCategories"></ul>
+
+                    <div id="default-imgs"></div>
+                </div>
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane images-pane" id="user-images">
+
+                <div id="user-imgs-wrapper">
+
+                    <div id="upload-button-wrapper" class="fileupload-buttonbar">
+                        <label class="fileinput-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+                            <span class="ui-button-text">
+                                <span>Add Documents...</span>
+                            </span>
+                            <input id="upload_button" type="file" name="postedFiles" multiple="" />
+                        </label>
+                    </div>
+                    <div id="UploadMessage" data-bind="visible: showMessage">
+
+                        @*<ul data-bind="foreach: upload()">
+                                <li>
+                                    <a href="#" data-bind="click: $parent.openFile">
+                                        <span data-bind="text: $data.fileName">  </span>
+                                    </a>
+                                </li>
+                            </ul>*@
+                    </div>
+
+                    <div id="user-imgs"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script id="pages-designer-page" type="text/x-handlebars">
+    <div class="col page {{page.Type}}">
+        <div class="center-outer image">
+            <div class="center-inner">
+                <div class="clipping">
+                    {{#if page.ImageUrl}}
+                    <img class="" src="{{page.ImageUrl}}" />
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        {{#if page.Text}}
+        <div class="cel text" contenteditable="true">
+            {{{page.Text}}}
+        </div>
+        {{/if}}
+    </div>
+</script>
+
+<script id="pages-nav-template" type="text/x-handlebars">
+    <li>
+        {{{showDeleteButton Position}}}
+        <a class="col cont page {{Type}}" href="#" style="display:block;cursor:pointer">
+            <div class="center-outer image">
+                <div class="center-inner">
+                    <div class="clipping">
+                        {{#if ImageUrl}}
+                        <img class="" src="{{ImageUrl}}" />
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+
+            {{#if Text}}
+            <div class="text cel">
+                {{{Text}}}
+            </div>
+            {{/if}}
+        </a>
+    </li>
+</script>
+
+<script id="story-details-content" type="text/x-handlebars">
+    <form>
+        <div>
+            <label for="name">Nombre</label>
+            <input id="story-name" name="name" type="text" value="{{story.Name}}" />
+        </div>
+
+        <div>
+            <label for="name">Resumen</label>
+            <textarea id="story-summary" name="summary" maxlength="290"> {{story.Summary}} </textarea>
+        </div>
+
+
+        <div class="categorias">
+            <h3>Categorías</h3>
+            {{#each allCategories}}
+            <label for="{{Name}}">
+                <input id="{{Name}}" name="category" type="checkbox" value="{{Id}}" {{isChecked ../story.Categories Id}} />
+                {{Name}}
+            </label>
+            {{/each}}
+        </div>
+
+        <div class="categorias">
+            <h3>Grados</h3>
+            {{#each allGrades}}
+            <label for="{{Name}}">
+                <input id="{{Name}}" name="grade" type="checkbox" value="{{Id}}" {{isChecked ../story.Grades Id}} />
+                {{Name}}
+            </label>
+            {{/each}}
+        </div>
+
+        <div class="categorias">
+            <h3>Intereses</h3>
+            {{#each allInterests}}
+            <label for="{{Name}}">
+                <input id="{{Name}}" name="interest" type="checkbox" value="{{Id}}" {{isChecked ../story.Interests Id}} />
+                {{Name}}
+            </label>
+            {{/each}}
+        </div>
+
+        <div>
+            <input id="submit-details" type="submit" value="Guardar" />
+        </div>
+    </form>
+</script>
+
+<script id="template-selector-content" type="text/x-handlebars-template">
+    {{#each pageTypes}}
+    <tr>
+        {{#each this}}
+        <td data-id="{{ this.id }}"><a href="#"><img src="{{this.imagePath}}" alt="{{this.description}}"></a></td>
+        {{/each}}
+    </tr>
+    {{/each}}
+</script>
+
+<script id="image-template" type="text/x-handlebars">
+
+    <div>
+        <div class="delete"></div>
+        <img src="{{image.imagePath}}" />
+    </div>
+
+</script>
+
+<script id="image-category-template" type="text/x-handlebars">
+    <li>
+        <a href="#">
+            {{category.Name}}
+        </a>
+    </li>
+</script>
+
+

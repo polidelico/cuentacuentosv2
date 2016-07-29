@@ -1,0 +1,30 @@
+﻿<div class="header_paginas">
+    <div class="wp">
+        <a href="@Url.Action("Index", "Home")"><img src="~/content/img/logo.png" class="logo" width="300" /></a>
+
+        <nav>
+            <ul>
+                <li>
+                    <a id="import-pdf" href="#import-pdf-modal">
+                        <i class="fa fa-file-pdf-o"></i>
+                        PDF
+                    </a>
+                </li>
+                <li>
+                    <a id="save-story" href="#story-details-modal" class="fancybox-save-diaglog">
+                        <img src="~/content/img/ico_guardar.png" />
+                        Guardar
+                    </a>
+                </li>
+                @*<li>
+                <a href="#"><img src="~/content/img/ico_ayuda.png" />Ayuda</a>
+            </li>*@
+                <li>
+                    <a href="@Url.Action("Index", "Account")"><img src="~/content/img/ico_salir.png" />Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

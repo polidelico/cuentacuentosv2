@@ -1,0 +1,92 @@
+﻿@using Cuentos.Lib.Helpers
+@using Cuentos.Lib
+@model Story
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal fill-up validatable" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="padded">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Name)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Name)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Grades, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @foreach (var grade in ViewBag.Grades)
+                {
+                    <input type="checkbox" value="@grade.Id" name="selectedGrades" id="grade-@grade.Id"
+                        @(Model.Grades.Where(g => g.Id == grade.Id).Count() > 0 ? "checked" : "") />
+                    <label for="grade-@grade.Id">@grade.Name</label>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Categories, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <input type="checkbox" value="@category.Id" name="selectedCategories" id="category-@category.Id"
+                        @(Model.Categories.Where(c => c.Id == category.Id).Count() > 0 ? "checked" : "") />
+                    <label for="category-@category.Id">@category.Name</label>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Interests, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @foreach (var interest in ViewBag.Interests)
+                {
+                    <input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id"
+                           @(Model.Interests.Where(c => c.Id == interest.Id).Count() > 0 ? "checked" : "") />
+                    <label for="interest-@interest.Id">@interest.Name</label>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Summary, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.TextAreaFor(model => model.Summary)
+                <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.Summary)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownListFor(model => model.Status, (List<SelectListItem>)ViewBag.StatusDDL)
+            </div>
+        </div>
+
+        @{ var image = Model.getImagesByTarget(ImageTarget.MAIN).First(); }
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Foto del cuento</label>
+            <div class="col-lg-10">
+                @Html.ImageLabel("Subir imagen",
+                    image.Dimensions.Width,
+                    image.Dimensions.Height,
+                    @Html.Partial("_SimpleUploader", Model, new ViewDataDictionary() {
+                        { "IsNewUpload", image.Size == 0},
+                        { "ImageUrl", @Href(image.ImagePath) },
+                        { "ExtraClasses", "" },
+                        { "DataName", "mainImage" } }).ToString())
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-blue">Guardar cambios</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Stories")">Cancelar</a>
+    </div>
+}

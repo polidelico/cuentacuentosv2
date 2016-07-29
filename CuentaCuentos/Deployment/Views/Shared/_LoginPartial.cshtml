@@ -1,0 +1,23 @@
+﻿@if (Request.IsAuthenticated) {
+    <div class="buttons">
+        <a href="@Url.RouteUrl("MiCuenta")" class="blue login-btn"> @ViewBag.LoggedUser.UserName </a>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="yellow">Log Out</a>
+        }
+    </div>
+
+}
+else
+{
+    <div class="buttons">
+        <a href="@Url.RouteUrl("LoginMiCuenta")" class="blue">Mi Cuenta</a>
+        <a href="@Url.RouteUrl("RegistraMiCuenta")" class="yellow">Registrate Aquí</a>
+    </div>
+}
+
+
+
+
+

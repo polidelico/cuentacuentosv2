@@ -1,0 +1,101 @@
+﻿
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div style="padding:8px;" class="box-header">
+                <input style="width:250px;" placeholder="Nombre, Usuario o Escuela" id="searchUser2" type="text" />
+            </div>
+            <div class="box-content">
+                <div id="userslist2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var gridElement = $("#userslist2");
+
+    function showLoading(e) {
+        kendo.ui.progress(gridElement, true);
+    }
+
+    function restoreSelection(e) {
+        kendo.ui.progress(gridElement, false);
+    }
+
+
+    $("#userslist2").kendoGrid({
+        dataSource: {
+            requestStart: showLoading,
+            transport: {
+                read: {
+                    url: "/Admin/Approvals/GetUsersForApproval",
+                }
+            },
+            pageSize: 15,
+        },
+
+        groupable: false,
+        sortable: true,
+        pageable: { refresh: true, pageSizes: true, },
+        dataBound: restoreSelection,
+        columns: [{
+            field: "Name",
+            title: "Nombre Completo",
+        }, {
+            field: "UserName",
+            title: "Nombre de Usuario",
+        }, {
+            field: "UserRole",
+            title: "Rol",
+        }, {
+            width: "300px",
+            field: "SchoolName",
+            title: "Escuela",
+        }, {
+            field: "UserDateCreated",
+            title: "Creado",
+            template: "#= kendo.toString(new Date(parseInt(UserDateCreated.substr(6))),'MM/dd/yyyy hh:mm tt')#"
+        }, {
+            title: "Acciones",
+            template: "<a id=\"aprobadobtn2#: UserName #\" style=\"cursor:default; display:none\" class=\"btn btn-xs btn-success\"> Aprobado </a> <a id=\"aprobadononebtn2#: UserName #\" style=\"cursor:pointer\" onclick=\"AproveUser('#: UserName #')\" class=\"btn btn-xs btn-primary\" target=\"_blank\"> Aprobar </a>"
+        }],
+
+        editable: false,
+    });
+
+
+    $("#searchUser2").keyup(function () {
+        var val = $('#searchUser2').val();
+        $("#userslist2").data("kendoGrid").dataSource.filter({
+            logic: "or",
+            filters: [
+                {
+                    field: "Name",
+                    operator: "contains",
+                    value: val
+                }, {
+                    field: "SchoolName",
+                    operator: "contains",
+                    value: val
+                }, {
+                    field: "UserName",
+                    operator: "contains",
+                    value: val
+                },
+            ]
+        });
+    });
+
+    function AproveUser(user) {
+        $.post("/Admin/Users/Approve/", {
+            username: user
+        }).done(function (data) {
+            $('#aprobadononebtn2' + user).css("display", "none");
+            $('#aprobadobtn2' + user).css("display", "initial");
+        }).fail(function () {
+            alert("error");
+        });
+    }
+
+</script>

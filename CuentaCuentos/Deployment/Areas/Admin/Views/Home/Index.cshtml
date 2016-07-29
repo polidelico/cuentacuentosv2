@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- find me in partials/action_nav_normal_one_row -->
+<!--big normal buttons-->
+<div class="action-nav-normal action-nav-line">
+
+<div class="row action-nav-row">
+
+    <div class="col-sm-2 action-nav-button">
+        <a href="@Url.Action("Index","Contacts")" title="Mensajes">
+            <i class="icon-envelope-alt"></i>
+            <span>Mensajes</span>
+        </a>
+        <span class="label label-black">@ViewBag.ContactsBatch</span>
+    </div>
+
+
+    <div class="col-sm-2 action-nav-button">
+        <a href="@Url.Action("Index", "Approvals")#Usuarios" title="Usuarios para aprobación">
+            <i class="icon-user"></i>
+            <span>Usuarios para aprobación</span>
+        </a>
+    <span class="label label-black">@ViewBag.UsersBatch</span>
+    </div>
+
+    <div class="col-sm-2 action-nav-button">
+        <a href="@Url.Action("Index", "Approvals")#Cuentos" title="Cuentos para aprobación">
+            <i class="icon-book"></i>
+            <span>Cuentos para aprobación</span>
+        </a>
+        <span class="label label-black">@ViewBag.StoriesBatch</span>
+    </div>
+
+    <div class="col-sm-2 action-nav-button">
+        <a href="@Url.Action("Index", "Approvals")#Comentarios" title="Comentarios para aprobación">
+            <i class="icon-comments-alt"></i>
+            <span>Comentarios para aprobación</span>
+        </a>
+        <span class="label label-black">@ViewBag.CommentsBatch</span>
+    </div>
+
+</div>
+
+</div>
+<hr class="divider">
+
+
+
+<div style="height: 150px;"></div>

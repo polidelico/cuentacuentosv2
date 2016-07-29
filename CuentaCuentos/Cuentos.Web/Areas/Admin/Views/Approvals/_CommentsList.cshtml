@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Comment>
+@using Cuentos.Lib
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div style="padding:8px;" class="box-header">
+                <input style="width:250px;" placeholder="Nombre del Cuento" id="searchcomments2" type="text" />
+            </div>
+            <div class="box-content">
+                <div id="comments2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $("#comments2").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: "/Admin/Approvals/GetCommentsForApproval",
+                }
+            },
+            pageSize: 15,
+        },
+
+        groupable: false,
+        sortable: true,
+        pageable: { refresh: true, pageSizes: true, },
+        columns: [{
+            field: "StoryName",
+            title: "Nombre del Cuento",
+        }, {
+            field: "SchoolName",
+            title: "Escuela",
+        }, {
+            field: "UserName",
+            title: "Usuario",
+        }, {
+            field: "Comment",
+            title: "Comentario",
+        }, {
+            field: "CreatedDate",
+            title: "Recibido",
+            template: "#= kendo.toString(new Date(parseInt(CreatedDate.substr(6))),'MM/dd/yyyy')#"
+        }, {
+            title: "Acciones",
+            template: "<a id=\"aprobadobtn#: CommentID #\" style=\"cursor:default; display:none\" class=\"btn btn-xs btn-success\"> Aprobado </a> <a id=\"aprobadononebtn#: CommentID #\" style=\"cursor:pointer\" onclick=\"AproveComment(#: CommentID #)\" class=\"btn btn-xs btn-primary\" target=\"_blank\"> Aprobar </a> <a class=\"btn btn-xs btn-default\" href=\"/mis-cuentos/#: StoryID #\" target=\"_blank\">Ver cuento</a>"
+        }],
+
+        editable: false,
+    });
+
+
+    $("#searchcomments2").keyup(function () {
+        var val = $('#searchcomments2').val();
+        $("#comments2").data("kendoGrid").dataSource.filter({
+            logic: "or",
+            filters: [
+                {
+                    field: "StoryName",
+                    operator: "contains",
+                    value: val
+                },
+            ]
+        });
+    });
+
+    function AproveComment(commentid) {
+        $.post("/Admin/Comments/Approve/", {
+            Id: commentid
+        }).done(function (data) {
+            $('#aprobadononebtn' + commentid).css("display", "none");
+            $('#aprobadobtn' + commentid).css("display", "initial");
+        });
+    }
+</script>
+

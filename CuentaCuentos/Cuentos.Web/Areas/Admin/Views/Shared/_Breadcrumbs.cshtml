@@ -1,0 +1,14 @@
+﻿@{
+    List<KeyValuePair<String, String>> breadcrumbs = !Object.Equals(null, ViewBag.Breadcrumbs) ? ViewBag.Breadcrumbs : new List<KeyValuePair<String, String>>();
+}
+<div id="breadcrumbs">
+    @foreach (KeyValuePair<string, string> item in breadcrumbs)
+    {
+        <div class="breadcrumb-button @(breadcrumbs.IndexOf(item) == breadcrumbs.Count-1 ? "blue" : "")">
+            <a href="@item.Key"><span class="breadcrumb-label">
+                @item.Value
+            </span></a>
+            <span class="breadcrumb-arrow"><span></span></span>
+        </div>
+    }
+</div>

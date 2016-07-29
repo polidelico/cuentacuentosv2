@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Crea tu cuento";
+}
+<div class="content crea">
+    <div class="section1">
+        <div class="wp">
+            <h1>¡Crea tu Cuento y utiliza la escritura creativa!</h1>
+            <h2> </h2>
+            <div class="boxes">
+                <div class="box">
+                    <img src="~/Content/img/basura/crear1.jpg" />
+                    <p>Puedes buscar, inventar, usar palabras y jugar con ellas. Explora con el lenguaje. Asocia las palabras, los conceptos las ideas e imágenes.<br /></p>
+                </div>
+                <div class="box">
+                    <img src="~/Content/img/basura/crear2.jpg" />
+                    <p>Tienes hasta seis tipos de plantillas para seleccionar y contar tu cuento según prefieras.<br /><br /></p>
+                </div>
+                <div class="box">
+                    <img src="~/Content/img/basura/crear3.jpg" />
+                    <p>¡Selecciona las imágenes o puedes subir tus fotos!<br /><br /></p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="tools">
+                <a href="@Url.RouteUrl("CrearCuento")" class="btn_blue">Comienza aquí</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section2">
+        <div class="wp">
+            <div class="panel-section panel-left">
+                <img src="~/Content/img/basura/panel1.jpg">
+                <div><img src="~/Content/img/arrow_h3.jpg"></div>
+                <h1>Educadores</h1>
+                <p>Como educador debes inspirar y motivar a tus estudiantes a crear historias para que su creatividad tome vuelo.</p>
+                <a href="@Url.RouteUrl("Educadores")" class="btn_blue">Más información</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section3">
+        <div class="wp">
+            <div class="panel-section panel-right">
+                <img src="~/Content/img/basura/panel2.jpg">
+                <div><img src="~/Content/img/arrow_h3.jpg"></div>
+                <h1>Padres</h1>
+                <p>Padres fomenten la creatividad de sus hijos para que tengan un futuro brillante.</p>
+                <a href="@Url.RouteUrl("Padres")" class="btn_blue">Más información</a>
+            </div>
+        </div>
+    </div>
+</div>

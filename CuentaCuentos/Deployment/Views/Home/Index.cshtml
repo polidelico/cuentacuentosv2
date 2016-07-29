@@ -1,0 +1,82 @@
+﻿@model List<Cuentos.Models.Story>
+@using Cuentos.Lib
+@using Cuentos.Lib.Helpers
+@{
+    ViewBag.Title = "Home";
+    ViewBag.BodyId = "home";
+}
+
+
+<div class="content">
+    <div class="wp index">
+        <div class="col-izq">
+            <h1>
+                <div class="bold">Nace en ti el deseo de expresar lo que ves, <br /> que sientes y lo que piensas...</div><br />
+                ¡Libera tu imaginación y atrévete a soñar! Imagina tu cuento, constrúyelo y comparte con otros... Es tan fácil como:
+            </h1>
+
+            <div class="numeros">
+                <div class="num_1">
+                    <img src="~/Content/img/num_1.png" />
+                    <h2>Piensa</h2>
+                    <p>Inspírate en hechos reales o ficticios de tus personajes, lugares, animales, vivencias y ocurrencias.</p>
+                </div>
+                <div class="num_1">
+                    <img src="~/Content/img/num_2.png" />
+                    <h2>Construye</h2>
+                    <p>Es el momento de crear, déjate sentir, ahora vas a poder comunicarte con palabras e imágenes. Da vida a tus personajes, maravíllate realizando tu cuento!</p>
+                </div>
+                <div class="num_1">
+                    <img src="~/Content/img/num_3.png" />
+                    <h2>Comparte</h2>
+                    <p>Expresa y muestra a otros tu obra maestra; motiva a otros estudiantes a publicar sus cuentos, deja tu legado a las generaciones futuras. Opina y evalúa acerca de lo que otros compartieron.</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">Crea tu cuento aquí</a>
+        </div>
+
+        <div class="col-der">
+            <div class="cuentos_destacados">Cuentos <span class="bold">Destacados</span></div>
+            @foreach (var featured in Model.OrderBy(x => Guid.NewGuid()).Take(2))
+            {
+               
+                <div class="box cuento">
+
+                    <div class="main-image">
+                        <div class="center-outer">
+                            <div class="shade"></div>
+                            <div class="center-inner">
+                                <figure>
+                                    <img src="@featured.CoverImage" alt="@featured.Name" />
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    @*<img src="@featured.CoverImage" alt="@featured.Name" />*@
+
+                    <div class="text">
+                        
+                        <p>@TextHelpers.Truncate(featured.Summary,255)</p>
+                        
+                        <div class="btn_naranja btn_leer"><a href="@Url.RouteUrl("VerCuento", new { id = featured.Id })">Leer este cuento</a></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="text">
+                        <h3>@featured.Name</h3>
+                        <span>Por: @featured.User.Name</span>
+                    </div>
+                    
+                </div>
+            }
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var homeDivisor = 2.08;
+    </script>
+    <script src="~/Scripts/fixImagesSize.js"></script>
+}

@@ -1,0 +1,289 @@
+.miscuentos{}
+	.miscuentos .tabpanel{
+		background: white;
+		position: relative;
+	}
+	.miscuentos .tabpanel .nav-tabs{
+		background: #33AEAE;
+		padding-top: 6px;
+		min-height: 48px;
+	}
+		.miscuentos .tabpanel a.btn_naranja{
+			position: absolute;
+			right: 0;
+			display: inline-block;
+			font-size: 14px;
+			padding: 0;
+			width: 300px;
+			line-height: 51px;
+			border-radius: 0px;
+		}
+			.miscuentos .tabpanel a.btn_naranja span{
+				background: white;
+				display: block;
+				width: 11px;
+				height: 60px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				margin-left: -9px;
+			}
+		.miscuentos .tabpanel .nav-tabs ul li{}
+			.miscuentos .tabpanel .nav-tabs>li>a{
+				border: none;
+				border-radius: 0;
+				font-size: 0.813rem;
+				color: white;
+				font-family: 'Open Sans', sans-serif;
+				padding: 0 3.750rem;
+				line-height: 50px;
+			}
+			.miscuentos .tabpanel .nav-tabs>li.active>a{
+				color: #666;
+			}
+	.miscuentos .tabpanel h3{
+		font-size: 1.250rem;
+		line-height: 80px;
+		margin: 0;
+		padding: 0;
+		padding-left: 20px;
+		color: #666;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		border-bottom: solid #33AEAE 3px;
+		position: relative;
+	}
+		.miscuentos .tabpanel h3 span{
+			display: block;
+			position: absolute;
+			background: url('../img/arrow_h3.jpg') no-repeat 0px 0px;
+			width: 93px;
+			height: 13px;
+			bottom: -16px;
+			right: 6.625rem;
+		}
+	.miscuentos .tabpanel .cuento{
+		width: 305px;
+		float: left;
+		margin: 0 6px;
+		margin-top: 1.125rem;
+	}
+		.miscuentos .tabpanel .cuento:first-child,
+		.miscuentos .tabpanel .cuento:nth-child(4n+5){
+			margin-left: 5px;
+		}
+		.miscuentos .tabpanel .cuento:nth-child(4n+4){
+			margin-right: 5px;
+		}
+		.miscuentos .tabpanel .cuento .top{
+			border: #33AEAE solid 1px;
+			border-bottom: 0;
+			padding-bottom: 0.875rem;
+		}
+		.miscuentos .tabpanel .cuento .top h2,
+		.miscuentos .tabpanel .cuento .top p{
+			text-align: center;
+		}
+		.miscuentos .tabpanel .cuento .top h2{
+			color: #33ADAD;
+			font-size: 1.250rem;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 800;
+			margin-bottom: 0.25rem;
+		}
+		.miscuentos .tabpanel .cuento .top p{
+			font-size: 0.750em;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			margin: 0;
+		}
+		.miscuentos .tabpanel .cuento ul{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			border-top: #DDD solid 1px;
+		}
+			.miscuentos .tabpanel .cuento ul li{
+				font-size: 0.750rem;
+				display: inline-block;
+				text-align: center;
+				width: 33.333333333%;
+				border-left: solid 1px #DDD; 
+			}
+			.miscuentos .tabpanel .cuento ul li:last-child,
+			.miscuentos .tabpanel .cuento ul li:first-child{
+				border: none;
+			}
+			.miscuentos .tabpanel .cuento ul li.publish{
+				display: block;
+				width: 100%;
+				border-top: solid 1px #DDD; 
+				border-right: solid 1px white;
+				position: relative;
+			}
+			.miscuentos .tabpanel .cuento ul li a{
+				background: url('../img/bg_btn_cto.jpg') repeat-x;
+				display: block;
+				padding: 0.58rem;
+				color: #444;
+			}
+			.miscuentos .tabpanel .cuento ul li.publish a{
+				background: #33AEAE;
+				padding-top: 0.68rem;
+				color: white;
+			}
+				.miscuentos .tabpanel .cuento ul li.publish a span{
+					display: block;
+					width: 20px;
+					height: 20px;
+					position: absolute;
+					right: 1rem;
+					top: 50%;
+					margin-top: -10px;
+					border: solid 1px white;
+					background: rgb(255,255,255); /* Old browsers */
+					background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(109,217,0,1) 100%); /* FF3.6+ */
+					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(109,217,0,1))); /* Chrome,Safari4+ */
+					background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(109,217,0,1) 100%); /* Chrome10+,Safari5.1+ */
+					background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(109,217,0,1) 100%); /* Opera 11.10+ */
+					background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(109,217,0,1) 100%); /* IE10+ */
+					background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(109,217,0,1) 100%); /* W3C */
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#6dd900',GradientType=0 ); /* IE6-9 */
+				}
+				.miscuentos .tabpanel .ispublish .cuento ul li.publish a span{
+					background: rgb(255,255,255); /* Old browsers */
+					background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,0,0,1) 100%); /* FF3.6+ */
+					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,0,0,1))); /* Chrome,Safari4+ */
+					background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+					background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,0,0,1) 100%); /* Opera 11.10+ */
+					background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,0,0,1) 100%); /* IE10+ */
+					background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,0,0,1) 100%); /* W3C */
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ff0000',GradientType=0 ); /* IE6-9 */
+				}
+
+		.miscuentos .tabpanel #ajustes form{
+			padding: 1.750rem;
+			padding-bottom: 3.750rem;
+			padding-right: 0;
+		}
+			.miscuentos .tabpanel #ajustes form fieldset{
+				display: block;
+				width: 50%;
+				float: left;
+			}
+			.miscuentos .tabpanel #ajustes form fieldset:first-child{
+				padding-right: 1rem;
+			}
+			.miscuentos .tabpanel #ajustes form fieldset:last-child{
+				padding-left: 1rem;
+			}
+			.miscuentos .tabpanel #ajustes form div label,
+			.miscuentos .tabpanel #ajustes form div{
+				display: block;
+				width: 100%;
+			}
+			.miscuentos .tabpanel #ajustes form div.middle{
+				width: 50%;
+				float:left;
+			}
+				.miscuentos .tabpanel #ajustes form div.middle.pr{
+					padding-right: 1rem;
+				}
+				.miscuentos .tabpanel #ajustes form div.middle.pl{
+					padding-left: 1rem;
+				}
+			.miscuentos .tabpanel #ajustes form div{
+				margin-bottom: 1rem;
+			}
+			.miscuentos .tabpanel #ajustes form div label{
+				font-size: 0.813rem;
+				text-transform: uppercase;
+				color: #33ACAC;
+				font-family: 'Open Sans', sans-serif;
+				font-weight: 400;
+			}
+			.miscuentos .tabpanel #ajustes form select,
+			.miscuentos .tabpanel #ajustes form input{
+				border: solid 1px #A9A9A9;
+				/*width: 100%;*/
+				padding: 0.85rem;
+			}
+				.miscuentos .tabpanel #ajustes form select,
+				.miscuentos .tabpanel #ajustes form input[type="text"]{
+					width: 100%;
+					color: #666666;
+					font-family: 'Open Sans';
+					font-size: 13px;
+				}
+				.miscuentos .tabpanel #ajustes form select{
+					padding: 0.78rem;
+				}
+				.miscuentos .tabpanel #ajustes .intereses{
+					background: #F8F8F8;
+					border-top: #ADDFDF solid 3px;
+					border-bottom: #ADDFDF solid 3px;
+					padding: 22px 22px;
+					margin-top: 23px;
+				}
+					.miscuentos .tabpanel #ajustes .intereses h4{
+						margin: 0;
+						color: #33ACAC;
+						font-size: 0.813rem;
+						font-family: 'Open Sans', sans-serif;
+						font-weight: 400;
+						margin-bottom: 1.375rem;
+					}
+					.miscuentos .tabpanel #ajustes .intereses label{
+						color: #666;
+						width: 49%;
+						display: inline-block;
+						font-family: 'Open Sans';
+						font-size: 13px;
+						text-transform: none;
+						margin-bottom: 2px;
+					}
+					.miscuentos .tabpanel #ajustes .intereses label input{
+						position: relative;
+						top: 2px;
+						right: 5px;
+					}
+					.miscuentos .tabpanel #ajustes .avatar, .miscuentos .tabpanel #ajustes .intereses{
+						margin-bottom: 21px;
+					}
+					.miscuentos .tabpanel #ajustes .avatar figure{
+						float: left;
+					}
+						.miscuentos .tabpanel #ajustes .avatar figure img{
+							margin-right: 1rem;
+						}
+						.miscuentos .tabpanel #ajustes .avatar a{
+							color: #33ACAC;
+							font-size: 0.813rem;
+							font-family: 'Open Sans', sans-serif;
+							font-weight: 400;
+							position: relative;
+							top: 60px;
+							text-decoration: underline;
+						}
+					.miscuentos .tabpanel #ajustes input[type="submit"]{
+						font-size: 14px;
+						font-family: 'Open Sans', sans-serif;
+						font-weight: 800;
+						border:none;
+						border-bottom: solid 4px #C9A71C;
+						line-height: 37px;
+						width: 264px;
+						text-align: center;
+						padding: 0;
+					}
+					
+					.miscuentos .tabpanel #ajustes input[type="submit"]:hover{
+						color: #23527c;
+					}
+						
+			
+	.miscuentos .tabpanel .ispublish{
+		padding-bottom: 2.063rem;
+	}
+		
+			

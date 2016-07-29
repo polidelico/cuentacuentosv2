@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title | Cuenta Cuentos</title>
+    <meta name="description" content="">
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @*@Styles.Render("~/Content/css")*@
+
+    <link href="~/Content/css/bootstrap.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/normalize.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/main.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/main_rodri.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/main_micuentos.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/main_galeriacuentos.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/main_ayuda.css" rel='stylesheet' type='text/css'>
+    <link href="~/Scripts/vendor/slick/slick.css" rel='stylesheet' type='text/css'>
+    <link href="~/Scripts/vendor/sweetalert/sweet-alert.css" rel='stylesheet' type='text/css'>
+    <link href="~/Scripts/vendor/fancybox/jquery.fancybox.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/mainOverride.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+    @Scripts.Render("~/bundles/modernizr")
+
+    @RenderSection("customCss", required: false)
+</head>
+<body id=@ViewBag.BodyId>
+
+    @Html.Partial("_Flash")
+
+    @if (!IsSectionDefined("Header"))
+    {
+        @Html.Partial("_Header")
+    }
+    else
+    {
+        @RenderSection("Header", required: false)
+    }
+
+    @RenderBody()
+
+
+
+
+
+    <footer>
+        <div class="wp">
+            <p>Copyright © @DateTime.Now.Year <strong>Camera Mundi.</strong> Todos los derechos reservados.</p>
+
+            <nav>
+                <ul>
+                    @*<li><a href="@Url.RouteUrl("Ayuda")">Ayuda</a></li>*@
+                    <li><a href="@Url.RouteUrl("Terminos")">Términos de Uso</a></li>
+                    @*<li><a href="@Url.RouteUrl("Privacidad")">Política de Privacidad</a></li>*@
+                    <li><a href="@Url.RouteUrl("Contactanos")">Contáctenos</a></li>
+                </ul>
+            </nav>
+
+            <div class="clearfix"></div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryvalidate")
+    @Scripts.Render("~/bundles/publicscripts")
+
+    @*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="~/Scripts/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+
+
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/vendor/slick/slick.js"></script>
+        <script src="~/Scripts/vendor/sweetalert/sweet-alert.js"></script>
+        <script src="~/Scripts/main.js"></script>
+        <script src="~/Areas/Admin/Content/js/jquery.cookie.js"></script>
+        <script src="~/Areas/Admin/Content/js/jQuery.flashMessage.js"></script>*@
+
+
+    @RenderSection("scripts", required: false)
+    @Html.Partial("_Analytics")
+
+
+
+</body>
+</html>

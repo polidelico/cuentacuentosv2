@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Comment>
+@{
+    ViewBag.Title = "Comentarios";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("_CommentsList", Model)
+
+
+@Html.Partial("_DeleteConfirm")
+@Html.Partial("_ApproveConfirm")

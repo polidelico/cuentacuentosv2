@@ -1,0 +1,39 @@
+﻿@*@model IEnumerable<Story>*@
+@model PagedList.IPagedList<Story>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Cuentos";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        @*<div class="action-nav-normal">
+
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Create")" title="Crear Usuario">
+                        <i class="icon-file-alt"></i>
+                        <span>Crear Usuario</span>
+                    </a>
+                    <span class="triangle-button red"><i class="icon-plus"></i></span>
+                </div>
+
+            </div>
+        </div>*@
+
+    </div>
+</div>
+
+@Html.Partial("_StoriesList")
+
+
+@Html.Partial("_DeleteConfirm")
+@Html.Partial("_ApproveConfirm")
+
+@section scripts {
+    <script src="~/Areas/Admin/Content/js/stories.js"></script>
+}

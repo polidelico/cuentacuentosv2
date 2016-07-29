@@ -1,0 +1,44 @@
+﻿@model Cuentos.Models.view.CreateUserModel
+@{
+    ViewBag.Title = "Editar Usuario";
+    ViewBag.TitleIcon = "edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="action-nav-normal action-nav-line">
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Stories", "Users", new { id = Model.User.UserName})" title="Cuentos" data-toggle="modal">
+                        <i class="icon-book"></i>
+                        <span>Cuentos</span>
+                    </a>
+                </div>
+                <div class="col-sm-6 action-nav-button">
+                    
+                    <a href="@Url.Action("Comments", "Users", new { id = Model.User.UserName})" title="Comentarios">
+                        <i class="icon-beaker"></i>
+                        <span>Comentarios</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <span class="title">Información del usuario</span>
+            </div>
+
+            <div class="box-content">
+                @Html.Partial("_Form")
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Areas/Admin/Content/js/vendor/ckeditor/ckeditor.js")
+}

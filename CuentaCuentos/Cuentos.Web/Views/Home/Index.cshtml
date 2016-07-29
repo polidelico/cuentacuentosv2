@@ -1,0 +1,85 @@
+﻿@model List<Cuentos.Models.Story>
+@using Cuentos.Lib
+@using Cuentos.Lib.Helpers
+@{
+    ViewBag.Title = "Home";
+    ViewBag.BodyId = "home";
+}
+
+<div class="content">
+    <div class="wp index">
+        <div class="col-izq">
+            <h1>
+                <div class="bold">Nace en ti el deseo de expresar lo que ves, <br /> que sientes y lo que piensas...</div><br />
+                ¡Libera tu imaginación y atrévete a soñar! Imagina tu cuento, constrúyelo y comparte con otros... Es tan fácil como:
+            </h1>
+            <div class="numeros">
+                <div class="num_1">
+                    <img src="~/Content/img/num_1.png" />
+                    <h2>Piensa</h2>
+                    <p>Inspírate en hechos reales o ficticios de tus personajes, lugares, animales, vivencias y ocurrencias.</p>
+                </div>
+                <div class="num_1">
+                    <img src="~/Content/img/num_2.png" />
+                    <h2>Construye</h2>
+                    <p>Es el momento de crear, déjate sentir, ahora vas a poder comunicarte con palabras e imágenes. Da vida a tus personajes, maravíllate realizando tu cuento!</p>
+                </div>
+                <div class="num_1">
+                    <img src="~/Content/img/num_3.png" />
+                    <h2>Comparte</h2>
+                    <p>Expresa y muestra a otros tu obra maestra; motiva a otros estudiantes a publicar sus cuentos, deja tu legado a las generaciones futuras. Opina y evalúa acerca de lo que otros compartieron.</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">Crea tu cuento aquí</a>
+        </div>
+        <div class="col-der">
+            <div class="cuentos_destacados">Cuentos <span class="bold">Destacados</span></div>
+            <div style="margin-top:20px">
+                <ul class="bxslider">
+                    @foreach (var featured in Model.OrderBy(x => Guid.NewGuid()).Take(10)) {
+
+                        <li>
+                            <div style="height:180px; margin-left:10px">
+                                <div style="float:left; width:190px">
+                                    <img src="@featured.CoverImage" alt="@featured.Name">
+                                </div>
+                                <div style="float:left; margin-left:15px; width:235px; margin-top:10px">
+                                    <div style="font-size:16px; font-weight:bold; color:#33adad">@featured.Name</div>
+                                    <div style="margin-top:5px">Por: <strong>@featured.User.Name</strong></div>
+                                    <div style="margin-top:5px"><div class="btn_naranja btn_leer"><a href="@Url.RouteUrl("VerCuento", new { id = featured.Id })">Leer este cuento</a></div></div>
+                                </div>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+    @section scripts {
+
+        <!-- bxSlider Javascript file -->
+        <script src="~/Scripts/vendor/jquery.bxslider/jquery.bxslider.min.js"></script>
+        <!-- bxSlider CSS file -->
+        <link href="~/Scripts/vendor/jquery.bxslider/jquery.bxslider.css" rel="stylesheet" />
+
+        <script>
+
+            $(document).ready(function () {
+                $('.bxslider').bxSlider({
+                    adaptiveHeight: true,
+                    nextSelector: '#slider-next',
+                    prevSelector: '#slider-prev',
+                    nextText: 'Onward →',
+                    prevText: '← Go back'
+                });
+            });
+
+            var homeDivisor = 2.08;
+        </script>
+        <script src="~/Scripts/fixImagesSize.js"></script>
+    }

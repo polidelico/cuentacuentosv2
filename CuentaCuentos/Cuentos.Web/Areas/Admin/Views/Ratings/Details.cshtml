@@ -1,0 +1,9 @@
+﻿@model Cuentos.Models.Rating
+@{
+    ViewBag.Title = "Puntuaciones";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@Html.Partial("_RatingsList", Model.Ratings)

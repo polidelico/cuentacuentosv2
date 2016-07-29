@@ -1,0 +1,164 @@
+@{
+    var user = (User)ViewBag.LoggedUser;
+    var schoolsUrl = ViewBag.IsSuperAdmin ? Url.Action("Index", "Schools") : Url.Action("Edit", "Schools", new { id = user.SchoolId });
+}
+<div class="sidebar-background">
+    <div class="primary-sidebar-background"></div>
+</div>
+
+<div class="primary-sidebar">
+
+    <!-- Main nav -->
+    <ul class="nav navbar-collapse collapse navbar-collapse-primary">
+        
+        <li class="dark-nav ">
+            <span class="glow"></span>
+            <a href="@Url.Action("Index", "Approvals")">
+                <i class="fa-check-square-o icon-2x"></i>
+                <span>Aprobaciones</span>
+            </a>
+        </li>
+       
+        <li class="dark-nav ">
+            <span class="glow"></span>
+            <a href="@Url.Action("Index", "Contacts")">
+                <i class="icon-envelope-alt icon-2x"></i>
+                <span>Mensajería</span>
+            </a>
+        </li>
+            
+        <li class="dark-nav ">
+            <span class="glow"></span>
+            <a href="@schoolsUrl">
+                <i class="fa-institution icon-2x"></i>
+                <span>
+                    @(ViewBag.IsSuperAdmin ? "Escuelas" : "Escuela")
+                </span>
+            </a>
+        </li>
+
+        <li class="dark-nav ">
+            <span class="glow"></span>
+            <a href="@Url.Action("Index", "Featured")">
+                <i class="fa-thumb-tack icon-2x"></i>
+                <span>Destacados</span>
+            </a>
+        </li>
+       
+        <li class="dark-nav ">
+            <span class="glow"></span>
+            <a href="@Url.Action("Index", "Users")">
+                <i class="icon-user icon-2x"></i>
+                <span>Usuarios</span>
+            </a>
+        </li>
+
+        <li class="dark-nav ">
+            <span class="glow"></span>
+            <a href="@Url.Action("Index", "Stories")">
+                <i class="icon-book icon-2x"></i>
+                <span>Cuentos</span>
+            </a>
+        </li>
+
+        @if (ViewBag.IsSuperAdmin)
+        {
+            <li class="dark-nav ">
+                <span class="glow"></span>
+                <a href="@Url.Action("Index", "Interests")">
+                    <i class="fa-bicycle icon-2x"></i>
+                    <span>Intereses</span>
+                </a>
+            </li>
+        }
+
+        @if (ViewBag.IsSuperAdmin)
+        {
+            <li class="dark-nav ">
+                <span class="glow"></span>
+                <a href="@Url.Action("Index", "Categories")">
+                    <i class="fa-bicycle icon-2x"></i>
+                    <span>Categorías</span>
+                </a>
+            </li>
+        }    
+
+        @if (ViewBag.IsSuperAdmin)
+        {
+            <li class="dark-nav ">
+                <span class="glow"></span>
+                <a href="#galleriesOptions" class="accordion-toggle collapsed" data-toggle="collapse">
+                    <i class="icon-picture icon-2x"></i>
+                    <span>Galerías</span>
+                    <i class="icon-caret-down"></i>
+                </a>
+
+                <ul id="galleriesOptions" class="collapse">
+
+                    <li class="">
+                        <a href="@Url.Action("Index", "BuilderGalleries")">
+                            <i class="icon-picture"></i> Manejar Galerías
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="@Url.Action("Index", "ImageCategories")">
+                            <i class="icon-tags"></i> Manejar Categorias
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+        }   
+
+        @if (ViewBag.IsSuperAdmin)
+        {
+            <li class="dark-nav ">
+                <span class="glow"></span>
+                <a href="@Url.Action("Index", "PageTypes")">
+                    <i class="icon-file-alt icon-2x"></i>
+                    <span>Templates</span>
+                </a>
+            </li>
+            <li class="dark-nav ">
+                <span class="glow"></span>
+                <a href="@Url.Action("ImportUsers", "Utilities")">
+                    <i class="icon-download-alt icon-2x"></i>
+                    <span>Importar Usuarios</span>
+                </a>
+            </li>
+        }
+    
+        
+
+    </ul>
+
+    <div class="hide-dropdown-sidebar hidden-tablet hidden-phone">
+
+        <hr class="divider" style="margin-top: 60px">
+
+        <div class="sparkline-box side">
+
+            <div class="sparkline-row">
+                <h4 class="gray"><span>Cuentos</span> @ViewBag.StoriesCounterBatch</h4>
+                <div class="sparkline big" data-color="gray"><!--4,12,3,11,28,4,21,4,19,14,24,20--></div>
+            </div>
+
+            <hr class="divider">
+            <div class="sparkline-row">
+                <h4 class="dark-green"><span>Escuelas</span> @ViewBag.SchoolsCounterBatch</h4>
+                <div class="sparkline big" data-color="darkGreen"><!--24,22,11,4,18,8,8,20,23,29,4,19--></div>
+            </div>
+
+            <hr class="divider">
+            <div class="sparkline-row">
+                <h4 class="blue"><span>Usuarios</span> @ViewBag.UsersCounterBatch</h4>
+                <div class="sparkline big" data-color="blue"><!--14,26,4,17,29,27,27,17,14,24,4,23--></div>
+            </div>
+
+            <hr class="divider">
+        </div>
+    </div>
+
+</div>
+

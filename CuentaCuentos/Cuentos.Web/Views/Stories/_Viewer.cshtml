@@ -1,0 +1,48 @@
+﻿<script id="pages-designer-page" type="text/x-handlebars">
+
+    {{#each pages}}
+
+    {{#everyOther @@index  2 }}
+    <div class="col page {{Type}}">
+        <div class="center-outer image">
+            <div class="center-inner">
+                <div class="clipping">
+                    {{#if ImageUrl}}
+                    <img class="" src="{{ImageUrl}}" />
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        {{#if Text}}
+        <div class="cel text">
+            {{{Text}}}
+        </div>
+        {{/if}}
+    </div>
+    </li>
+    {{else}}
+    <li>
+        <div class="col page {{Type}}">
+            <div class="center-outer image">
+                <div class="center-inner">
+                    <div class="clipping">
+                        {{#if ImageUrl}}
+                        <img class="" src="{{ImageUrl}}" />
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+
+            {{#if Text}}
+            <div class="cel text">
+                {{{Text}}}
+            </div>
+            {{/if}}
+        </div>
+
+        {{/everyOther}}
+
+        {{/each }}
+
+</script>

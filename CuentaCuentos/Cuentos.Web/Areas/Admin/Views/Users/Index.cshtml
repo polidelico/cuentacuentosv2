@@ -1,0 +1,33 @@
+﻿@* @model IEnumerable<Cuentos.Models.User> *@ 
+@model PagedList.IPagedList<Cuentos.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-3">
+        <!-- find me in partials/action_nav_normal -->
+        <!--big normal buttons-->
+        <div class="action-nav-normal">
+
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Create")" title="Crear Usuario">
+                        <i class="icon-file-alt"></i>
+                        <span>Crear Usuario</span>
+                    </a>
+                    <span class="triangle-button red"><i class="icon-plus"></i></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Html.Partial("_UsersList")

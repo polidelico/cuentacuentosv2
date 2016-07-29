@@ -1,0 +1,22 @@
+﻿@model List<Cuentos.Models.School>
+@{
+    ViewBag.Title = "Escuelas";
+}
+
+
+<div class="content info">
+    <div class="wp">
+        <h1>Escuelas</h1>
+
+        <ul style="list-style:none; ">
+            @foreach (var school in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Details", "Schools", new { id = school.Id })">@school.Name</a>
+                </li>
+            }
+
+        </ul>
+        <div style="height:100px;"></div>
+    </div>
+</div>

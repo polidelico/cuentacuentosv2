@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Comment>
+@using Cuentos.Lib
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header"><span class="title"> Comentarios </span></div>
+            <div class="box-content">
+                <!-- find me in partials/data_tables_custom -->
+
+                <div id="dataTables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th><div> Cuento </div></th>
+                                <th><div> Escuela </div></th>
+                                <th><div> Nombre de usuario </div></th>
+                                <th class="commentsText"><div> Comentario </div></th>
+                                <th class="recived-date-column"><div> Recibido </div></th>
+                                <th width="200">Opciones </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var comment in Model)
+                            {
+                                <tr id="item-@comment.Id" data-id="@comment.Id">
+                                    <td class="hidden">@comment.Id</td>
+                                    <td>
+                                        @comment.Story.Name</td>
+                                    <td>@(comment.Story.User.School != null ? comment.Story.User.School.Name : "") 
+                                    </td> 
+                                    <td>@comment.User.Name</td>                                    
+                                    <td class="confirmName commentsText">@comment.Text</td>
+                                    <td class="">@comment.CreatedAt.Value.ToString("MM/dd/yyyy")</td>
+                                    <td class="approve-col">
+                                        @if (!comment.IsApproved)
+                                        {
+                                            <a href="#confirmApprove" class="btn btn-blue approve-btn" data-toggle="modal" data-url="@Url.Action("Approve", "Comments", new { id = comment.Id })">Aprobar</a>
+                                        }
+                                        else
+                                        {
+                                            <span>Si</span>
+                                        }
+                                        <a class="btn btn-default" href="@Url.RouteUrl("VerCuento", new { id = comment.StoryId })" target="_blank"><i class="icon-cog"></i> Ver cuento</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

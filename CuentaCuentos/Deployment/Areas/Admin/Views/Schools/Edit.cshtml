@@ -1,0 +1,51 @@
+﻿@model School
+@{
+    ViewBag.Title = "Editar Escuela";
+    ViewBag.TitleIcon = "edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="action-nav-normal action-nav-line">
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Users", "Schools", new { id = Model.Id })" title="Usuarios">
+                        <i class="icon-user"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </div>
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Stories", "Schools", new { id = Model.Id })" title="Cuentos" data-toggle="modal">
+                        <i class="icon-book"></i>
+                        <span>Cuentos</span>
+                    </a>
+                </div>
+                @*<div class="col-sm-4 action-nav-button">
+                    <a href="@Url.Action("Comments", "Schools", new { id = Model.Id })" title="Colors">
+                        <i class="icon-beaker"></i>
+                        <span>Comentarios</span>
+                    </a>
+                </div>*@
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <span class="title">Información de la escuela</span>
+
+                <ul class="box-toolbar">
+                    <li class="toolbar-link">
+                        <a href="@Url.Action("Details", "Schools", new { area = "" })" target="_blank"> <i class="icon-desktop"></i> Ver página </a>
+                    </li>
+                </ul>
+                
+            </div>
+
+            <div class="box-content">
+                @Html.Partial("_Form")
+            </div>            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+.galcuentos{}
+	.galcuentos aside{
+		width: 303px;
+		float: left;
+		margin-right: 0.813rem;
+	}
+		.galcuentos aside form{
+			background: white;
+		}
+		.galcuentos aside form div{
+			padding-left:  1.250rem;
+			padding-right:  1.250rem;
+			margin-bottom: 1.563rem;
+		}
+		.galcuentos aside form h4,
+		.galcuentos aside form label{
+			display: block;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			color: #33ADAD;
+		}
+		.galcuentos aside form h4{
+			margin: 0;
+		}
+		.galcuentos aside form select,
+		.galcuentos aside form input[type="text"],
+		.galcuentos aside form input[type="search"]{
+			border: solid 1px #A9A9A9;
+			padding: 0.85rem;
+			display: block;
+			width: 100%;
+			color: #666666;
+		}
+		.galcuentos aside form div.search{
+			background: #33AEAE;
+			padding: 1.250rem;
+		}
+			.galcuentos aside form div.search input{
+				border: none;
+				width: 90%;
+				color: #666666;
+			}
+			.galcuentos aside form div.search label{
+				color: white;
+			}
+		.galcuentos aside form div.checks{}
+			.galcuentos aside form div.checks label{
+				display: block;
+				float: left;
+				width: 33%;
+				color: #666;
+			}
+			.galcuentos aside form div.checks label input{
+				position: relative;
+				top: 2px;
+			}
+		.galcuentos aside form input[type="submit"].btn_naranja{
+			font-size: 0.875rem;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 800;
+			border: none;
+			border-bottom: solid 4px #C9A71C;
+			padding-left: 4rem;
+			padding-right: 4rem;
+			padding-bottom: 0.55rem;
+			width: 100%;
+		}
+	.galcuentos section{
+		width: 936px;
+		float: left;
+	}
+		.galcuentos section .cuento{
+			width: 303px;
+			float: left;
+			background: white;
+			margin: 6px 4px;
+			margin-top: 0;
+		}
+		.galcuentos section .cuento:first-child,
+		.galcuentos section .cuento:not(.clearfix):nth-child(3n+4){
+			/*margin-left: 0;*/
+		}
+		.galcuentos section .cuento:not(.clearfix):nth-child(3n+3){
+			/*margin-right: 0;*/
+		}
+		.galcuentos section .cuento .top{
+			padding: 1.500rem;
+		}
+			.galcuentos section .cuento .top p,
+			.galcuentos section .cuento .top h2{
+				margin: 0;
+				text-align: left;
+				font-family: 'Open Sans', sans-serif;
+				font-size: 20px;
+				margin-bottom: 5px;
+				letter-spacing: 0;
+			}
+			.galcuentos section .cuento .top h2{
+				font-weight: 800;
+				color: #33ACAC;
+			}
+			.galcuentos section .cuento .top p{
+				color: #444;
+				font-size: 0.750rem;
+			}
+			
+
+	.galcuentos .navpagination{
+		text-align: center;
+	}
+	.galcuentos .pagination>li>a,
+	.galcuentos .pagination>li>span{
+		border: none;
+		background: #EFF3F6;
+		margin: 0 1px;
+		border-radius: 0;
+		color: #A5AEB7;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 800;
+	}
+	.galcuentos .pagination>li>a:hover,
+	.galcuentos .pagination>li>span:hover,
+	.galcuentos .pagination>li>a:focus,
+	.galcuentos .pagination>li>span:focus{
+		background: #239D9D;
+		color: white;
+	}
+	.galcuentos .pagination>.active>a,
+	.galcuentos .pagination>.active>span,
+	.galcuentos .pagination>.active>a:hover,
+	.galcuentos .pagination>.active>span:hover,
+	.galcuentos .pagination>.active>a:focus,
+	.galcuentos .pagination>.active>span:focus{
+		background: #239D9D;
+		color: white;
+	}

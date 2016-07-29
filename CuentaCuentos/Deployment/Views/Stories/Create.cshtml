@@ -1,0 +1,34 @@
+﻿@model Cuentos.Models.Story
+@using Cuentos.Lib
+@using Cuentos.Lib.Enums
+@{
+    ViewBag.Title = "Crear Cuento";
+    
+    //BigImage,
+    //SmallImage,
+    //TextOnly,
+    //ImageTopTextBottom,
+    //TextTopImageBottom,
+    //BigImageTextOverlayBottom
+    //http://placehold.it/300&text=EmptyImage
+}
+
+<h2>Crea Cuento</h2>
+
+@Html.Partial("_Builder")
+
+@section scripts{
+    <script>var storyId = @Model.Id;</script>
+    <script src="~/Scripts/vendor/underscore-min.js"></script>
+    <script src="~/Scripts/vendor/backbone-min.js"></script>
+    <script src="~/Scripts/vendor/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/vendor/ckeditor/adapters/jquery.js"></script>
+    <script src="~/Scripts/vendor/jquery.easyModal.js"></script>
+
+
+    <script src="~/Scripts/builder.js"></script>
+    <script src="~/Scripts/builder-models.js"></script>
+    <script src="~/Scripts/builder-collections.js"></script>
+    <script src="~/Scripts/builder-views.js"></script>
+    <script src="~/Scripts/builder-main.js"></script>
+}

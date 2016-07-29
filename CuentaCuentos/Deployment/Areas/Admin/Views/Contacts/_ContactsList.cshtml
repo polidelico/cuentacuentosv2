@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Cuentos.Models.Contact>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header"><span class="title"> Mensajes Recibidos </span></div>
+            <div class="box-content">
+                <!-- find me in partials/data_tables_custom -->
+
+                <div id="dataTables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="dTable responsive">
+                        <thead>
+                            <tr>
+                                <td class="hidden"></td>
+                                <th class="hidden"><div> From </div></th>
+                                <th class="hidden"></th>
+                                <th><div> Nombre </div></th>
+                                <th><div> Escuela </div></th>
+                                <th><div> Asunto </div></th>
+                                <th> Contenido </th>
+                                <th><div> Leido </div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var contact in Model)
+                            {
+                                <tr id="item-@contact.Id" data-id="@contact.Id">
+                                    <td class="hidden">@contact.CreatedAt</td>
+                                    <td class="hidden From">@contact.From</td>
+                                    <td class="hidden Phone">@contact.Phone</td>
+                                    <td class="Name">@contact.Name</td>
+                                    <td class="">@(contact.School != null ? contact.School.Name : "") </td>
+                                    <td class="Subject">@contact.Subject</td>
+                                    <td class="commentsText">@contact.Comments</td>
+                                    <td class="approve-col">
+                                        @if (!contact.isRead)
+                                        {
+                                            <a href="#messageModal" class="btn btn-blue read-mess-btn" data-toggle="modal" data-url="@Url.Action("Read", "Contacts", new { id = contact.Id })">Ver mensaje</a>
+                                        }
+                                        else
+                                        {
+                                            <span>Si</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

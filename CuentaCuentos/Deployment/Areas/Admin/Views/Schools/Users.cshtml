@@ -1,0 +1,49 @@
+﻿@* @model IEnumerable<Cuentos.Models.User>*@
+@model PagedList.IPagedList<Cuentos.Models.User>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-3">
+        <!-- find me in partials/action_nav_normal -->
+        <!--big normal buttons-->
+        <div class="action-nav-normal">
+
+            <div class="row action-nav-row">
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("Create","Users")" title="Crear Usuario">
+                        <i class="icon-file-alt"></i>
+                        <span>Crear Usuario</span>
+                    </a>
+                    <span class="triangle-button red"><i class="icon-plus"></i></span>
+                </div>
+
+                <div class="col-sm-6 action-nav-button">
+                    <a href="@Url.Action("ExportUsersListToCSV","Schools", new { id=ViewBag.SchoolId})" title="Exportar Usuario">
+                        <i class="icon-download"></i>
+                        <span>Exportar Usuarios</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Areas/Admin/Views/Users/_UsersList.cshtml")
+
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Users",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+@Html.Partial("_DeleteConfirm")
+@Html.Partial("_ApproveConfirm")
+
+@section scripts {
+    <script src="~/Areas/Admin/Content/js/users.js"></script>
+}

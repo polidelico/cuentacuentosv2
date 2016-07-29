@@ -1,0 +1,47 @@
+﻿@model Cuentos.Models.view.ContactUsModel
+ 
+@{
+    ViewBag.Title = "Contáctanos";
+    
+}
+
+<div class="content cuenta contacto">
+    @Html.ValidationSummary(true, "Su mensaje no ha sido enviado, Favor de corregir y e intentar otra vez.")
+    <div class="wp">
+        <h1>Contáctanos</h1>
+        <h2>Llena el formulario para que nos dejes saber cómo podemos ayudarte.</h2>
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm" }))
+        {
+            
+            
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email)
+
+            @Html.LabelFor(m => m.Phone)
+            @Html.TextBoxFor(m => m.Phone, new { @placeholder = "999-999-9999" })
+            @Html.ValidationMessageFor(m => m.Phone)
+
+            @Html.LabelFor(m => m.SchoolId)
+            @Html.DropDownListFor(m => m.SchoolId, (SelectList)ViewBag.Schools, "Selecciona una Escuela")
+            @Html.ValidationMessageFor(m => m.SchoolId)
+
+            @Html.LabelFor(m => m.Subject)
+            @Html.TextBoxFor(m => m.Subject)
+            @Html.ValidationMessageFor(m => m.Subject)
+
+            @Html.LabelFor(m => m.Comments)
+            @Html.TextAreaFor(m => m.Comments)
+            @Html.ValidationMessageFor(m => m.Comments)
+
+
+            <input type="submit" class="btn_naranja btn_iniciar" value="ENVIAR" />
+        }
+
+    </div>
+</div>

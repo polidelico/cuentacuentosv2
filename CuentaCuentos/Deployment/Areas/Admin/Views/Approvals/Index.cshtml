@@ -1,0 +1,142 @@
+﻿@model Cuentos.Models.view.ApprovalsModel
+
+@{
+    ViewBag.Title = "Aprobaciones";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#Usuarios" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Usuarios</a></li>
+        <li role="presentation" class=""><a href="#Cuentos" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Cuentos</a></li>
+        <li role="presentation" class=""><a href="#Comentarios" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Comentarios</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div role="tabpanel" class="tab-pane active in" id="Usuarios" aria-labelledby="home-tab">
+            @Html.Partial("_UsersList", Model.Users)
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="Cuentos" aria-labelledby="home-tab">
+            @Html.Partial("_StoriesList", Model.Stories)
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="Comentarios" aria-labelledby="home-tab">
+            @Html.Partial("_CommentsList", Model.Comments)
+        </div>
+        
+    </div>
+</div>
+
+<div class="modal fade" id="user-info-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="title-username"> Información de usuario </h4>
+            </div>
+            <div class="modal-body">
+                <div class="preview preview-picture-wrapper">
+                    <img src="" class="user-picture" alt="" />                    
+                </div>
+                <div class="preview preview-info-wrapper">
+                    <ul>
+                        <li>
+                            @Html.LabelFor(m => Model.User.UserName):
+                            <span id="username-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.Name):
+                            <span id="name-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.LastName):
+                            <span id="lastname-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.Age):
+                            <span id="age-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.Email):
+                            <span id="email-val"></span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <label> Rol</label>:
+                            <span id="role-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.Grade):
+                            <span id="grade-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.School):
+                            <span id="school-val"></span>
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => Model.User.Owner)
+                            <span id="owner-val"></span>
+                        </li>
+                        
+                        <li>
+                            @Html.LabelFor(m => Model.User.Interests):
+                            <span id="interests-val"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="edit-btn-wrapper">
+                    <a href="#" id="edit-btn" class="btn btn-default" target="_blank">Editar usuario</a>
+                </div>
+                
+            </div>            
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            var hash = window.location.hash;
+            hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+            $('.nav-tabs a').click(function (e) {
+                $(this).tab('show');
+                var scrollmem = $('body').scrollTop();
+                window.location.hash = this.hash;
+                $('html,body').scrollTop(scrollmem);
+            });
+
+            $('#user-info-modal').on('show.bs.modal', function (event) {
+                
+                var $modal = $(this);
+                var $button = $(event.relatedTarget);
+
+                $modal.find('#username-val').text($button.data('username'));
+                $modal.find('#name-val').text($button.data('name'));
+                $modal.find('#lastname-val').text($button.data('lastname'));
+                $modal.find('#age-val').text($button.data('age'));
+                $modal.find('#role-val').text($button.data('user-role'));
+                $modal.find('#grade-val').text($button.data('grade'));
+                $modal.find('#school-val').text($button.data('school'));
+                $modal.find('#owner-val').text($button.data('owner'));
+                $modal.find('#email-val').text($button.data('email'));
+                $modal.find('#interests-val').text($button.data('interests'));
+                $modal.find('.user-picture').attr('src', $button.data('picture-url'));
+                $modal.find('#edit-btn').attr('href', $button.data('edit-url'));
+                
+            })
+        });
+    </script>
+    <script src="~/Areas/Admin/Content/js/approvals.js"></script>
+}
+
+
+@*<a href="#AprovalModal" class="btn btn-blue approve-btn" data-toggle="modal" data-url="">Aprobar</a>*@
+
+@Html.Partial("_ApproveConfirm")
+
+
+
+@*@Html.Partial("_AprovalModal")*@
