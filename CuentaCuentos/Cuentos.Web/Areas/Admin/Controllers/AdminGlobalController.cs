@@ -14,10 +14,10 @@ namespace Cuentos.Areas.Admin.Controllers
 
     public class AdminGlobalControllerFilter : ActionFilterAttribute
     {
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override async void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CuentosContext db = new CuentosContext();
-            var user = db.Users.Find(HttpContext.Current.User.Identity.Name);
+            var user = await db.Users.FindAsync(HttpContext.Current.User.Identity.Name);
             var userRole = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), user.Roles.First().RoleName, true);
 
             filterContext.Controller.ViewBag.LoggedUser = user;

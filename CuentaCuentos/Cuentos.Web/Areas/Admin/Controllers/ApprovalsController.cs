@@ -8,14 +8,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cuentos.Areas.Admin.Models;
-
+using System.Threading.Tasks;
+using System.Data.Entity;
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class ApprovalsController : AdminGlobalController
     {
 
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             IEnumerable<Story> stories = null;
             IEnumerable<User> users = null;
@@ -25,18 +26,18 @@ namespace Cuentos.Areas.Admin.Controllers
 
             if (IsSuperAdmin)
             {
-                users = Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.IsApproved == false);
-                stories = Db.Stories.Include("User.School").Where(s => s.Status == StatusStory.InApproval);
-                comments = Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false);
+                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.IsApproved == false).ToListAsync();
+                stories = await Db.Stories.Include("User.School").Where(s => s.Status == StatusStory.InApproval).ToListAsync();
+                comments = await Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false).ToListAsync();
 
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
-                users = Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false);
-                stories = Db.Stories.Include("Ratings").Include("User.School").Where(s => s.User.SchoolId == user.SchoolId).Where(s => s.Status == StatusStory.InApproval);
-                comments = Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId);
+                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
+                stories =await Db.Stories.Include("Ratings").Include("User.School").Where(s => s.User.SchoolId == user.SchoolId).Where(s => s.Status == StatusStory.InApproval).ToListAsync();
+                comments = await Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).ToListAsync();
 
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
