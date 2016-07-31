@@ -19,6 +19,7 @@ using System.IO;
 using System.Net;
 using Mandrill.Models;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Cuentos.Controllers
 {
@@ -37,20 +38,20 @@ namespace Cuentos.Controllers
         }
 
         [Authorize]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var story = Db.Stories.Find(id);
+            var story = await Db.Stories.FindAsync(id);
             if (story == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var categories = Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToList();
-            var grades = Db.Grades.Select(g => new { g.Id, g.Name, g.Position }).OrderBy(g => g.Position).ToList();
-            var interests = Db.Interests.Select(i => new { i.Id, i.Name }).ToList();
-            var pageTypes = Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToList();
+            var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
+            var grades =  await Db.Grades.Select(g => new { g.Id, g.Name, g.Position }).OrderBy(g => g.Position).ToListAsync();
+            var interests = await Db.Interests.Select(i => new { i.Id, i.Name }).ToListAsync();
+            var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
             List<dynamic> images = new List<dynamic>();
             List<dynamic> templates = new List<dynamic>();
-            List<ImageCategory> allImageCategories = Db.ImageCategories.ToList();
+            List<ImageCategory> allImageCategories = await Db.ImageCategories.ToListAsync();
             List<ImageCategory> imageCategories = new List<ImageCategory>();
             var returnStory = new Story
             {
@@ -61,8 +62,8 @@ namespace Cuentos.Controllers
                 Grades = story.Grades.Select(g => new Grade { Id = g.Id, Name = g.Name }).ToList(),
                 Interests = story.Interests.Select(i => new Interest { Id = i.Id, Name = i.Name }).ToList(),
             };
-            var galleries = Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
-                || (g.UserName == LoggedUser.UserName && g.Active == true)).ToList();
+            var galleries = await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
+                || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
 
             foreach (BuilderGallery gallery in galleries)
             {
@@ -111,12 +112,12 @@ namespace Cuentos.Controllers
 
         [Authorize]
         [WebMethod, HttpPost]
-        public ActionResult Save(int id, string name, string summary, string selectedCategories, string selectedGrades, string selectedInterests)
+        public async Task<ActionResult> Save(int id, string name, string summary, string selectedCategories, string selectedGrades, string selectedInterests)
         {
             var result = false;
             try
             {
-                var story = Db.Stories.Find(id);
+                var story = await Db.Stories.FindAsync(id);
                 dynamic newCategories = JsonConvert.DeserializeObject(selectedCategories);
                 dynamic newGrades = JsonConvert.DeserializeObject(selectedGrades);
                 dynamic newInterests = JsonConvert.DeserializeObject(selectedInterests);
@@ -166,15 +167,15 @@ namespace Cuentos.Controllers
             return (this.Json(result, "application/json"));
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             double average = 0;
-            var story = Db.Stories.Include("User")
+            var story = await Db.Stories.Include("User")
                 .Include("User.ImageHolders")
                 .Include("Comments")
                 .Include("Comments.User")
                 .Include("Comments.User.ImageHolders")
-                .Include("Ratings").Where(s => s.Id == id).FirstOrDefault();
+                .Include("Ratings").Where(s => s.Id == id).FirstOrDefaultAsync();
 
             if (story != null && story.isViewable(id))
             {
@@ -208,13 +209,13 @@ namespace Cuentos.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddComment(int storyId, string newComment)
+        public async Task<ActionResult> AddComment(int storyId, string newComment)
         {
 
             if (!string.IsNullOrEmpty(newComment))
             {
                 //var story = Db.Stories.Find(storyId);
-                var story = Db.Stories.Include("User.ImageHolders").Include("User").Where(s => s.Id == storyId).First();
+                var story = await Db.Stories.Include("User.ImageHolders").Include("User").Where(s => s.Id == storyId).FirstAsync();
                 var comment = new Comment
                 {
                     UserName = LoggedUser.UserName,
@@ -226,7 +227,7 @@ namespace Cuentos.Controllers
                 MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
                 var email = new EmailMessage();
                 var recipients = new List<EmailAddress>();
-                var admins = Db.Users.Include("Roles").Where(u => u.SchoolId == story.User.SchoolId);
+                var admins = await Db.Users.Include("Roles").Where(u => u.SchoolId == story.User.SchoolId).ToListAsync();
 
                 foreach (var admin in admins)
                 {
@@ -255,15 +256,16 @@ namespace Cuentos.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage RateStory(int storyId, int rate)
+        public async Task<HttpResponseMessage> RateStory(int storyId, int rate)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                if (LoggedUser != null && Db.Ratings.Where(r => r.UserName == LoggedUser.UserName && r.StoryId == storyId).Count() == 0)
+                var ratings = await Db.Ratings.Where(r => r.UserName == LoggedUser.UserName && r.StoryId == storyId).ToListAsync();
+                if (LoggedUser != null && ratings.Count == 0)
                 {
-                    var story = Db.Stories.Find(storyId);
+                    var story = await Db.Stories.FindAsync(storyId);
                     var rating = new Rating
                     {
                         UserName = LoggedUser.UserName,
@@ -288,13 +290,13 @@ namespace Cuentos.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var story = Db.Stories.Find(id);
+                var story = await Db.Stories.FindAsync(id);
                 //Db.Stories.Remove(story);
                 story.Status = StatusStory.Deleted;
                 Db.SaveChanges();
@@ -315,14 +317,14 @@ namespace Cuentos.Controllers
 
             try
             {
-                var story = Db.Stories.Include("User").Where(s => s.Id == id).First();
+                var story = await Db.Stories.Include("User").Where(s => s.Id == id).FirstAsync();
                 story.Status = StatusStory.InApproval;
                 Db.SaveChanges();
 
                 MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
                 var email = new EmailMessage();
                 var recipients = new List<EmailAddress>();
-                var admins = Db.Users.Include("Roles").Where(u => u.SchoolId == story.User.SchoolId);
+                var admins = await Db.Users.Include("Roles").Where(u => u.SchoolId == story.User.SchoolId).ToListAsync();
 
                 foreach (var admin in admins)
                 {
@@ -355,13 +357,13 @@ namespace Cuentos.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage UnPublish(int id)
+        public async Task<HttpResponseMessage> UnPublish(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var story = Db.Stories.Find(id);
+                var story = await Db.Stories.FindAsync(id);
                 story.Status = StatusStory.UnPublished;
                 Db.SaveChanges();
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };
@@ -374,7 +376,7 @@ namespace Cuentos.Controllers
             return response;
         }
 
-        public ActionResult Search(int? pageNum, SearchModel model)
+        public async Task<ActionResult> Search(int? pageNum, SearchModel model)
         {
             model = model ?? new SearchModel();
             int pageSize = 6;
@@ -385,17 +387,27 @@ namespace Cuentos.Controllers
 
             if (model.q != null)
             {
-                stories = Db.Stories.Include("User").Include("Grades").Include("Categories").Include("Images").Where(s => s.Name.Contains(model.q) && s.Status == StatusStory.Published);
+                stories = await Db.Stories
+                                  .Include("User").Include("Grades")
+                                  .Include("Categories").Include("Images")
+                                  .Where(s => s.Name.Contains(model.q) &&
+                                        s.Status == StatusStory.Published)
+                                  .ToListAsync();
             }
             if (model.CityId != null)
             {
                 stories = stories != null ? stories.Where(s => s.User.School.CityId == model.CityId)
-                    : Db.Stories.Include("User").Include("Grades").Include("Categories").Include("Images").Where(s => s.User.School.CityId == model.CityId);
+                    : await Db.Stories.Include("User").Include("Grades")
+                                .Include("Categories").Include("Images")
+                                .Where(s => s.User.School.CityId == model.CityId).ToListAsync();
             }
             if (model.SchoolId != null)
             {
                 stories = stories != null ? stories.Where(s => s.User.SchoolId == model.SchoolId)
-                    : Db.Stories.Include("User").Include("Grades").Include("Categories").Include("Images").Where(s => s.User.SchoolId == model.SchoolId);
+                    : await Db.Stories.Include("User").Include("Grades")
+                                       .Include("Categories").Include("Images")
+                                       .Where(s => s.User.SchoolId == model.SchoolId)
+                                       .ToListAsync();
             }
             if (model.selectedGrades.Count() > 0)
             {
@@ -404,8 +416,13 @@ namespace Cuentos.Controllers
                 foreach (var strGradeId in model.selectedGrades)
                 {
                     int gradeId = Convert.ToInt32(strGradeId);
-                    gradeStories = stories != null ? gradeStories.Union(stories.Where(s => s.Grades.Select(g => g.Id).Contains(gradeId)))
-                        : gradeStories.Union(Db.Stories.Include("User").Include("Categories").Where(s => s.Grades.Select(g => g.Id).Contains(gradeId)));
+                    gradeStories = stories != null ? gradeStories.Union(stories
+                                                                        .Where(s => 
+                                                                        s.Grades.Select(g => g.Id)
+                                                                        .Contains(gradeId)))
+                        : gradeStories.Union(await Db.Stories.Include("User").Include("Categories")
+                                                             .Where(s => s.Grades.Select(g => g.Id)
+                                                             .Contains(gradeId)).ToListAsync());
                 }
 
                 stories = gradeStories;
@@ -417,8 +434,15 @@ namespace Cuentos.Controllers
                 foreach (var strCategoryId in model.selectedCategories)
                 {
                     int categoryId = Convert.ToInt32(strCategoryId);
-                    categoryStories = stories != null ? categoryStories.Union(stories.Where(s => s.Categories.Select(c => c.Id).Contains(categoryId)))
-                        : categoryStories.Union(Db.Stories.Include("User").Include("Categories").Where(s => s.Categories.Select(c => c.Id).Contains(categoryId)));
+                    categoryStories = stories != null ? categoryStories.Union(stories
+                                                                              .Where(s => s.Categories
+                                                                                     .Select(c => c.Id)
+                                                                                     .Contains(categoryId)))
+                        : categoryStories.Union(await Db.Stories.Include("User").Include("Categories")
+                                                      .Where(s => s.Categories
+                                                             .Select(c => c.Id)
+                                                             .Contains(categoryId))
+                                                      .ToListAsync());
                 }
 
                 stories = categoryStories;
@@ -426,23 +450,25 @@ namespace Cuentos.Controllers
             if (stories != null)
                 stories = stories.Where(s => s.Status == StatusStory.Published);
             else
-                stories = Db.Stories.Include("User").Include("Grades").Include("Categories").Include("Images").Where(s => s.Status == StatusStory.Published).ToList();
+                stories = await Db.Stories.Include("User").Include("Grades")
+                                          .Include("Categories").Include("Images")
+                                          .Where(s => s.Status == StatusStory.Published).ToListAsync();
 
             model.Stories = stories.ToPagedList(pageNumber, pageSize);
 
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Cities = new SelectList(cities, "Id", "Name");
-            ViewBag.Grades = Db.Grades.ToList().OrderBy(g => g.Position);
-            ViewBag.Categories = Db.Categories.Where(c => c.Active == true);
+            ViewBag.Grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            ViewBag.Categories = await Db.Categories.Where(c => c.Active == true).ToListAsync();
 
             return View(model);
         }
 
-        public ActionResult ConvertPDF(int id, HttpPostedFileBase postedFiles)
+        public async Task<ActionResult> ConvertPDF(int id, HttpPostedFileBase postedFiles)
         {
             if (postedFiles != null && postedFiles.ContentType == "application/pdf")
             {
-                var story = Db.Stories.Find(id);
+                var story = await Db.Stories.FindAsync(id);
                 var path = System.Web.HttpContext.Current.Server.MapPath("~/bin");
                 List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(story.Pages);
 
