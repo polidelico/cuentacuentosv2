@@ -4,16 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cuentos.Models;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Cuentos.Controllers
 {
     public class HomeController : ApplicationGlobalController
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {           
-            var stories = Db.Stories
+            var stories = await Db.Stories
                 .Where(b => b.Featured == true && b.Status == StatusStory.Published)
-                .ToList();
+                .ToListAsync();
 
             return View(stories);
         }

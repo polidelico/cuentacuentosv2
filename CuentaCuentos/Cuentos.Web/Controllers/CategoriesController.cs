@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using System.Web.Services;
 
 namespace Cuentos.Controllers
@@ -12,9 +14,9 @@ namespace Cuentos.Controllers
     public class CategoriesController : ApplicationGlobalController
     {
         [WebMethod]
-        public JsonResult GetCategories()
+        public async Task<JsonResult> GetCategories()
         {
-            var categories = Db.Categories.ToList();
+            var categories = await Db.Categories.ToListAsync();
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
