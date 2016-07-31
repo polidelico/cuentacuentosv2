@@ -18,18 +18,18 @@ namespace Cuentos.Controllers
         public static string StorageRootPath = "~/Content/dynamic";
         public static string StoriesPath = "stories";
 
-        public ContentResult GetPages(int id)
+        public async Task<ContentResult> GetPages(int id)
         {
-            var story = Db.Stories.Find(id);
+            var story = await Db.Stories.FindAsync(id);
             return (this.Content(story.Pages, "application/json"));
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult SavePages(int id, string jsonStr)
+        public async Task<ActionResult> SavePages(int id, string jsonStr)
         {
             var result = false;
-            var story = Db.Stories.Find(id);
+            var story = await Db.Stories.FindAsync(id);
 
             if (story != null && !String.IsNullOrEmpty(jsonStr))
             {
@@ -44,14 +44,15 @@ namespace Cuentos.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult AddNewImage(HttpPostedFileBase postedFiles, string id)
+        public async Task<JsonResult> AddNewImage(HttpPostedFileBase postedFiles, string id)
         {
             if (postedFiles != null)
             {
-                if (Db.Users.Find(id) != null)
+                var user = await Db.Users.FindAsync(id);
+                if (user != null)
                 {
 
-                    var userGallery = Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefault();
+                    var userGallery = await Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefaultAsync();
 
                     if (userGallery == null)
                     {
@@ -92,11 +93,11 @@ namespace Cuentos.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ContentResult MoveAndSaveImage(int id, string imgJsonStr)
+        public async Task<ContentResult> MoveAndSaveImage(int id, string imgJsonStr)
         {
 
             dynamic img = null;
-            var story = Db.Stories.Find(id);
+            var story = await Db.Stories.FindAsync(id);
 
             if (!String.IsNullOrEmpty(imgJsonStr))
             {
@@ -117,12 +118,12 @@ namespace Cuentos.Controllers
 
         [HttpDelete]
         [ValidateInput(false)]
-        public ContentResult DeleteImage(int id)
+        public async Task<ContentResult> DeleteImage(int id)
         {
 
             var result = false;
-            var image = Db.Images.Find(id);
-            var userGallery = Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefault();
+            var image = await Db.Images.FindAsync(id);
+            var userGallery = await Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
 
             if (image.ImagebleId == userGallery.Id)
             {
@@ -136,22 +137,24 @@ namespace Cuentos.Controllers
 
         [HttpGet]
         [ValidateInput(false)]
-        public ContentResult GetImages(bool onlyUserImages = false)
+        public async Task<ContentResult> GetImages(bool onlyUserImages = false)
         {
             List<dynamic> images = new List<dynamic>();
             List<BuilderGallery> galleries = null;
 
             if (onlyUserImages)
             {
-                galleries = Db.BuilderGalleries.Include("Images").Where(g => g.UserName == LoggedUser.UserName && g.Active == true).ToList();
+                galleries = await Db.BuilderGalleries.Include("Images")
+                                    .Where(g => g.UserName == LoggedUser.UserName
+                                     && g.Active == true).ToListAsync();
             }
             else
             {
-                galleries = Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
-                    || (g.UserName == LoggedUser.UserName && g.Active == true)).ToList();
+                galleries =  await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
+                    || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
             }
 
-            List<ImageCategory> allImageCategories = Db.ImageCategories.ToList(); ;
+            List<ImageCategory> allImageCategories = await Db.ImageCategories.ToListAsync(); ;
 
             foreach (BuilderGallery gallery in galleries)
             {

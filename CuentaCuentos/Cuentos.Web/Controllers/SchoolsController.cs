@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Threading.Tasks;
 using Cuentos.Models;
 namespace Cuentos.Controllers
 {
     public class SchoolsController : ApplicationGlobalController
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var schools = Db.Schools.ToList();
-
-            
+            var schools = await Db.Schools.ToListAsync();
             
             return View(schools);
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
 
-            ViewBag.Users = Db.Users.Include("ImageHolders").Where(u => u.SchoolId == id && u.Featured == true).ToList();
-            ViewBag.Stories = Db.Stories.Include("Ratings").Where(s => s.User.SchoolId == id && s.Featured == true && s.Status == StatusStory.Published).ToList();
+            ViewBag.Users = await Db.Users.Include("ImageHolders")
+                                          .Where(u => u.SchoolId == id && u.Featured == true)
+                                          .ToListAsync();
+            ViewBag.Stories = await Db.Stories.Include("Ratings")
+                                              .Where(s => s.User.SchoolId == id 
+                                                     && s.Featured == true 
+                                                     && s.Status == StatusStory.Published)
+                                            .ToListAsync();
 
-            var school = Db.Schools.Find(id);
+            var school = await Db.Schools.FindAsync(id);
             return View(school);
         }
 
