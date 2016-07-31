@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cuentos.Controllers
 {
@@ -25,17 +27,16 @@ namespace Cuentos.Controllers
         //
         // GET: /Users/Details/5
 
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
 
             CultureInfo es = new CultureInfo("es-PR");
             Thread.CurrentThread.CurrentCulture = es;
 
 
-            var user = Db.Users.Include("ImageHolders").Where(u => u.UserName == id).First();
+            var user = await Db.Users.Include("ImageHolders").FirstOrDefaultAsync(u => u.UserName == id);
 
-
-            ViewBag.Stories = Db.Stories.Where(s => s.UserName == id && s.Status == StatusStory.Published).ToList();
+            ViewBag.Stories = await Db.Stories.Where(s => s.UserName == id && s.Status == StatusStory.Published).ToListAsync();
             return View(user);
         }
 

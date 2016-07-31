@@ -17,10 +17,12 @@ using System.Configuration;
 using Cuentos.Areas.Admin.Lib;
 using System.Globalization;
 using System.Threading;
+using System.Data.Entity;
 using Cuentos.Lib;
 using Mandrill;
 using Cuentos.Lib.Helpers;
 using Mandrill.Models;
+using System.Threading.Tasks;
 
 namespace CodeFirstAltairis.Controllers
 {
@@ -39,22 +41,27 @@ namespace CodeFirstAltairis.Controllers
             base.Initialize(requestContext);
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
             //CultureInfo es = new CultureInfo("es-PR");
             //Thread.CurrentThread.CurrentCulture = es;
 
-            var model = Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).First();
-            var schools = Db.Schools.ToList().OrderBy(s => s.Name);
-            var grades = Db.Grades.ToList().OrderBy(g => g.Position);
+            var model = await Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
+            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
+            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
 
 
 
             var user = LoggedUser;
-            var StoriesNotApproved = Db.Stories.Where(s => s.UserName == user.UserName && (s.Status == StatusStory.Draft || s.Status == StatusStory.InApproval || s.Status == StatusStory.UnPublished)).ToList();
+            var StoriesNotApproved = await Db.Stories.Where(s =>
+                                                      s.UserName == user.UserName
+                                                      && (s.Status == StatusStory.Draft || 
+                                                      s.Status == StatusStory.InApproval || 
+                                                      s.Status == StatusStory.UnPublished)).ToListAsync();
 
-            var storiesApproved = Db.Stories.Where(s => s.UserName == user.UserName && (s.Status == StatusStory.Published)).ToList();
+            var storiesApproved = await Db.Stories.Where(s => s.UserName == user.UserName
+                                                   && (s.Status == StatusStory.Published)).ToListAsync();
 
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Grades = new SelectList(grades, "Id", "Name");
@@ -67,15 +74,16 @@ namespace CodeFirstAltairis.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(User model, HttpPostedFileBase mainImage, string[] selectedInterests)
+        public async Task<ActionResult> Index(User model, HttpPostedFileBase mainImage, string[] selectedInterests)
         {
             if (ModelState.IsValid)
             {
-                var user = Db.Users.Include("ImageHolders").Where(u => u.UserName == model.UserName).First();
+                var user = await Db.Users.Include("ImageHolders").Where(u => u.UserName == model.UserName).FirstAsync();
                 model.ImageHolders = user.ImageHolders;
 
                 model.IsApproved = true;
-                if (AccountController.UpdateUser(model, null, selectedInterests))
+                var updated = await AccountController.UpdateUser(model, null, selectedInterests);
+                if (updated)
                 {
                     if (mainImage != null)
                     {
@@ -93,7 +101,7 @@ namespace CodeFirstAltairis.Controllers
                         }
 
                         UploadImage(mainImage, image);
-                        Db.SaveChanges();
+                       var result = await Db.SaveChangesAsync();
                     }
 
                     var url = Url.RouteUrl(new { controller = "Account", action = "Index" });
@@ -160,10 +168,10 @@ namespace CodeFirstAltairis.Controllers
             }
         }
 
-        private void setRegisterModel()
+        private async void setRegisterModel()
         {
-            var schools = Db.Schools.ToList().OrderBy(s => s.Name);
-            var grades = Db.Grades.ToList().OrderBy(g => g.Position);
+            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
+            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
             var ownerTypesSelectList = new List<SelectListItem>();
 
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
@@ -190,21 +198,20 @@ namespace CodeFirstAltairis.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public ActionResult Register(RegisterModel model, string[] selectedInterests)
+        public async Task<ActionResult> Register(RegisterModel model, string[] selectedInterests)
         {
             if (ModelState.IsValid)
             {
                 model.User.SchoolId = model.SchoolId;
                 model.User.GradeId = model.GradeId;
 
-                var createStatus = RegisterUser(model.User, model.Password, Role.RoleType.student, selectedInterests);
-
+                var createStatus = await RegisterUser(model.User, model.Password, Role.RoleType.student, selectedInterests);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
                     var email = new EmailMessage();
                     var recipients = new List<EmailAddress>();
-                    var admins = Db.Users.Include("Roles").Where(u => u.SchoolId == model.SchoolId);
+                    var admins = await Db.Users.Include("Roles").Where(u => u.SchoolId == model.SchoolId).ToListAsync();
 
                     foreach (var admin in admins)
                     {
@@ -223,7 +230,7 @@ namespace CodeFirstAltairis.Controllers
                         email.AddGlobalVariable("TITLE", "Un nuevo usuario se ha registrado.");
                         email.AddGlobalVariable("CONTENT", "Para que el nuevo usuario pueda tener acceso a todas las funcionalidades de Cuenta Cuentos es necesario que sea aprovado.");
                         email.AddGlobalVariable("CALLTOACTION", "Apruebe el usuario <a href=\"" + Url.Action("Index", "Approvals", new { area = "admin" }, Request.Url.Scheme) + "\"> aqui </a>");
-                        mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
+                        var result = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
                     }
 
                     return RedirectToAction("Index", "Home").Success("Su cuenta ha sido creada satisfactoriamente, la misma esta en espera de aprobación.");
@@ -244,7 +251,7 @@ namespace CodeFirstAltairis.Controllers
             return View(model);
         }
 
-        public static MembershipCreateStatus RegisterUser(User model, string password, Role.RoleType roleType, string[] selectedInterests = null)
+        public static async Task<MembershipCreateStatus> RegisterUser(User model, string password, Role.RoleType roleType, string[] selectedInterests = null)
         {
             IMembershipService MembershipService = new AccountMembershipService();
             CuentosContext Db = new CuentosContext();
@@ -253,8 +260,8 @@ namespace CodeFirstAltairis.Controllers
 
             if (createStatus == MembershipCreateStatus.Success)
             {
-                var user = Db.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
-                var role = Db.Roles.Find(roleType.ToString());
+                var user = await Db.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
+                var role = await Db.Roles.FindAsync(roleType.ToString());
 
                 user.Name = model.Name;
                 user.LastName = model.LastName;
@@ -273,32 +280,32 @@ namespace CodeFirstAltairis.Controllers
                     foreach (var selectedInterest in selectedInterests)
                     {
                         int interestId = Convert.ToInt32(selectedInterest);
-                        var interest = Db.Interests.Where(i => i.Id == interestId).First();
+                        var interest = await Db.Interests.Where(i => i.Id == interestId).FirstAsync();
                         user.Interests.Add(interest);
                     }
                 }
 
-                Db.SaveChanges();
+               var result = await Db.SaveChangesAsync();
             }
 
             return createStatus;
         }
 
-        public static bool UpdateUser(User model, string password = null, string[] selectedInterests = null)
+        public static async Task<bool> UpdateUser(User model, string password = null, string[] selectedInterests = null)
         {
             var result = false;
             try
             {
                 IMembershipService MembershipService = new AccountMembershipService();
                 CuentosContext Db = new CuentosContext();
-                var user = Db.Users.Include("ImageHolders").Where(u => u.UserName == model.UserName).First();
+                var user = await Db.Users.Include("ImageHolders").Where(u => u.UserName == model.UserName).FirstAsync();
 
                 user.UpdateUserFields(model);
 
                 if (model.Roles != null)
                 {
                     string roleName = model.Roles.First().RoleName;
-                    var role = Db.Roles.Find(roleName);
+                    var role = await Db.Roles.FindAsync(roleName);
                     user.Roles.Clear();
                     user.Roles.Add(role);
                 }
@@ -315,7 +322,7 @@ namespace CodeFirstAltairis.Controllers
                     foreach (var selectedInterest in selectedInterests)
                     {
                         int interestId = Convert.ToInt32(selectedInterest);
-                        var interest = Db.Interests.Where(i => i.Id == interestId).First();
+                        var interest = await Db.Interests.Where(i => i.Id == interestId).FirstAsync();
                         user.Interests.Add(interest);
                     }
                 }
@@ -372,11 +379,11 @@ namespace CodeFirstAltairis.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public ActionResult RecoverPassword(User model)
+        public  async Task<ActionResult> RecoverPassword(User model)
         {
             if (!string.IsNullOrEmpty(model.UserName))
             {
-                var user = Db.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+                var user = await Db.Users.Where(u => u.UserName == model.UserName).FirstOrDefaultAsync();
                 string newPassword = "";
 
                 if (user != null)
@@ -395,7 +402,7 @@ namespace CodeFirstAltairis.Controllers
                     email.AddGlobalVariable("TITLE", "Hemos creado una nueva contraseña.");
                     email.AddGlobalVariable("CONTENT", "Puede volver a tener acceso a tu cuenta con la sigiguiente contraseña: <strong>" + newPassword + "</strong>.");
                     email.AddGlobalVariable("CALLTOACTION", "Accesede tu cuenta <a href=\"" + Url.Action("Login", "Account", Request.Url.Scheme) + "\"> aqui </a>");
-                    mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
+                   var sent = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
 
                 }
             }
@@ -403,11 +410,11 @@ namespace CodeFirstAltairis.Controllers
         }
 
         [HttpPost]
-        public ActionResult Manage(User model)
+        public async Task<ActionResult> Manage(User model)
         {
             if (!string.IsNullOrEmpty(model.UserName))
             {
-                var user = Db.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+                var user = await Db.Users.Where(u => u.UserName == model.UserName).FirstOrDefaultAsync();
                 string newPassword = "";
 
                 if (user != null)
@@ -424,7 +431,7 @@ namespace CodeFirstAltairis.Controllers
             return View();
         }
 
-        public List<SelectListItem> GetDDLOptions(string type, string selected = "")
+        public async Task<List<SelectListItem>> GetDDLOptions(string type, string selected = "")
         {
             List<SelectListItem> result = null;
             //var defaultText = Resources.Tools.Contact.Default_DDL_Value.ToString();
@@ -436,34 +443,21 @@ namespace CodeFirstAltairis.Controllers
                     {
                         List<School> options = null;
 
-                        options = Db.Schools.OrderBy(c => c.Name).ToList();
+                        options = await Db.Schools.OrderBy(c => c.Name).ToListAsync();
                         result = new List<SelectListItem>();
                         result.Add(new SelectListItem { Text = "Selecciona tu escuela", Value = "" });
-                        foreach (var school in options)
-                        {
-                            result.Add(new SelectListItem
-                            {
-                                Text = school.Name,
-                                Value = school.Id.ToString()
-                            });
-                        }
+                        result.AddRange(options.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString() }));
+
                         break;
                     }
                 case "grades":
                     {
                         List<Grade> options = null;
 
-                        options = Db.Grades.OrderBy(c => c.Position).ToList();
+                        options = await Db.Grades.OrderBy(c => c.Position).ToListAsync();
                         result = new List<SelectListItem>();
                         result.Add(new SelectListItem { Text = "Selecciona", Value = "" });
-                        foreach (var grade in options)
-                        {
-                            result.Add(new SelectListItem
-                            {
-                                Text = grade.Name,
-                                Value = grade.Id.ToString()
-                            });
-                        }
+                        result.AddRange(options.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString() }));
                         break;
                     }
             }
