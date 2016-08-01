@@ -279,6 +279,10 @@
     <Compile Include="Lib\Interfaces.cs" />
     <Compile Include="Lib\Utils\Uploader.cs" />
     <Compile Include="Lib\Validations\CustomDataAnnotation.cs" />
+    <Compile Include="Migrations\201607302209508_InitialCreate.cs" />
+    <Compile Include="Migrations\201607302209508_InitialCreate.Designer.cs">
+      <DependentUpon>201607302209508_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -1173,6 +1177,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607302209508_InitialCreate.resx">
+      <DependentUpon>201607302209508_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
