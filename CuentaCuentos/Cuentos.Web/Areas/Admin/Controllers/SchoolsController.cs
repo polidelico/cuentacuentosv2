@@ -11,25 +11,27 @@ using Cuentos.Areas.Admin.Lib;
 using System.IO;
 using PagedList;
 using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class SchoolsController : AdminGlobalController
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var schools = Db.Schools.ToList();
+            var schools = await Db.Schools.ToListAsync();
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
 
             return View(schools);
         }
 
         [Authorize(Roles = "superAdmin")]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             var school = new School();
-            var schools = Db.Schools.ToList().OrderBy(s => s.Name);
+            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
 
             InitializeModelImages(school);
 
@@ -70,10 +72,10 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(model).Error(SaveMessage.Error);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
 
-            var school = Db.Schools.Include("images").First(s => s.Id == id);
+            var school = await Db.Schools.Include("images").FirstAsync(s => s.Id == id);
 
             if (school != null && school.isAuthorized())
             {
@@ -118,13 +120,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var school = Db.Schools.Find(id);
+                var school = await Db.Schools.FindAsync(id);
                 Db.Schools.Remove(school);
                 Db.SaveChanges();
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };
@@ -137,15 +139,15 @@ namespace Cuentos.Areas.Admin.Controllers
             return response;
         }
 
-        public ActionResult Users(int id, int? page)
+        public async Task<ActionResult> Users(int id, int? page)
         {
             //IsAuthorizedRedirect(id);
             ViewBag.SchoolId = id;
-            var school = Db.Schools.Find(id);
+            var school = await Db.Schools.FindAsync(id);
 
             if (school != null && school.isAuthorized())
             {
-                var users = Db.Users.Where(u => u.SchoolId == id).ToList();
+                var users = await Db.Users.Where(u => u.SchoolId == id).ToListAsync();
                 var controllerBreadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(@Url.Action("Edit", "Schools", new {id = school.Id}), school.Name),
@@ -162,7 +164,7 @@ namespace Cuentos.Areas.Admin.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void ExportUsersListToCSV(int id)
+        public async void ExportUsersListToCSV(int id)
         {
 
             StringWriter sw = new StringWriter();
@@ -170,7 +172,7 @@ namespace Cuentos.Areas.Admin.Controllers
             sw.WriteLine("\"UserName\",\"Name\",\"Last Name\",\"Age\",\"School\",\"Grade\",\"Is Approved?\",\"DateCreated\"");
 
             Response.ClearContent();
-            var school = Db.Schools.Find(id);
+            var school = await Db.Schools.FindAsync(id);
             var FileName = Guid.NewGuid().ToString();
             Response.AddHeader("content-disposition", "attachment;filename=" + FileName + ".csv");
             Response.ContentType = "text/csv";
@@ -179,7 +181,7 @@ namespace Cuentos.Areas.Admin.Controllers
             
             if (school != null && school.isAuthorized())
             {
-                var users = Db.Users.Where(u => u.SchoolId == id).ToList();
+                var users = await Db.Users.Where(u => u.SchoolId == id).ToListAsync();
                 foreach (var line in users)
                 {
                     sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\"",
@@ -201,14 +203,14 @@ namespace Cuentos.Areas.Admin.Controllers
 
         }
 
-        public ActionResult Stories(int id)
+        public async Task<ActionResult> Stories(int id)
         {
             IsAuthorizedRedirect(id);
 
             var user = LoggedUser;
-            var users = Db.Users.Where(u => u.SchoolId == id).Select(u => u.UserName);
-            var stories = Db.Stories.Where(s => users.Contains(s.UserName)).ToList();
-            var school = Db.Schools.Find(id);
+            var users = await Db.Users.Where(u => u.SchoolId == id).Select(u => u.UserName).ToListAsync();
+            var stories = await Db.Stories.Where(s => users.Contains(s.UserName)).ToListAsync();
+            var school = await Db.Schools.FindAsync(id);
 
             if (school != null && school.isAuthorized())
             {

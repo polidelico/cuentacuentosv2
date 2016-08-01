@@ -153,7 +153,7 @@ namespace CodeFirstAltairis.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -162,13 +162,13 @@ namespace CodeFirstAltairis.Controllers
             else
             {
                 ViewBag.PasswordLength = MembershipService.MinPasswordLength;
-                setRegisterModel();
+                var result = await setRegisterModel();
 
                 return View();
             }
         }
 
-        private async void setRegisterModel()
+        private async Task<bool> setRegisterModel()
         {
             var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
             var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
@@ -186,14 +186,14 @@ namespace CodeFirstAltairis.Controllers
             ViewBag.OwnerTypesSelectList = ownerTypesSelectList;
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Grades = new SelectList(grades, "Id", "Name");
-            ViewBag.Interests = Db.Interests.ToList();
+            ViewBag.Interests = await Db.Interests.ToListAsync();
 
 
             //RegisterModel model = new RegisterModel();
             //model.DDLSchool = GetDDLOptions("schools");
             //model.DDLGrade = GetDDLOptions("grades");
             //model.User.Interests = Db.Interests.ToList();
-
+            return true;
             //return model;
         }
 

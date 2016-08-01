@@ -7,16 +7,17 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace Cuentos.Controllers
 {
     public class AdminGlobalControllerFilter : ActionFilterAttribute
     {
-        public override async void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CuentosContext db = new CuentosContext();
-            var user = await db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.Current.User.Identity.Name).FirstOrDefaultAsync();
-
+            var user = db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.Current.User.Identity.Name).FirstOrDefault();
+            
             filterContext.Controller.ViewBag.LoggedUser = user;
         }
     }

@@ -8,15 +8,17 @@ using Cuentos.Lib.Extensions;
 using Cuentos.Lib;
 using System.Net.Http;
 using Cuentos.Areas.Admin.Lib;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class PageTypesController : AdminGlobalController
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var pageTypes = Db.PageTypes.OrderBy(t => t.Position).ToList();
+            var pageTypes = await Db.PageTypes.OrderBy(t => t.Position).ToListAsync();
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
 
             return View(pageTypes);
@@ -62,10 +64,10 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(model).Error(SaveMessage.Error);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
 
-            var pageType = Db.PageTypes.Include("images").First(s => s.Id == id);
+            var pageType = await Db.PageTypes.Include("images").FirstAsync(s => s.Id == id);
 
             InitializeModelImages(pageType);
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "PageTypes", new { id = pageType.Id }), pageType.Name), pageType);
@@ -104,13 +106,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var pageType = Db.PageTypes.Find(id);
+                var pageType = await Db.PageTypes.FindAsync(id);
                 Db.PageTypes.Remove(pageType);
                 Db.SaveChanges();
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };

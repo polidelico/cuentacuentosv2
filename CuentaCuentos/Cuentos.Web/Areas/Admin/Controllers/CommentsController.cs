@@ -9,17 +9,18 @@ using System.Web.Mvc;
 using Cuentos.Areas.Admin.Lib;
 using Mandrill;
 using Mandrill.Models;
-
+using System.Data.Entity;
+using System.Threading.Tasks;
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class CommentsController : AdminGlobalController
     {
 
-        public ActionResult Index(int id)
+        public async Task<ActionResult> Index(int id)
         {
-            var model = Db.Comments.Include("User").Include("Story.User.School").Where(c => c.StoryId == id);
+            var model = await Db.Comments.Include("User").Include("Story.User.School").FirstOrDefaultAsync(c => c.StoryId == id);
 
-            Story story = Db.Stories.Include("Images").Include("Grades").Include("Categories").First(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
 
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {
@@ -33,11 +34,11 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var model = Db.Comments.Find(id);
+            var model = await Db.Comments.FindAsync(id);
 
-            Story story = Db.Stories.Include("Images").Include("Grades").Include("Categories").First(s => s.Id == model.StoryId);
+            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == model.StoryId);
 
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {
@@ -66,13 +67,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Approve(int id)
+        public async Task<HttpResponseMessage> Approve(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var comment = Db.Comments.Include("User").Include("User.ImageHolders").Include("Story").Where(c => c.Id == id).First();
+                var comment = await Db.Comments.Include("User").Include("User.ImageHolders").Include("Story").Where(c => c.Id == id).FirstAsync();
                 comment.IsApproved = true;
                 comment.ApprovedDate = DateTime.Now;
                 comment.ApprovedBy = LoggedUser.UserName;
@@ -103,13 +104,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var story = Db.Comments.Find(id);
+                var story =  await Db.Comments.FindAsync(id);
                 Db.Comments.Remove(story);
                 Db.SaveChanges();
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };

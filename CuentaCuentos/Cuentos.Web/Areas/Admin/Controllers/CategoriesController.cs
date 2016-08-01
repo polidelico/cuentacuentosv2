@@ -8,15 +8,17 @@ using System.Web.Mvc;
 using System.Net.Http;
 using Cuentos.Areas.Admin.Lib;
 using System.Net;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class CategoriesController : AdminGlobalController
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var categories = Db.Categories.ToList();
+            var categories = await Db.Categories.ToListAsync();
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
 
             return View(categories);
@@ -42,9 +44,9 @@ namespace Cuentos.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var category = Db.Categories.Find(id);
+            var category = await Db.Categories.FindAsync(id);
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "Categories", new { id = category.Id }), category.Name), category);
 
             return View(category);
@@ -63,13 +65,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             ContentResult result = new ContentResult();
 
             try
             {
-                var category = Db.Categories.Find(id);
+                var category = await Db.Categories.FindAsync(id);
                 Db.Categories.Remove(category);
                 Db.SaveChanges();
                 result.Content = "success";

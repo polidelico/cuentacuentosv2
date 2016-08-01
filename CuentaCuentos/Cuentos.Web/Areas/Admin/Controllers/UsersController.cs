@@ -17,6 +17,8 @@ using System.Net;
 using Mandrill;
 using Cuentos.Lib.Helpers;
 using PagedList;
+using System.Data.Entity;
+using System.Threading.Tasks;
 using System.IO;
 using Mandrill.Models;
 
@@ -24,20 +26,20 @@ namespace Cuentos.Areas.Admin.Controllers
 {
     public class UsersController : AdminGlobalController
     {
-        public ActionResult Index(int? page)
+        public async Task<ActionResult> Index(int? page)
         {
             IEnumerable<User> users = null;
 
             if (IsSuperAdmin)
             {
-                users = Db.Users.ToList().OrderBy(u => u.Name);
+                users = await Db.Users.OrderBy(u => u.Name).ToListAsync();
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
 
-                users = Db.Users.Where(u => u.SchoolId == user.SchoolId).ToList().OrderBy(u => u.Name);
+                users = await Db.Users.Where(u => u.SchoolId == user.SchoolId).OrderBy(u => u.Name).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
@@ -54,19 +56,16 @@ namespace Cuentos.Areas.Admin.Controllers
             //return View(users);
         }
 
-        public ActionResult GetAllUsers()
+        public async Task<ActionResult> GetAllUsers()
         {
-
-            var values = from u in Db.Users
-                         select new Cuentos.Models.User.UsersModel
-                         {
-                             Name = u.Name,
-                             Email = u.Email,
-                             LastName = u.LastName,
-                             UserName = u.UserName,
-                             CreatedDate = u.DateCreated
-                         };
-
+            var values = await Db.Users.Select(u => new Cuentos.Models.User.UsersModel
+            {
+                Name = u.Name,
+                Email = u.Email,
+                LastName = u.LastName,
+                UserName = u.UserName,
+                CreatedDate = u.DateCreated
+            }).ToListAsync();
 
             var allvalues =  Json(values, JsonRequestBehavior.AllowGet);
             allvalues.MaxJsonLength = int.MaxValue;
@@ -109,17 +108,17 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateUserModel model, string[] selectedInterests)
+        public async Task<ActionResult> Create(CreateUserModel model, string[] selectedInterests)
         {
             
             if (ModelState.IsValid)
             {
                 var role = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), model.Role, true);
-                var createStatus = AccountController.RegisterUser(model.User, model.Password, role, selectedInterests);
+                var createStatus = await AccountController.RegisterUser(model.User, model.Password, role, selectedInterests);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    var createdUser = Db.Users.Include("ImageHolders").Where(u => u.UserName == model.User.UserName).First();
+                    var createdUser = await Db.Users.Include("ImageHolders").Where(u => u.UserName == model.User.UserName).FirstAsync();
                     model.User = createdUser;
 
                     return RedirectToAction("Index", "Users").Success(SaveMessage.CreateSuccess);
@@ -141,9 +140,9 @@ namespace Cuentos.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
-            User user = Db.Users.Include("ImageHolders").Where(u => u.UserName == id).First();
+            User user = await Db.Users.Include("ImageHolders").Where(u => u.UserName == id).FirstAsync();
             if (!IsSuperAdmin)
             {
 
@@ -181,13 +180,13 @@ namespace Cuentos.Areas.Admin.Controllers
             InitializeModelImages(user);
             setDropDowns();
             ViewBag.Edit = true;
-            ViewBag.Interests = Db.Interests.ToList();
+            ViewBag.Interests = await Db.Interests.ToListAsync();
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(CreateUserModel model, HttpPostedFileBase mainImage, string[] selectedInterests)
+        public async Task<ActionResult> Edit(CreateUserModel model, HttpPostedFileBase mainImage, string[] selectedInterests)
         {
             if (ModelState.IsValid)
             {
@@ -196,8 +195,8 @@ namespace Cuentos.Areas.Admin.Controllers
                 var roles = Db.Roles.Where(r => r.RoleName == model.Role).ToList();
                 model.User.Roles = roles;
                 model.User.ImageHolders = user.ImageHolders;
-
-                if (AccountController.UpdateUser(model.User, model.Password, selectedInterests))
+                var updated = await AccountController.UpdateUser(model.User, model.Password, selectedInterests);
+                if (updated)
                 {
                     if (mainImage != null)
                     {
@@ -235,7 +234,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
         
 
-        public ActionResult Comments(string id)
+        public async Task<ActionResult> Comments(string id)
         {
             IEnumerable<Comment> comments = null;
 
@@ -250,8 +249,8 @@ namespace Cuentos.Areas.Admin.Controllers
                 }
             }
 
-            comments = Db.Comments.Include("Story.User.School").Where(c => c.UserName == id);
-            var user = Db.Users.Include("School").Where(u => u.UserName == id).First();
+            comments = await Db.Comments.Include("Story.User.School").Where(c => c.UserName == id).ToListAsync();
+            var user = await Db.Users.Include("School").Where(u => u.UserName == id).FirstAsync();
 
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {
@@ -268,11 +267,11 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(comments);
         }
 
-        public ActionResult Stories(string id)
+        public async Task<ActionResult> Stories(string id)
         {
             ViewBag.UserName = id;
 
-            User user = Db.Users.Include("ImageHolders").Where(u => u.UserName == id).First();
+            User user = await Db.Users.Include("ImageHolders").Where(u => u.UserName == id).FirstAsync();
             if (!IsSuperAdmin)
             {
 
@@ -310,10 +309,10 @@ namespace Cuentos.Areas.Admin.Controllers
             return View("UserStories");
         }
 
-        public void setDropDowns()
+        public async void setDropDowns()
         {
             //var schools = Db.Schools.ToList().OrderBy(s => s.Name);
-            var grades = Db.Grades.ToList().OrderBy(g => g.Position);
+            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
             var sprAdminRole = Role.RoleType.superAdmin.ToString();
             var ownerTypesSelectList = new List<SelectListItem>();
             IEnumerable<School> schools = null;
@@ -321,14 +320,14 @@ namespace Cuentos.Areas.Admin.Controllers
 
             if (IsSuperAdmin)
             {
-                schools = Db.Schools.ToList().OrderBy(s => s.Name);
-                roles = Db.Roles.ToList().OrderBy(r => r.RoleName);
+                schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
+                roles = await Db.Roles.OrderBy(r => r.RoleName).ToListAsync();
             }
             else
             {
                 var user = LoggedUser;
-                schools = Db.Schools.Where(s => s.Id == user.SchoolId).ToList().OrderBy(s => s.Name);
-                roles = Db.Roles.Where(r => r.RoleName != sprAdminRole).ToList();
+                schools = await Db.Schools.Where(s => s.Id == user.SchoolId).OrderBy(s => s.Name).ToListAsync();
+                roles = await Db.Roles.Where(r => r.RoleName != sprAdminRole).ToListAsync();
             }
 
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
@@ -348,13 +347,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Approve(string username)
+        public async Task<HttpResponseMessage> Approve(string username)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var user = Db.Users.Where(u => u.UserName == username).First();
+                var user = await Db.Users.Where(u => u.UserName == username).FirstAsync();
                 var userRole = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), user.Roles.First().RoleName, true);
                 user.IsApproved = true;
                 user.ApprovedDate = DateTime.Now;
@@ -392,13 +391,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(string username)
+        public async Task<HttpResponseMessage> Delete(string username)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var user = Db.Users.Find(username);
+                var user = await Db.Users.FindAsync(username);
                 Db.Users.Remove(user);
                 Db.SaveChanges();
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cuentos.Models;
+using System.Threading.Tasks;
+using System.Data.Entity;
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class HomeController : AdminGlobalController
@@ -11,7 +13,7 @@ namespace Cuentos.Areas.Admin.Controllers
         //
         // GET: /Admin/Home/
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             //TODO: Batch de aprobaciones con conteo de aprobaciones  vigentes.
 
@@ -23,18 +25,18 @@ namespace Cuentos.Areas.Admin.Controllers
             var CommentsBatch = 0;
             if (IsSuperAdmin)
             {
-                ContactsBatch = Db.Contacts.Where(c => c.isRead == false).Count();
-                UsersBatch = Db.Users.Where(u => u.IsApproved == false).Count();
-                StoriesBatch = Db.Stories.Where(s => s.Status == StatusStory.InApproval).Count();
-                CommentsBatch = Db.Comments.Where(c => c.IsApproved == false).Count();
+                ContactsBatch = await Db.Contacts.Where(c => c.isRead == false).CountAsync();
+                UsersBatch = await Db.Users.Where(u => u.IsApproved == false).CountAsync();
+                StoriesBatch = await Db.Stories.Where(s => s.Status == StatusStory.InApproval).CountAsync();
+                CommentsBatch = await Db.Comments.Where(c => c.IsApproved == false).CountAsync();
             }
             else
             {
                 var user = LoggedUser;
-                ContactsBatch = Db.Contacts.Where(c => c.isRead == false && c.SchoolId == user.SchoolId).Count();
-                UsersBatch = Db.Users.Where(u => u.IsApproved == false && u.SchoolId == user.SchoolId).Count();
-                StoriesBatch = Db.Stories.Where(s => s.Status == StatusStory.InApproval && s.User.SchoolId == user.SchoolId).Count();
-                CommentsBatch = Db.Comments.Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).Count();
+                ContactsBatch = await Db.Contacts.Where(c => c.isRead == false && c.SchoolId == user.SchoolId).CountAsync();
+                UsersBatch = await Db.Users.Where(u => u.IsApproved == false && u.SchoolId == user.SchoolId).CountAsync();
+                StoriesBatch = await Db.Stories.Where(s => s.Status == StatusStory.InApproval && s.User.SchoolId == user.SchoolId).CountAsync();
+                CommentsBatch = await Db.Comments.Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).CountAsync();
             }
 
             ViewBag.ContactsBatch = ContactsBatch;

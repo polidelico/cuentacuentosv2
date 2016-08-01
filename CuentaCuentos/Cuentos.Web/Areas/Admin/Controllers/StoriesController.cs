@@ -14,27 +14,30 @@ using Mandrill;
 using PagedList;
 using Cuentos.Areas.Admin.Models;
 using Mandrill.Models;
+using System.Threading.Tasks;
+using System.Data.Entity;
+
 
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class StoriesController : AdminGlobalController
     {
 
-        public ActionResult Index(int? page)
+        public async Task<ActionResult> Index(int? page)
         {
             IEnumerable<Story> model = null;
 
             if (IsSuperAdmin)
             {
-                model = Db.Stories.Include("Ratings").ToList();
+                model = await Db.Stories.Include("Ratings").ToListAsync();
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
-                var users = Db.Users.Where(u => u.SchoolId == user.SchoolId).Select(u => u.UserName).ToList();
+                var users = await Db.Users.Where(u => u.SchoolId == user.SchoolId).Select(u => u.UserName).ToListAsync();
 
-                model = Db.Stories.Include("Ratings").Where(s => users.Contains(s.User.UserName)).ToList();
+                model = await Db.Stories.Include("Ratings").Where(s => users.Contains(s.User.UserName)).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
@@ -50,25 +53,23 @@ namespace Cuentos.Areas.Admin.Controllers
             //return View(model);
         }
 
-        public ActionResult GetStories()
+        public async Task<ActionResult> GetStories()
         {
-            var values = from s in Db.Stories
-                         select new StoriesModel
-                         {
-                             StoryID = s.Id,
-                             StoryName = s.Name,
-                             Author = s.UserName,
-                             Status = s.Status.ToString(),
-                             Created = (DateTime)s.CreatedAt
-                         };
+            var values = await Db.Stories.Select(s => new StoriesModel() {
+                                                      StoryID = s.Id,
+                                                      StoryName = s.Name,
+                                                      Author = s.UserName, School = s.Status.ToString(),
+                                                      Created = (DateTime)s.CreatedAt,
+                                                      Status = s.Status.ToString()
+                                                    }).ToListAsync();
 
             return Json(values, JsonRequestBehavior.AllowGet);
 
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            Story story = Db.Stories.Include("Images").Include("Grades").Include("Categories").Include("Interests").First(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").Include("Interests").FirstAsync(s => s.Id == id);
             IEnumerable<StatusStory> statuses = Enum.GetValues(typeof(StatusStory)).Cast<StatusStory>();
             var statusSelect = new List<SelectListItem>();
 
@@ -92,7 +93,7 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Story model, HttpPostedFileBase mainImage, int[] selectedGrades, int[] selectedCategories, int[] selectedInterests)
+        public async Task<ActionResult> Edit(Story model, HttpPostedFileBase mainImage, int[] selectedGrades, int[] selectedCategories, int[] selectedInterests)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +129,7 @@ namespace Cuentos.Areas.Admin.Controllers
                 {
                     foreach (var categoryId in selectedCategories)
                     {
-                        var category = Db.Categories.Find(categoryId);
+                        var category = await Db.Categories.FindAsync(categoryId);
                         model.Categories.Add(category);
                     }
                 }
@@ -138,7 +139,7 @@ namespace Cuentos.Areas.Admin.Controllers
                 {
                     foreach (var interestId in selectedInterests)
                     {
-                        var interest = Db.Interests.Find(interestId);
+                        var interest = await Db.Interests.FindAsync(interestId);
                         model.Interests.Add(interest);
                     }
                 }
@@ -152,13 +153,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Approve(int id)
+        public async Task<HttpResponseMessage> Approve(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var story = Db.Stories.Include("User").Include("User.ImageHolders").Where(s => s.Id == id).First();
+                var story = await Db.Stories.Include("User").Include("User.ImageHolders").Where(s => s.Id == id).FirstAsync();
                 story.ApprovedDate = DateTime.Now;
                 story.ApprovedBy = LoggedUser.UserName;
                 story.Status = StatusStory.Published;
@@ -190,13 +191,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             ContentResult result = new ContentResult();
 
             try
             {
-                var story = Db.Stories.Find(id);
+                var story = await Db.Stories.FindAsync(id);
                 story.Status = StatusStory.Deleted;
                 Db.SaveChanges();
                 result.Content = "story";
@@ -210,18 +211,16 @@ namespace Cuentos.Areas.Admin.Controllers
             return result;
         }
 
-        public ActionResult GetUserStories(string username)
+        public async Task<ActionResult> GetUserStories(string username)
         {
-            var values = from s in Db.Stories
-                         where s.UserName == username
-                         select new StoriesModel
-                         {
-                             StoryID = s.Id,
-                             StoryName = s.Name,
-                             Author = s.UserName,
-                             Status = s.Status.ToString(),
-                             Created = (DateTime)s.CreatedAt
-                         };
+            var values = await Db.Stories.Where(s => s.UserName == username).Select(s => new StoriesModel
+            {
+                StoryID = s.Id,
+                StoryName = s.Name,
+                Author = s.UserName,
+                Status = s.Status.ToString(),
+                Created = (DateTime)s.CreatedAt
+            }).ToListAsync();
 
             return Json(values, JsonRequestBehavior.AllowGet);
         }

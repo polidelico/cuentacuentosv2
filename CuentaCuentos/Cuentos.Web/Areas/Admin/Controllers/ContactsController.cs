@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace Cuentos.Areas.Admin.Controllers
@@ -16,7 +18,7 @@ namespace Cuentos.Areas.Admin.Controllers
         //
         // GET: /Admin/Messages/
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
             IEnumerable<Contact> contacts = null;
@@ -25,13 +27,13 @@ namespace Cuentos.Areas.Admin.Controllers
 
             if (IsSuperAdmin)
             {
-                contacts = Db.Contacts.Include("School").OrderByDescending(c => c.CreatedAt).ToList();
+                contacts =  await Db.Contacts.Include("School").OrderByDescending(c => c.CreatedAt).ToListAsync();
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
-                contacts = Db.Contacts.Include("School").Where(c => c.SchoolId == user.SchoolId).OrderByDescending(c => c.CreatedAt).ToList();
+                contacts = await Db.Contacts.Include("School").Where(c => c.SchoolId == user.SchoolId).OrderByDescending(c => c.CreatedAt).ToListAsync();
 
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
@@ -49,13 +51,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Read(int id)
+        public async Task<HttpResponseMessage> Read(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var contact = Db.Contacts.Find(id);
+                var contact = await Db.Contacts.FindAsync(id);
                 contact.isRead = true;
                 contact.UpdatedAt = DateTime.Now;
                 Db.SaveChanges();

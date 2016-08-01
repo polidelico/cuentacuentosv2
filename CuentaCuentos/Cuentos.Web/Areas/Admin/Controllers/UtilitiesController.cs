@@ -9,22 +9,23 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Cuentos.Lib.Extensions;
-
+using System.Data.Entity;
+using System.Threading.Tasks;
 namespace Cuentos.Areas.Admin.Controllers
 {
     [Authorize(Roles = "superAdmin")]
     public class UtilitiesController : AdminGlobalController
     {
 
-        public ActionResult ImportUsers()
+        public async Task<ActionResult> ImportUsers()
         {
-            var schools = Db.Schools.ToList().OrderBy(s => s.Name);
+            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public ActionResult ImportUsers(int id, HttpPostedFileBase postedFile)
+        public async Task<ActionResult> ImportUsers(int id, HttpPostedFileBase postedFile)
         {
             if (postedFile != null && postedFile.ContentType == "application/octet-stream")
             {
@@ -63,11 +64,11 @@ namespace Cuentos.Areas.Admin.Controllers
                             user.GradeId = userGrade.Id;
                         }
 
-                        var createStatus = AccountController.RegisterUser(user, importedUser.Username + dobCustom, Role.RoleType.student);
+                        var createStatus = await AccountController.RegisterUser(user, importedUser.Username + dobCustom, Role.RoleType.student);
 
                         if (createStatus == MembershipCreateStatus.Success)
                         {
-                            var createdUser = Db.Users.Find(user.UserName);
+                            var createdUser = await Db.Users.FindAsync(user.UserName);
                             createdUser.IsApproved = true;
                             Db.SaveChanges();
                             successCount++;
@@ -96,7 +97,7 @@ namespace Cuentos.Areas.Admin.Controllers
                 RedirectToAction("ImportUsers", "Utilities").Error("Archivo provisto no es aceptable.");
             }
 
-            var schools = Db.Schools.ToList().OrderBy(s => s.Name);
+            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             return View();
         }
@@ -112,46 +113,46 @@ namespace Cuentos.Areas.Admin.Controllers
             //public string Genre { get; set; }
         }
 
-        public Grade getGrade(string grade)
+        public async Task<Grade> getGrade(string grade)
         {
             Grade result = new Grade();
             switch (grade)
             {
                 case "1":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "primero").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "primero").FirstOrDefaultAsync();
                     break;
                 case "2":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "segundo").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "segundo").FirstOrDefaultAsync();
                     break;
                 case "3":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "tercero").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "tercero").FirstOrDefaultAsync();
                     break;
                 case "4":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "cuerto").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "cuerto").FirstOrDefaultAsync();
                     break;
                 case "5":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "quinto").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "quinto").FirstOrDefaultAsync();
                     break;
                 case "6":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "sexto").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "sexto").FirstOrDefaultAsync();
                     break;
                 case "7":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "septimo").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "septimo").FirstOrDefaultAsync();
                     break;
                 case "8":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "octavo").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "octavo").FirstOrDefaultAsync();
                     break;
                 case "9":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "noveno").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "noveno").FirstOrDefaultAsync();
                     break;
                 case "10":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "décimo").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "décimo").FirstOrDefaultAsync();
                     break;
                 case "11":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "undécimo").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "undécimo").FirstOrDefaultAsync();
                     break;
                 case "12":
-                    result = Db.Grades.Where(g => g.Name.ToLower() == "duodécimo").FirstOrDefault();
+                    result = await Db.Grades.Where(g => g.Name.ToLower() == "duodécimo").FirstOrDefaultAsync();
                     break;
                 default:
                     result = null;

@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Threading.Tasks;
+using System.Data.Entity;
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class RatingsController : AdminGlobalController
@@ -19,12 +20,12 @@ namespace Cuentos.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
 
-            Story story = Db.Stories.Include("Images").Include("Grades").Include("Categories").First(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
 
-            var ratings = Db.Ratings.Where(r => r.StoryId == id).ToList();
+            var ratings = await Db.Ratings.Where(r => r.StoryId == id).ToListAsync();
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),

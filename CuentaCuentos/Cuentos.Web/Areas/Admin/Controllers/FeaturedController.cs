@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Threading.Tasks;
+using System.Data.Entity;
 namespace Cuentos.Areas.Admin.Controllers
 {
     public class FeaturedController : AdminGlobalController
@@ -15,7 +16,7 @@ namespace Cuentos.Areas.Admin.Controllers
         //
         // GET: /Admin/Featured/
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             IEnumerable<Story> stories = null;
             IEnumerable<User> users = null;
@@ -23,15 +24,15 @@ namespace Cuentos.Areas.Admin.Controllers
             if (IsSuperAdmin)
             {
                 users = Db.Users;
-                stories = Db.Stories.Include("Ratings").Where(s => s.Status == StatusStory.Published);
+                stories = await Db.Stories.Include("Ratings").Where(s => s.Status == StatusStory.Published).ToListAsync();
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
-                users = Db.Users.Where(u => u.SchoolId == user.SchoolId);
+                users = await Db.Users.Where(u => u.SchoolId == user.SchoolId).ToListAsync();
 
-                stories = Db.Stories.Include("Ratings").Where(s => s.User.SchoolId == user.SchoolId && s.Status == StatusStory.Published);
+                stories = await Db.Stories.Include("Ratings").Where(s => s.User.SchoolId == user.SchoolId && s.Status == StatusStory.Published).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
@@ -55,9 +56,9 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int[] selectedFeatured)
+        public async Task<ActionResult> Edit(int[] selectedFeatured)
         {
-            var stories = Db.Stories.ToList();
+            var stories = await Db.Stories.ToListAsync();
             foreach (var story in stories)
             {
                 story.Featured = false;
@@ -81,9 +82,9 @@ namespace Cuentos.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public ActionResult EditUsers(string[] selectedFeatured)
+        public async Task<ActionResult> EditUsers(string[] selectedFeatured)
         {
-            var users = Db.Users.Include("ImageHolders").ToList();
+            var users = await Db.Users.Include("ImageHolders").ToListAsync();
             foreach (var user in users)
             {
                 user.Featured = false;

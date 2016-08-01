@@ -8,6 +8,8 @@ using Cuentos.Lib.Extensions;
 using Cuentos.Lib;
 using System.Net.Http;
 using Cuentos.Areas.Admin.Lib;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Cuentos.Areas.Admin.Controllers
 {
@@ -15,9 +17,9 @@ namespace Cuentos.Areas.Admin.Controllers
     public class BuilderGalleriesController : AdminGlobalController
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var galleries = Db.BuilderGalleries.ToList();
+            var galleries = Db.BuilderGalleries.ToListAsync();
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
 
             return View(galleries);
@@ -43,11 +45,11 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(model).Error(SaveMessage.Error);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
 
-            var gallery = Db.BuilderGalleries.Include("Images").First(s => s.Id == id);
-            var categories = Db.ImageCategories.ToList();
+            var gallery = await Db.BuilderGalleries.Include("Images").FirstAsync(s => s.Id == id);
+            var categories = await Db.ImageCategories.ToListAsync();
 
             ViewBag.ImageCategoriesSelect = new SelectList(categories, "Id", "Name");
             ViewBag.ImageCategories = categories;
@@ -68,9 +70,9 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveImage(int galleryId, string target, HttpPostedFileBase galleryImageFile)
+        public async Task<ActionResult> SaveImage(int galleryId, string target, HttpPostedFileBase galleryImageFile)
         {
-            var gallery = Db.BuilderGalleries.Include("Images").SingleOrDefault(g => g.Id == galleryId);
+            var gallery = await Db.BuilderGalleries.Include("Images").SingleOrDefaultAsync(g => g.Id == galleryId);
 
             if (galleryImageFile != null)
             {
@@ -94,13 +96,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var gallery = Db.BuilderGalleries.Find(id);
+                var gallery = await Db.BuilderGalleries.FindAsync(id);
                 Db.BuilderGalleries.Remove(gallery);
                 Db.SaveChanges();
 
@@ -115,13 +117,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage DeleteImage(int id)
+        public async Task<HttpResponseMessage> DeleteImage(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var image = Db.Images.Find(id);
+                var image = await Db.Images.FindAsync(id);
                 Db.Images.Remove(image);
                 Db.SaveChanges();
 

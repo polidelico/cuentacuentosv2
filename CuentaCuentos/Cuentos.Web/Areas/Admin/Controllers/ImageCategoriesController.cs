@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Cuentos.Lib.Extensions;
 using Cuentos.Lib;
+using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Net.Http;
 using Cuentos.Areas.Admin.Lib;
 
@@ -15,9 +17,9 @@ namespace Cuentos.Areas.Admin.Controllers
     public class ImageCategoriesController : AdminGlobalController
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var imageCategories = Db.ImageCategories.ToList();
+            var imageCategories = await Db.ImageCategories.ToListAsync();
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
 
             return View(imageCategories);
@@ -45,9 +47,9 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(model).Error(SaveMessage.Error);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var imageCategory = Db.ImageCategories.Find(id);
+            var imageCategory = await Db.ImageCategories.FindAsync(id);
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "ImageCategories", new { id = imageCategory.Id }), imageCategory.Name), imageCategory);
 
             return View(imageCategory);
@@ -67,13 +69,13 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             HttpResponseMessage response = null;
 
             try
             {
-                var imageCategory = Db.ImageCategories.Find(id);
+                var imageCategory = await Db.ImageCategories.FindAsync(id);
                 Db.ImageCategories.Remove(imageCategory);
                 Db.SaveChanges();
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };
