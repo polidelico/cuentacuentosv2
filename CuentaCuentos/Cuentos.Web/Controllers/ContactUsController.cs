@@ -65,7 +65,7 @@ namespace Cuentos.Controllers
                 contact.Subject = model.Subject;
                 contact.Comments = model.Comments;
                 Db.Contacts.Add(contact);
-                var result = Db.SaveChangesAsync();
+                var result = await Db.SaveChangesAsync();
 
 
 

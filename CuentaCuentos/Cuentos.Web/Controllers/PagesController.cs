@@ -48,15 +48,17 @@ namespace Cuentos.Controllers
         {
             if (postedFiles != null)
             {
-                var user = await Db.Users.FindAsync(id);
-                if (user != null)
+                var user =  Db.Users.FindAsync(id);
+                var userGallery =  Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefaultAsync();
+                Task.WaitAll(user,userGallery);
+                var galery = userGallery.Result;
+                if (user.Result != null)
                 {
 
-                    var userGallery = await Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefaultAsync();
 
-                    if (userGallery == null)
+                    if (galery == null)
                     {
-                        userGallery = new BuilderGallery
+                        galery = new BuilderGallery
                         {
                             Name = id + "Gallery",
                             Description = "Gallery automatically created for " + id,
@@ -64,7 +66,7 @@ namespace Cuentos.Controllers
                             Active = true
                         };
 
-                        Db.BuilderGalleries.Add(userGallery);
+                        Db.BuilderGalleries.Add(galery);
                         Db.SaveChanges();
                     }
 
@@ -75,7 +77,7 @@ namespace Cuentos.Controllers
                         ImagebleId = userGallery.Id
                     };
 
-                    userGallery.Images.Add(image);
+                    galery.Images.Add(image);
                     Db.SaveChanges();
 
                     UploadImage(postedFiles, image, false);
@@ -122,12 +124,13 @@ namespace Cuentos.Controllers
         {
 
             var result = false;
-            var image = await Db.Images.FindAsync(id);
-            var userGallery = await Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
+            var image = Db.Images.FindAsync(id);
+            var userGallery = Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
 
-            if (image.ImagebleId == userGallery.Id)
+            Task.WaitAll(image, userGallery);
+            if (image.Result.ImagebleId == userGallery.Result.Id)
             {
-                Db.Images.Remove(image);
+                Db.Images.Remove(image.Result);
                 Db.SaveChanges();
                 result = true;
             }
@@ -141,20 +144,26 @@ namespace Cuentos.Controllers
         {
             List<dynamic> images = new List<dynamic>();
             List<BuilderGallery> galleries = null;
+            Task<List<BuilderGallery>> galleryTask = null;
 
             if (onlyUserImages)
             {
-                galleries = await Db.BuilderGalleries.Include("Images")
+                galleryTask =  Db.BuilderGalleries.Include("Images")
                                     .Where(g => g.UserName == LoggedUser.UserName
                                      && g.Active == true).ToListAsync();
             }
             else
             {
-                galleries =  await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
+                galleryTask =   Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
                     || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
             }
 
-            List<ImageCategory> allImageCategories = await Db.ImageCategories.ToListAsync(); ;
+            List<ImageCategory> allImageCategories = null;
+            var categoriesTask = Db.ImageCategories.ToListAsync();
+
+            Task.WaitAll(galleryTask, categoriesTask);
+            allImageCategories = categoriesTask.Result;
+            galleries = galleryTask.Result;
 
             foreach (BuilderGallery gallery in galleries)
             {

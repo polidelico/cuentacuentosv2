@@ -40,32 +40,35 @@ namespace Cuentos.Controllers
         [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
-            var story = await Db.Stories.FindAsync(id);
-            if (story == null)
+            var story =  Db.Stories.FindAsync(id);
+
+            var categories = Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
+            var grades =  Db.Grades.Select(g => new { g.Id, g.Name, g.Position }).OrderBy(g => g.Position).ToListAsync();
+            var interests = Db.Interests.Select(i => new { i.Id, i.Name }).ToListAsync();
+            var pageTypes = Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
+            var galleries = Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
+                || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
+
+            Task.WaitAll(categories, grades, interests, pageTypes,story);
+            if (story.Result == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
-            var grades =  await Db.Grades.Select(g => new { g.Id, g.Name, g.Position }).OrderBy(g => g.Position).ToListAsync();
-            var interests = await Db.Interests.Select(i => new { i.Id, i.Name }).ToListAsync();
-            var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
             List<dynamic> images = new List<dynamic>();
             List<dynamic> templates = new List<dynamic>();
             List<ImageCategory> allImageCategories = await Db.ImageCategories.ToListAsync();
             List<ImageCategory> imageCategories = new List<ImageCategory>();
             var returnStory = new Story
             {
-                Id = story.Id,
-                Name = story.Name,
-                Summary = story.Summary,
-                Categories = story.Categories.Select(c => new Category { Id = c.Id, Name = c.Name }).ToList(),
-                Grades = story.Grades.Select(g => new Grade { Id = g.Id, Name = g.Name }).ToList(),
-                Interests = story.Interests.Select(i => new Interest { Id = i.Id, Name = i.Name }).ToList(),
+                Id = story.Result.Id,
+                Name = story.Result.Name,
+                Summary = story.Result.Summary,
+                Categories = story.Result.Categories.Select(c => new Category { Id = c.Id, Name = c.Name }).ToList(),
+                Grades = story.Result.Grades.Select(g => new Grade { Id = g.Id, Name = g.Name }).ToList(),
+                Interests = story.Result.Interests.Select(i => new Interest { Id = i.Id, Name = i.Name }).ToList(),
             };
-            var galleries = await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
-                || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
-
-            foreach (BuilderGallery gallery in galleries)
+            
+            foreach (BuilderGallery gallery in galleries.Result)
             {
                 var isUserGallery = string.IsNullOrEmpty(gallery.UserName) ? false : true;
 
@@ -86,7 +89,7 @@ namespace Cuentos.Controllers
                 }
             }
 
-            foreach (PageType pageType in pageTypes)
+            foreach (PageType pageType in pageTypes.Result)
             {
                 templates.Add(new
                 {
@@ -99,9 +102,9 @@ namespace Cuentos.Controllers
             }
 
             //ViewBag.Pages = story.Pages;
-            ViewBag.Grades = grades;
-            ViewBag.Interests = interests;
-            ViewBag.Categories = categories;
+            ViewBag.Grades = grades.Result;
+            ViewBag.Interests = interests.Result;
+            ViewBag.Categories = categories.Result;
             ViewBag.ImageCategories = imageCategories;
             ViewBag.PageTypes = templates;
             ViewBag.Images = images;
@@ -343,7 +346,7 @@ namespace Cuentos.Controllers
                     email.AddGlobalVariable("TITLE", "El usuario <strong>" + story.UserName + "</strong> ha sometido un cuento para aprobación");
                     email.AddGlobalVariable("CONTENT", "El título del cuento para aprobar es: <strong>" + story.Name + "</strong>.");
                     email.AddGlobalVariable("CALLTOACTION", "Apruebe el cuento <a href=\"" + Url.Action("Index", "Approvals", new { area = "admin" }, Request.Url.Scheme) + "\"> aqui </a>");
-                    var result = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
+                    mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
                 }
 
                 response = new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };
@@ -455,11 +458,13 @@ namespace Cuentos.Controllers
                                           .Where(s => s.Status == StatusStory.Published).ToListAsync();
 
             model.Stories = stories.ToPagedList(pageNumber, pageSize);
-
+           var gradesTask =  Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            var categoriesTask = Db.Categories.Where(c => c.Active).ToListAsync();
+            Task.WaitAll(gradesTask, categoriesTask);
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Cities = new SelectList(cities, "Id", "Name");
-            ViewBag.Grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
-            ViewBag.Categories = await Db.Categories.Where(c => c.Active == true).ToListAsync();
+            ViewBag.Grades = gradesTask.Result;
+            ViewBag.Categories = categoriesTask.Result;
 
             return View(model);
         }

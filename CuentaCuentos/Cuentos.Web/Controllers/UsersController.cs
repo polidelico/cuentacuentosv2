@@ -34,10 +34,12 @@ namespace Cuentos.Controllers
             Thread.CurrentThread.CurrentCulture = es;
 
 
-            var user = await Db.Users.Include("ImageHolders").FirstOrDefaultAsync(u => u.UserName == id);
+            var user = Db.Users.Include("ImageHolders").FirstOrDefaultAsync(u => u.UserName == id);
 
-            ViewBag.Stories = await Db.Stories.Where(s => s.UserName == id && s.Status == StatusStory.Published).ToListAsync();
-            return View(user);
+            var storiesTask = Db.Stories.Where(s => s.UserName == id && s.Status == StatusStory.Published).ToListAsync();
+            Task.WaitAll(storiesTask, user);
+            ViewBag.Stories = storiesTask.Result;
+            return View(user.Result);
         }
 
     }

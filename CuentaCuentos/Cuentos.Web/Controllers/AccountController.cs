@@ -170,9 +170,13 @@ namespace CodeFirstAltairis.Controllers
 
         private async Task<bool> setRegisterModel()
         {
-            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
-            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            var schoolsTask = Db.Schools.OrderBy(s => s.Name).ToListAsync();
+            var gradesTask =  Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            var interestesTask = Db.Interests.ToListAsync();
             var ownerTypesSelectList = new List<SelectListItem>();
+            Task.WaitAll(schoolsTask, gradesTask,interestesTask);
+            var schools = schoolsTask.Result;
+            var grades = gradesTask.Result;
 
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
             {
@@ -186,7 +190,7 @@ namespace CodeFirstAltairis.Controllers
             ViewBag.OwnerTypesSelectList = ownerTypesSelectList;
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Grades = new SelectList(grades, "Id", "Name");
-            ViewBag.Interests = await Db.Interests.ToListAsync();
+            ViewBag.Interests = interestesTask.Result;
 
 
             //RegisterModel model = new RegisterModel();
@@ -260,9 +264,12 @@ namespace CodeFirstAltairis.Controllers
 
             if (createStatus == MembershipCreateStatus.Success)
             {
-                var user = await Db.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
-                var role = await Db.Roles.FindAsync(roleType.ToString());
-
+                var userTask = Db.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
+                var roleTask = Db.Roles.FindAsync(roleType.ToString());
+                
+                Task.WaitAll(userTask, roleTask);
+                var user = userTask.Result;
+                var role = roleTask.Result;
                 user.Name = model.Name;
                 user.LastName = model.LastName;
                 user.SchoolId = model.SchoolId;
@@ -276,7 +283,6 @@ namespace CodeFirstAltairis.Controllers
                 if (selectedInterests != null)
                 {
                     user.Interests.Clear();
-
                     foreach (var selectedInterest in selectedInterests)
                     {
                         int interestId = Convert.ToInt32(selectedInterest);
@@ -285,7 +291,7 @@ namespace CodeFirstAltairis.Controllers
                     }
                 }
 
-               var result = await Db.SaveChangesAsync();
+                Db.SaveChanges();
             }
 
             return createStatus;

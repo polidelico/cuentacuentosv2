@@ -21,17 +21,20 @@ namespace Cuentos.Controllers
         public async Task<ActionResult> Details(int id)
         {
 
-            ViewBag.Users = await Db.Users.Include("ImageHolders")
-                                          .Where(u => u.SchoolId == id && u.Featured == true)
-                                          .ToListAsync();
-            ViewBag.Stories = await Db.Stories.Include("Ratings")
-                                              .Where(s => s.User.SchoolId == id 
-                                                     && s.Featured == true 
+            var usersTask = Db.Users.Include("ImageHolders")
+                                    .Where(u => u.SchoolId == id && u.Featured == true)
+                                    .ToListAsync();
+            var storiesTask = Db.Stories.Include("Ratings").Where(s => s.User.SchoolId == id
+                                                     && s.Featured == true
                                                      && s.Status == StatusStory.Published)
                                             .ToListAsync();
+            var school = Db.Schools.FindAsync(id);
 
-            var school = await Db.Schools.FindAsync(id);
-            return View(school);
+            Task.WaitAll(usersTask, storiesTask,school);
+            ViewBag.Stories = storiesTask.Result;
+            ViewBag.Users = usersTask.Result;
+
+            return View(school.Result);
         }
 
 
