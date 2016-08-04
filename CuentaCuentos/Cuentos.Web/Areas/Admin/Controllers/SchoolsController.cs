@@ -211,7 +211,7 @@ namespace Cuentos.Areas.Admin.Controllers
             var users = await Db.Users.Where(u => u.SchoolId == id).Select(u => u.UserName).ToListAsync();
             var stories = await Db.Stories.Where(s => users.Contains(s.UserName)).ToListAsync();
             var school = await Db.Schools.FindAsync(id);
-
+            
             if (school != null && school.isAuthorized())
             {
                 var controllerBreadcrumbs = new List<KeyValuePair<String, String>>
@@ -302,7 +302,7 @@ namespace Cuentos.Areas.Admin.Controllers
             return breadcrumbs;
         }
 
-        public List<SelectListItem> GetDDLOptions(string type, string selected = "")
+        public async Task<List<SelectListItem>> GetDDLOptions(string type, string selected = "")
         {
             List<SelectListItem> result = null;
             //var defaultText = Resources.Tools.Contact.Default_DDL_Value.ToString();
@@ -314,7 +314,7 @@ namespace Cuentos.Areas.Admin.Controllers
                     {
                         List<City> options = null;
 
-                        options = Db.Cities.OrderBy(c => c.Name).ToList();
+                        options = await Db.Cities.OrderBy(c => c.Name).ToListAsync();
                         result = new List<SelectListItem>();
                         result.Add(new SelectListItem { Text = "Selecciona un pueblo", Value = "" });
                         foreach (var city in options)

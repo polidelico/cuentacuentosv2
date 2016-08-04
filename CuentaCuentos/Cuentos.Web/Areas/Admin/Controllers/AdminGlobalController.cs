@@ -14,18 +14,32 @@ namespace Cuentos.Areas.Admin.Controllers
 
     public class AdminGlobalControllerFilter : ActionFilterAttribute
     {
-        public override async void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CuentosContext db = new CuentosContext();
-            var user = await db.Users.FindAsync(HttpContext.Current.User.Identity.Name);
-            var userRole = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), user.Roles.First().RoleName, true);
+            var userTask =  db.Users.FindAsync(HttpContext.Current.User.Identity.Name);
+            var storiesCountTask = db.Stories.CountAsync();
+            var schoolCountTask = db.Stories.CountAsync();
+            var userCountAsync = db.Users.CountAsync();
+            try
+            {
+                Task.WaitAll(storiesCountTask, schoolCountTask, userTask, userCountAsync);
+            }catch (AggregateException e)
+            {
+                
+            }
+            var user = userTask.IsCompleted && userTask.Exception != null ? userTask.Result : null;
+            var roleName = user != null ? user.Roles.First().RoleName : string.Empty;
+            var userRole = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), roleName, true);
 
             filterContext.Controller.ViewBag.LoggedUser = user;
             filterContext.Controller.ViewBag.IsSuperAdmin = userRole == Role.RoleType.superAdmin ? true : false;
-            filterContext.Controller.ViewBag.StoriesCounterBatch = db.Stories.Count();
-            filterContext.Controller.ViewBag.SchoolsCounterBatch = db.Schools.Count();
-            filterContext.Controller.ViewBag.UsersCounterBatch = db.Users.Count();
+            filterContext.Controller.ViewBag.StoriesCounterBatch = storiesCountTask.IsCompleted && storiesCountTask.Exception != null ? storiesCountTask.Result : 0;
+            filterContext.Controller.ViewBag.SchoolsCounterBatch = schoolCountTask.IsCompleted && schoolCountTask.Exception != null ? schoolCountTask.Result : 0;
+            filterContext.Controller.ViewBag.UsersCounterBatch = userCountAsync.IsCompleted && userCountAsync.Exception != null ? userCountAsync.Result : 0;
+
         }
+
     }
 
     [Authorize(Roles = "superAdmin, schoolAdmin")]

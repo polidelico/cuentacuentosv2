@@ -69,11 +69,11 @@ namespace Cuentos.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").Include("Interests").FirstAsync(s => s.Id == id);
+            Story story = null;
+            Task<Story> storyTask = Db.Stories.Include("Images").Include("Grades").Include("Categories").Include("Interests").FirstAsync(s => s.Id == id);
             IEnumerable<StatusStory> statuses = Enum.GetValues(typeof(StatusStory)).Cast<StatusStory>();
             var statusSelect = new List<SelectListItem>();
 
-            InitializeModelImages(story);
             foreach (StatusStory status in statuses)
             {
                 statusSelect.Add(new SelectListItem
@@ -84,9 +84,27 @@ namespace Cuentos.Areas.Admin.Controllers
             }
 
             ViewBag.StatusDDL = statusSelect;
-            ViewBag.Grades = Db.Grades;
-            ViewBag.Categories = Db.Categories.Where(c => c.Active == true);
-            ViewBag.Interests = Db.Interests;
+            var gradesTask = Db.Grades.ToListAsync();
+            var categories = Db.Categories.Where(c => c.Active).ToListAsync();
+            var interest = Db.Interests.ToListAsync();
+            try
+            {
+                Task.WaitAll(gradesTask, categories, interest,storyTask);
+               
+            }
+            catch (AggregateException e)
+            {
+
+            }
+
+            ViewBag.Grades = gradesTask.IsCompleted && gradesTask.Exception == null ? gradesTask.Result : null;
+            ViewBag.Categories = categories.IsCompleted && categories.Exception == null ? categories.Result : null;
+            ViewBag.Interests = interest.IsCompleted && interest.Exception == null ?  interest.Result : null;
+            story = storyTask.IsCompleted && storyTask.Exception == null ? storyTask.Result : null;
+
+            InitializeModelImages(story);
+
+
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "Stories", new { id = id }), story.Name));
 
             return View(story);
@@ -119,7 +137,7 @@ namespace Cuentos.Areas.Admin.Controllers
                 {
                     foreach (var gradeId in selectedGrades)
                     {
-                        var grade = Db.Grades.Find(gradeId);
+                        var grade = await Db.Grades.FindAsync(gradeId);
                         model.Grades.Add(grade);
                     }
                 }

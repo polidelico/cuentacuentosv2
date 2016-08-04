@@ -49,7 +49,15 @@ namespace Cuentos.Controllers
             var galleries = Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
                 || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
 
-            Task.WaitAll(categories, grades, interests, pageTypes,story);
+            try
+            {
+                Task.WaitAll(categories, grades, interests, pageTypes, story);
+            }catch(AggregateException e)
+            {
+
+            }
+
+
             if (story.Result == null)
             {
                 return RedirectToAction("Index", "Home");

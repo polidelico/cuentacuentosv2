@@ -48,11 +48,18 @@ namespace Cuentos.Controllers
         {
             if (postedFiles != null)
             {
-                var user =  Db.Users.FindAsync(id);
+                var userTask =  Db.Users.FindAsync(id);
                 var userGallery =  Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefaultAsync();
-                Task.WaitAll(user,userGallery);
-                var galery = userGallery.Result;
-                if (user.Result != null)
+                try
+                {
+                    Task.WaitAll(userTask, userGallery);
+                }catch(AggregateException e)
+                {
+
+                }
+                var galery = userGallery.IsCompleted && userGallery.Exception == null ? userGallery.Result : null;
+                var user = userTask.IsCompleted && userTask.Exception == null ? userTask.Result : null;
+                if (user != null)
                 {
 
 
@@ -126,9 +133,18 @@ namespace Cuentos.Controllers
             var result = false;
             var image = Db.Images.FindAsync(id);
             var userGallery = Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
+            try
+            {
+                Task.WaitAll(image, userGallery);
+            }catch(AggregateException e)
+            {
 
-            Task.WaitAll(image, userGallery);
-            if (image.Result.ImagebleId == userGallery.Result.Id)
+            }
+
+            var imageObj = image.IsCompleted && image.Exception == null ? image.Result : null;
+            var userGal = userGallery.IsCompleted && userGallery.Exception == null ? userGallery.Result : null;
+
+            if (imageObj.ImagebleId == userGal.Id)
             {
                 Db.Images.Remove(image.Result);
                 Db.SaveChanges();
@@ -160,10 +176,16 @@ namespace Cuentos.Controllers
 
             List<ImageCategory> allImageCategories = null;
             var categoriesTask = Db.ImageCategories.ToListAsync();
+            try
+            {
+                Task.WaitAll(galleryTask, categoriesTask);
+            }
+            catch (AggregateException e)
+            {
 
-            Task.WaitAll(galleryTask, categoriesTask);
-            allImageCategories = categoriesTask.Result;
-            galleries = galleryTask.Result;
+            }
+            allImageCategories = categoriesTask.IsCompleted && categoriesTask.Exception == null ? categoriesTask.Result : null;
+            galleries = galleryTask.IsCompleted && galleryTask.Exception == null ? galleryTask.Result : null;
 
             foreach (BuilderGallery gallery in galleries)
             {

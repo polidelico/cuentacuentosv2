@@ -19,7 +19,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var galleries = Db.BuilderGalleries.ToListAsync();
+            var galleries = await Db.BuilderGalleries.ToListAsync();
             ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
 
             return View(galleries);
@@ -48,13 +48,21 @@ namespace Cuentos.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(int id)
         {
 
-            var gallery = await Db.BuilderGalleries.Include("Images").FirstAsync(s => s.Id == id);
-            var categories = await Db.ImageCategories.ToListAsync();
+            var gallery =  Db.BuilderGalleries.Include("Images").FirstAsync(s => s.Id == id);
+            var categories =  Db.ImageCategories.ToListAsync();
+            try
+            {
+                Task.WaitAll(gallery, categories);
+            }catch (AggregateException e)
+            {
 
-            ViewBag.ImageCategoriesSelect = new SelectList(categories, "Id", "Name");
+            }
+            var galleryObj = gallery.IsCompleted && gallery.Exception == null ? gallery.Result : null;
+            var categoriesController = categories.IsCompleted && categories.Exception == null ? categories.Result : null;
+            ViewBag.ImageCategoriesSelect = new SelectList(categories.Result, "Id", "Name");
             ViewBag.ImageCategories = categories;
-            ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "BuilderGalleries", new { id = gallery.Id }), gallery.Name), gallery);
-            return View(gallery);
+            ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "BuilderGalleries", new { id = gallery.Id }), gallery.Result.Name), gallery.Result);
+            return View(gallery.Result);
         }
 
         [HttpPost]

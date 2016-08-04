@@ -18,27 +18,35 @@ namespace Cuentos.Areas.Admin.Controllers
 
         public async Task<ActionResult> Index(int id)
         {
-            var model = await Db.Comments.Include("User").Include("Story.User.School").FirstOrDefaultAsync(c => c.StoryId == id);
+            var model =  Db.Comments.Include("User").Include("Story.User.School").FirstOrDefaultAsync(c => c.StoryId == id);
 
-            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            var story =  Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            try
+            {
+                Task.WaitAll(model, story);
+            }catch (AggregateException e)
+            {
 
+            }
+            var modelObj = model.IsCompleted && model.Exception == null ? model.Result : null;
+            var storyObj = story.IsCompleted && story.Exception == null ? story.Result : null;
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {
                 new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
                 new KeyValuePair<String, String>(Url.Action("Index", "Stories"), "Cuentos"),
-                new KeyValuePair<String, String>(@Url.Action("Edit", "Stories", new { id = id }), story.Name),
+                new KeyValuePair<String, String>(@Url.Action("Edit", "Stories", new { id = id }), storyObj.Name),
                 new KeyValuePair<String, String>(@Url.Action("Index", "Comments", new { id = id }), "Comentarios")
             };
 
 
-            return View(model);
+            return View(modelObj);
         }
 
         public async Task<ActionResult> Edit(int id)
         {
             var model = await Db.Comments.FindAsync(id);
 
-            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == model.StoryId);
+            var story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == model.StoryId);
 
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {

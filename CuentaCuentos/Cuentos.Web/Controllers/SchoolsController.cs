@@ -29,11 +29,17 @@ namespace Cuentos.Controllers
                                                      && s.Status == StatusStory.Published)
                                             .ToListAsync();
             var school = Db.Schools.FindAsync(id);
+            try
+            {
+                Task.WaitAll(usersTask, storiesTask, school);
+            }
+            catch (AggregateException e)
+            {
 
-            Task.WaitAll(usersTask, storiesTask,school);
-            ViewBag.Stories = storiesTask.Result;
-            ViewBag.Users = usersTask.Result;
-
+            }
+            ViewBag.Stories = storiesTask.IsCompleted && storiesTask.Exception == null ? storiesTask.Result : null;
+            ViewBag.Users = usersTask.IsCompleted && usersTask.Exception == null ? usersTask.Result : null;
+            var schoolObj = school.IsCompleted && school.Exception == null ? school.Result : null;
             return View(school.Result);
         }
 

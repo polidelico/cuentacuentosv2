@@ -20,19 +20,20 @@ namespace Cuentos.Areas.Admin.Controllers
         {
             IEnumerable<Story> stories = null;
             IEnumerable<User> users = null;
-
+            Task<List<User>> usersTask = null;
+            Task<List<Story>> storiesTask = null;
             if (IsSuperAdmin)
             {
-                users = Db.Users;
-                stories = await Db.Stories.Include("Ratings").Where(s => s.Status == StatusStory.Published).ToListAsync();
+                usersTask = Db.Users.ToListAsync();
+                storiesTask = Db.Stories.Include("Ratings").Where(s => s.Status == StatusStory.Published).ToListAsync();
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
-                users = await Db.Users.Where(u => u.SchoolId == user.SchoolId).ToListAsync();
+                usersTask = Db.Users.Where(u => u.SchoolId == user.SchoolId).ToListAsync();
 
-                stories = await Db.Stories.Include("Ratings").Where(s => s.User.SchoolId == user.SchoolId && s.Status == StatusStory.Published).ToListAsync();
+                storiesTask = Db.Stories.Include("Ratings").Where(s => s.User.SchoolId == user.SchoolId && s.Status == StatusStory.Published).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
@@ -43,7 +44,16 @@ namespace Cuentos.Areas.Admin.Controllers
 
 
             }
+            try
+            {
+                Task.WaitAll(storiesTask, usersTask);
+            }catch
+            {
 
+            }
+
+            stories = storiesTask.IsCompleted && storiesTask.Exception == null ? storiesTask.Result : null;
+            users = usersTask.IsCompleted && usersTask.Exception == null ? usersTask.Result : null;
             var model = new FeaturedModel
             {
                 Stories = stories,
