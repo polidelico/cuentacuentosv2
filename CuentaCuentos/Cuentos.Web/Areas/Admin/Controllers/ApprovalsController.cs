@@ -21,26 +21,24 @@ namespace Cuentos.Areas.Admin.Controllers
             IEnumerable<Story> stories = null;
             IEnumerable<User> users = null;
             IEnumerable<Comment> comments = null;
-            Task <List<Story>>storiesTask = null;
-            Task<List<User>> usersTask = null;
-            Task<List<Comment>> commentsTask = null;
+           
 
             //TODO: Hacerlo en tabs mas comodo cada tab con su batch
 
             if (IsSuperAdmin)
             {
-                usersTask =  Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.IsApproved == false).ToListAsync();
-                storiesTask =  Db.Stories.Include("User.School").Where(s => s.Status == StatusStory.InApproval).ToListAsync();
-                commentsTask =  Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false).ToListAsync();
+                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.IsApproved == false).ToListAsync();
+                stories = await  Db.Stories.Include("User.School").Where(s => s.Status == StatusStory.InApproval).ToListAsync();
+                comments = await  Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false).ToListAsync();
 
                 ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>("", ""));
             }
             else
             {
                 var user = LoggedUser;
-                usersTask = Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
-                storiesTask = Db.Stories.Include("Ratings").Include("User.School").Where(s => s.User.SchoolId == user.SchoolId).Where(s => s.Status == StatusStory.InApproval).ToListAsync();
-                commentsTask =  Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).ToListAsync();
+                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
+                stories = await Db.Stories.Include("Ratings").Include("User.School").Where(s => s.User.SchoolId == user.SchoolId).Where(s => s.Status == StatusStory.InApproval).ToListAsync();
+                comments = await Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
@@ -50,16 +48,7 @@ namespace Cuentos.Areas.Admin.Controllers
                 };
 
             }
-            try
-            {
-                Task.WaitAll(usersTask, storiesTask, commentsTask);
-            }catch (AggregateException e)
-            {
-                
-            }
-            users = usersTask.IsCompleted && usersTask.Exception == null ? usersTask.Result : null;
-            stories = storiesTask.IsCompleted && storiesTask.Exception == null ? storiesTask.Result : null;
-            comments = commentsTask.IsCompleted && commentsTask.Exception == null ? commentsTask.Result : null;
+
             var model = new ApprovalsModel
             {
                 Stories = stories,
@@ -70,9 +59,9 @@ namespace Cuentos.Areas.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult GetUsersForApproval()
+        public async Task<ActionResult> GetUsersForApproval()
         {
-            var values = from u in Db.Users
+            var values = await (from u in Db.Users
                          join s in Db.Schools on u.SchoolId equals s.Id
                          where u.IsApproved == false
                          select new UsersModel
@@ -82,14 +71,14 @@ namespace Cuentos.Areas.Admin.Controllers
                              UserRole = u.Roles.FirstOrDefault().RoleName,
                              UserDateCreated = u.DateCreated,
                              UserName = u.UserName
-                         };
+                         }).ToListAsync();
 
             return Json(values, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetStoriesForApproval()
+        public async Task<ActionResult> GetStoriesForApproval()
         {
-            var values = from stories in Db.Stories
+            var values = await (from stories in Db.Stories
                          join users in Db.Users on stories.UserName equals users.UserName
                          join school in Db.Schools on users.SchoolId equals school.Id into users2
                          from us in users2.DefaultIfEmpty()
@@ -101,14 +90,14 @@ namespace Cuentos.Areas.Admin.Controllers
                              School = us.Name,
                              StoryID = stories.Id,
                              Created = (DateTime)stories.CreatedAt
-                         };
+                         }).ToListAsync();
 
             return Json(values, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetCommentsForApproval()
+        public async Task<ActionResult> GetCommentsForApproval()
         {
-            var values = from comments in Db.Comments
+            var values = await (from comments in Db.Comments
                          join story in Db.Stories on comments.StoryId equals story.Id
                          join users in Db.Users on comments.UserName equals users.UserName
                          join school in Db.Schools on users.SchoolId equals school.Id into school2
@@ -123,7 +112,7 @@ namespace Cuentos.Areas.Admin.Controllers
                              Comment = comments.Text,
                              CommentID = comments.Id,
                              CreatedDate = (DateTime)comments.CreatedAt
-                         };
+                         }).ToListAsync();
 
             return Json(values, JsonRequestBehavior.AllowGet);
         }

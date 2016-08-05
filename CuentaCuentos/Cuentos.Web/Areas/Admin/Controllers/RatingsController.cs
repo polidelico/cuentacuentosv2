@@ -23,22 +23,10 @@ namespace Cuentos.Areas.Admin.Controllers
         public async Task<ActionResult> Details(int id)
         {
 
-            Story story = null;
-            List < Rating > ratings = null;
-            var storiesTask =  Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            List < Rating > ratings = await Db.Ratings.Where(r => r.StoryId == id).ToListAsync();
+           
 
-            var ratingsTASK =  Db.Ratings.Where(r => r.StoryId == id).ToListAsync();
-            try
-            {
-                Task.WaitAll(ratingsTASK, storiesTask);
-               
-            }catch (AggregateException e)
-            {
-
-            }
-
-            story = storiesTask.IsCompleted && storiesTask.Exception == null ? storiesTask.Result : null;
-            ratings = ratingsTASK.IsCompleted && ratingsTASK.Exception == null ? ratingsTASK.Result : null;
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
                 {
                     new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),

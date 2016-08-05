@@ -343,40 +343,24 @@ namespace Cuentos.Areas.Admin.Controllers
         public async void setDropDowns()
         {
             //var schools = Db.Schools.ToList().OrderBy(s => s.Name);
-            var gradesTask = Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
             var sprAdminRole = Role.RoleType.superAdmin.ToString();
             var ownerTypesSelectList = new List<SelectListItem>();
             IEnumerable<School> schools = null;
             IEnumerable<Role> roles = null;
-            Task<List<School>> schoolsTask = null;
-            Task<List<Role>> rolesTask = null;
             if (IsSuperAdmin)
             {
-                schoolsTask =  Db.Schools.OrderBy(s => s.Name).ToListAsync();
-                rolesTask =  Db.Roles.OrderBy(r => r.RoleName).ToListAsync();
+                schools = await  Db.Schools.OrderBy(s => s.Name).ToListAsync();
+                roles =  await Db.Roles.OrderBy(r => r.RoleName).ToListAsync();
             }
             else
             {
                 var user = LoggedUser;
-                schoolsTask =  Db.Schools.Where(s => s.Id == user.SchoolId).OrderBy(s => s.Name).ToListAsync();
-                rolesTask =  Db.Roles.Where(r => r.RoleName != sprAdminRole).ToListAsync();
-            }
-            List<Grade> grades = null;
-            try
-            {
-
-                Task.WaitAll(gradesTask, schoolsTask, rolesTask);
-
-               
-
-            }catch(AggregateException e)
-            {
-
+                schools = await  Db.Schools.Where(s => s.Id == user.SchoolId).OrderBy(s => s.Name).ToListAsync();
+                roles = await Db.Roles.Where(r => r.RoleName != sprAdminRole).ToListAsync();
             }
 
-            roles = rolesTask.IsCompleted && rolesTask.Exception == null ? rolesTask.Result : null;
-            schools = schoolsTask.IsCompleted && schoolsTask.Exception == null ? schoolsTask.Result : null;
-            grades = gradesTask.IsCompleted && gradesTask.Exception == null ? gradesTask.Result : null;
+            
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
             {
                 ownerTypesSelectList.Add(new SelectListItem

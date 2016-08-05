@@ -17,26 +17,19 @@ namespace Cuentos.Areas.Admin.Controllers
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CuentosContext db = new CuentosContext();
-            var userTask =  db.Users.FindAsync(HttpContext.Current.User.Identity.Name);
-            var storiesCountTask = db.Stories.CountAsync();
-            var schoolCountTask = db.Stories.CountAsync();
-            var userCountAsync = db.Users.CountAsync();
-            try
-            {
-                Task.WaitAll(storiesCountTask, schoolCountTask, userTask, userCountAsync);
-            }catch (AggregateException e)
-            {
-                
-            }
-            var user = userTask.IsCompleted && userTask.Exception != null ? userTask.Result : null;
+            var user = db.Users.Find(HttpContext.Current.User.Identity.Name);
+            var storiesCount =  db.Stories.Count();
+            var schoolCount =  db.Stories.Count();
+            var userCount =  db.Users.Count();
+            
             var roleName = user != null ? user.Roles.First().RoleName : string.Empty;
             var userRole = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), roleName, true);
 
             filterContext.Controller.ViewBag.LoggedUser = user;
-            filterContext.Controller.ViewBag.IsSuperAdmin = userRole == Role.RoleType.superAdmin ? true : false;
-            filterContext.Controller.ViewBag.StoriesCounterBatch = storiesCountTask.IsCompleted && storiesCountTask.Exception != null ? storiesCountTask.Result : 0;
-            filterContext.Controller.ViewBag.SchoolsCounterBatch = schoolCountTask.IsCompleted && schoolCountTask.Exception != null ? schoolCountTask.Result : 0;
-            filterContext.Controller.ViewBag.UsersCounterBatch = userCountAsync.IsCompleted && userCountAsync.Exception != null ? userCountAsync.Result : 0;
+            filterContext.Controller.ViewBag.IsSuperAdmin = userRole == Role.RoleType.superAdmin;
+            filterContext.Controller.ViewBag.StoriesCounterBatch = storiesCount;
+            filterContext.Controller.ViewBag.SchoolsCounterBatch = schoolCount;
+            filterContext.Controller.ViewBag.UsersCounterBatch = userCount;
 
         }
 

@@ -48,21 +48,13 @@ namespace Cuentos.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(int id)
         {
 
-            var gallery =  Db.BuilderGalleries.Include("Images").FirstAsync(s => s.Id == id);
-            var categories =  Db.ImageCategories.ToListAsync();
-            try
-            {
-                Task.WaitAll(gallery, categories);
-            }catch (AggregateException e)
-            {
+            var gallery =  await Db.BuilderGalleries.Include("Images").FirstAsync(s => s.Id == id);
+            var categories = await Db.ImageCategories.ToListAsync();
 
-            }
-            var galleryObj = gallery.IsCompleted && gallery.Exception == null ? gallery.Result : null;
-            var categoriesController = categories.IsCompleted && categories.Exception == null ? categories.Result : null;
-            ViewBag.ImageCategoriesSelect = new SelectList(categories.Result, "Id", "Name");
+            ViewBag.ImageCategoriesSelect = new SelectList(categories, "Id", "Name");
             ViewBag.ImageCategories = categories;
-            ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "BuilderGalleries", new { id = gallery.Id }), gallery.Result.Name), gallery.Result);
-            return View(gallery.Result);
+            ViewBag.breadcrumbs = Breadcrumbs(new KeyValuePair<String, String>(@Url.Action("Edit", "BuilderGalleries", new { id = gallery.Id }), gallery.Name), gallery);
+            return View(gallery);
         }
 
         [HttpPost]
