@@ -16,26 +16,8 @@ namespace Cuentos.Controllers
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CuentosContext db = new CuentosContext();
-            var userTask = db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.Current.User.Identity.Name).FirstAsync();
-            User loggedUser = null;
-            try
-            {
-                Task.WaitAll(userTask);
-            }catch(AggregateException e)
-            {
-                var errors = new List<string>();
-
-                for(int i = 0; i < e.InnerExceptions.Count; i++)
-                {
-                    var exception = e.InnerExceptions[i];
-
-                    errors.Add(exception.Message);
-                }
-
-                System.IO.File.WriteAllLines(@"C:\exceptions.text", errors.ToArray());
-            }
-
-            loggedUser = userTask.IsCompleted && userTask.Exception == null ? userTask.Result : null;
+            var loggedUser = db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.Current.User.Identity.Name);
+           
             filterContext.Controller.ViewBag.LoggedUser = loggedUser;
         }
     }

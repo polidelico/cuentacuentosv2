@@ -47,40 +47,27 @@ namespace CodeFirstAltairis.Controllers
             //CultureInfo es = new CultureInfo("es-PR");
             //Thread.CurrentThread.CurrentCulture = es;
 
-            var model =  Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
-            var schools =  Db.Schools.OrderBy(s => s.Name).ToListAsync();
-            var grades =  Db.Grades.OrderBy(g => g.Position).ToListAsync();
-            var interestsTask = Db.Interests.ToListAsync();
+            var model =  await Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
+            var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
+            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            var interestsTask = await Db.Interests.ToListAsync();
 
             var user = LoggedUser;
-            var StoriesNotApproved =  Db.Stories.Where(s =>
+            var StoriesNotApproved =  await Db.Stories.Where(s =>
                                                       s.UserName == user.UserName
                                                       && (s.Status == StatusStory.Draft || 
                                                       s.Status == StatusStory.InApproval || 
                                                       s.Status == StatusStory.UnPublished)).ToListAsync();
 
-            var storiesApproved =  Db.Stories.Where(s => s.UserName == user.UserName
+            var storiesApproved = await Db.Stories.Where(s => s.UserName == user.UserName
                                                    && (s.Status == StatusStory.Published)).ToListAsync();
-
-            try
-            {
-                Task.WaitAll(model, schools, grades, storiesApproved, StoriesNotApproved);
-            }catch
-            {
-
-            }
-            var schooldsObj = schools.IsCompleted && schools.Exception == null ? schools.Result : null;
-            var modelObj = model.IsCompleted && model.Exception == null ? model.Result : null;
-            var gradesObj = grades.IsCompleted && grades.Exception == null ? grades.Result : null;
-            var approvedObj = storiesApproved.IsCompleted && storiesApproved.Exception == null ? storiesApproved.Result : null;
-            var notApproved = StoriesNotApproved.IsCompleted && StoriesNotApproved.Exception == null ? StoriesNotApproved.Result : null;
-            var interestsObj = interestsTask.IsCompleted && interestsTask.Exception == null ? interestsTask.Result : null;
-            ViewBag.Schools = new SelectList(schooldsObj, "Id", "Name");
-            ViewBag.Grades = new SelectList(gradesObj, "Id", "Name");
-            ViewBag.Interests = Db.Interests.ToList();
-            ViewBag.StoriesNotApproved = notApproved;
-            ViewBag.StoriesApproved = approvedObj;
-            InitializeModelImages(modelObj);
+            
+            ViewBag.Schools = new SelectList(schools, "Id", "Name");
+            ViewBag.Grades = new SelectList(grades, "Id", "Name");
+            ViewBag.Interests = interestsTask;
+            ViewBag.StoriesNotApproved = StoriesNotApproved;
+            ViewBag.StoriesApproved = storiesApproved;
+            InitializeModelImages(model);
 
             return View(model);
         }
@@ -182,20 +169,11 @@ namespace CodeFirstAltairis.Controllers
 
         private async Task<bool> setRegisterModel()
         {
-            var schoolsTask = Db.Schools.OrderBy(s => s.Name).ToListAsync();
-            var gradesTask =  Db.Grades.OrderBy(g => g.Position).ToListAsync();
-            var interestesTask = Db.Interests.ToListAsync();
+            var schoolsTask = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
+            var gradesTask = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
+            var interestesTask = await Db.Interests.ToListAsync();
             var ownerTypesSelectList = new List<SelectListItem>();
-            try
-            {
-                Task.WaitAll(schoolsTask, gradesTask, interestesTask);
-            }catch
-            {
 
-            }
-            var schools = schoolsTask.IsCompleted && schoolsTask.Exception == null ? schoolsTask.Result : null;
-            var grades = gradesTask.IsCompleted && gradesTask.Exception == null ? gradesTask.Result : null;
-            var interests = interestesTask.IsCompleted && interestesTask.Exception == null ? interestesTask.Result : null;
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
             {
                 ownerTypesSelectList.Add(new SelectListItem
@@ -206,9 +184,9 @@ namespace CodeFirstAltairis.Controllers
             }
 
             ViewBag.OwnerTypesSelectList = ownerTypesSelectList;
-            ViewBag.Schools = new SelectList(schools, "Id", "Name");
-            ViewBag.Grades = new SelectList(grades, "Id", "Name");
-            ViewBag.Interests = interests;
+            ViewBag.Schools = new SelectList(schoolsTask, "Id", "Name");
+            ViewBag.Grades = new SelectList(gradesTask, "Id", "Name");
+            ViewBag.Interests = interestesTask;
 
 
             //RegisterModel model = new RegisterModel();
@@ -282,20 +260,10 @@ namespace CodeFirstAltairis.Controllers
 
             if (createStatus == MembershipCreateStatus.Success)
             {
-                var userTask = Db.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
-                var roleTask = Db.Roles.FindAsync(roleType.ToString());
-                User user = null;
-                Role role = null;
-                try
-                {
-                    Task.WaitAll(userTask, roleTask);
-                }catch (AggregateException e)
-                {
-                    
-                }
-                 user = userTask.IsCompleted && userTask.Exception == null ? userTask.Result : null;
-                role = roleTask.IsCompleted && roleTask.Exception == null ? roleTask.Result : null;
-                user.Name = model.Name;
+                var user = await Db.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
+                var role = await Db.Roles.FindAsync(roleType.ToString());
+               
+                user.Name = model.Name == null ? string.Empty : model.Name;
                 user.LastName = model.LastName;
                 user.SchoolId = model.SchoolId;
                 user.GradeId = model.GradeId;

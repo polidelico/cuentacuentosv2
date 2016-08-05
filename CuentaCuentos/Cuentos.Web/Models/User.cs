@@ -96,7 +96,7 @@ namespace Cuentos.Models
         [Display(Name = "Aprobado")]
         public bool IsApproved { get; set; }
 
-        [Display(Name = "Crate Date")]
+        [Display(Name = "Create Date")]
         public DateTime DateCreated { get; set; }
 
         [Display(Name = "Last Login Date")]

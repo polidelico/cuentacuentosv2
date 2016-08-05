@@ -63,9 +63,8 @@ namespace CodeFirstAltairis.Models
             if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
             if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
             if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
-
             MembershipCreateStatus status;
-            _provider.CreateUser(userName, password, email, null, null, true, null, out status);
+            _provider.CreateUser(userName, password, email, "", "", true, null, out status);
             return status;
         }
 

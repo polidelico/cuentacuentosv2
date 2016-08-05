@@ -48,24 +48,16 @@ namespace Cuentos.Controllers
         {
             if (postedFiles != null)
             {
-                var userTask =  Db.Users.FindAsync(id);
-                var userGallery =  Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefaultAsync();
-                try
-                {
-                    Task.WaitAll(userTask, userGallery);
-                }catch(AggregateException e)
-                {
-
-                }
-                var galery = userGallery.IsCompleted && userGallery.Exception == null ? userGallery.Result : null;
-                var user = userTask.IsCompleted && userTask.Exception == null ? userTask.Result : null;
+                var user = await Db.Users.FindAsync(id);
+                var userGallery = await  Db.BuilderGalleries.Where(g => g.UserName == id).FirstOrDefaultAsync();
+                
                 if (user != null)
                 {
 
 
-                    if (galery == null)
+                    if (userGallery == null)
                     {
-                        galery = new BuilderGallery
+                        userGallery = new BuilderGallery
                         {
                             Name = id + "Gallery",
                             Description = "Gallery automatically created for " + id,
@@ -73,7 +65,7 @@ namespace Cuentos.Controllers
                             Active = true
                         };
 
-                        Db.BuilderGalleries.Add(galery);
+                        Db.BuilderGalleries.Add(userGallery);
                         Db.SaveChanges();
                     }
 
@@ -84,7 +76,7 @@ namespace Cuentos.Controllers
                         ImagebleId = userGallery.Id
                     };
 
-                    galery.Images.Add(image);
+                    userGallery.Images.Add(image);
                     Db.SaveChanges();
 
                     UploadImage(postedFiles, image, false);
@@ -131,22 +123,14 @@ namespace Cuentos.Controllers
         {
 
             var result = false;
-            var image = Db.Images.FindAsync(id);
-            var userGallery = Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
-            try
-            {
-                Task.WaitAll(image, userGallery);
-            }catch(AggregateException e)
-            {
+            var imageObj = await Db.Images.FindAsync(id);
+            var userGal = await Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
 
-            }
 
-            var imageObj = image.IsCompleted && image.Exception == null ? image.Result : null;
-            var userGal = userGallery.IsCompleted && userGallery.Exception == null ? userGallery.Result : null;
-
+            
             if (imageObj.ImagebleId == userGal.Id)
             {
-                Db.Images.Remove(image.Result);
+                Db.Images.Remove(imageObj);
                 Db.SaveChanges();
                 result = true;
             }
@@ -160,32 +144,21 @@ namespace Cuentos.Controllers
         {
             List<dynamic> images = new List<dynamic>();
             List<BuilderGallery> galleries = null;
-            Task<List<BuilderGallery>> galleryTask = null;
 
             if (onlyUserImages)
             {
-                galleryTask =  Db.BuilderGalleries.Include("Images")
+                galleries  = await  Db.BuilderGalleries.Include("Images")
                                     .Where(g => g.UserName == LoggedUser.UserName
                                      && g.Active == true).ToListAsync();
             }
             else
             {
-                galleryTask =   Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
+                galleries =  await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
                     || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
             }
 
-            List<ImageCategory> allImageCategories = null;
-            var categoriesTask = Db.ImageCategories.ToListAsync();
-            try
-            {
-                Task.WaitAll(galleryTask, categoriesTask);
-            }
-            catch (AggregateException e)
-            {
-
-            }
-            allImageCategories = categoriesTask.IsCompleted && categoriesTask.Exception == null ? categoriesTask.Result : null;
-            galleries = galleryTask.IsCompleted && galleryTask.Exception == null ? galleryTask.Result : null;
+            ///List<ImageCategory> allImageCategories = await Db.ImageCategories.ToListAsync();
+          
 
             foreach (BuilderGallery gallery in galleries)
             {
