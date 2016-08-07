@@ -112,26 +112,7 @@
                 <span class="help-block note error"><i class="icon-warning-sign"></i> @Html.ValidationMessageFor(model => model.User.IsApproved) </span>
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.User.Interests, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @foreach (var interest in ViewBag.Interests)
-                {
-                    if (ViewBag.Edit == true)
-                    {
-                        <input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id"
-                               @(Model.User.Interests.Where(i => i.Name == interest.Name).Count() > 0 ? "checked" : "") />
-                    }
-                    else
-                    {
-                        <input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id" />
-                    }
-
-                    <label for="interest-@interest.Id">@interest.Name</label>
-                    <br />
-                }
-            </div>
-        </div>
+        
         <div class="form-actions">
             <button type="submit" class="btn btn-blue">Guardar cambios</button>
             <a class="btn btn-default" href="@Url.Action("Index", "Users")">Cancelar</a>

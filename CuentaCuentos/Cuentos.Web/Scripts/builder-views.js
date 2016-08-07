@@ -8,7 +8,6 @@ App.Views.App = Backbone.View.extend({
         //get general data 
         App.Categories = new App.Collections.Categories(App.CategoriesJson);
         App.Grades = new App.Collections.Grades(App.GradesJson);
-        App.Interests = new App.Collections.Interests(App.InterestsJson);
         App.PageTypes = new App.Collections.PageTypes(App.PageTypesJson);
         App.Images = new App.Collections.Images(App.ImagesJson);
         App.ImageCategories = new App.Collections.ImageCategories(App.ImagesCategoriesJson);
@@ -17,7 +16,6 @@ App.Views.App = Backbone.View.extend({
         //set story properties
         App.Story.set('AllCategories', App.Categories);
         App.Story.set('AllGrades', App.Grades);
-        App.Story.set('AllInterests', App.Interests);
         
         // instantiate views
         var saveStoryButtonView = new App.Views.SaveStoryButton();
@@ -640,7 +638,6 @@ App.Views.StoryInfoModal = Backbone.View.extend({
             story: this.model.toJSON(),
             allCategories: this.model.get('AllCategories').toJSON(),
             allGrades: this.model.get('AllGrades').toJSON(),
-            allInterests: this.model.get('AllInterests').toJSON()
         });
         this.$el.html(html);
 
@@ -651,21 +648,16 @@ App.Views.StoryInfoModal = Backbone.View.extend({
 
         var selCategories = [];
         var selGrades= [];
-        var selInterests = [];
         var name = this.$('#story-name').val();
         var summary = this.$('#story-summary').val();
         var categories = this.$('input[name="category"]:checked');
         var grades = this.$('input[name="grade"]:checked');
-        var interests = this.$('input[name="interest"]:checked');
 
         categories.each(function (i, e) {
             selCategories[i] = $(this).val();
         });
         grades.each(function (i, e) {
             selGrades[i] = $(this).val();
-        });
-        interests.each(function (i, e) {
-            selInterests[i] = $(this).val();
         });
 
         $.ajax({
@@ -676,7 +668,6 @@ App.Views.StoryInfoModal = Backbone.View.extend({
                 summary: summary,
                 selectedCategories: JSON.stringify(selCategories),
                 selectedGrades: JSON.stringify(selGrades),
-                selectedInterests: JSON.stringify(selInterests)
             },
             success: function (response) {
 

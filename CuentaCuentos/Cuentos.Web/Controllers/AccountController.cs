@@ -50,7 +50,6 @@ namespace CodeFirstAltairis.Controllers
             var model =  await Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
             var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
             var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
-            var interestsTask = await Db.Interests.ToListAsync();
 
             var user = LoggedUser;
             var StoriesNotApproved =  await Db.Stories.Where(s =>
@@ -64,7 +63,6 @@ namespace CodeFirstAltairis.Controllers
             
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Grades = new SelectList(grades, "Id", "Name");
-            ViewBag.Interests = interestsTask;
             ViewBag.StoriesNotApproved = StoriesNotApproved;
             ViewBag.StoriesApproved = storiesApproved;
             InitializeModelImages(model);
@@ -73,7 +71,7 @@ namespace CodeFirstAltairis.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(User model, HttpPostedFileBase mainImage, string[] selectedInterests)
+        public async Task<ActionResult> Index(User model, HttpPostedFileBase mainImage)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +79,7 @@ namespace CodeFirstAltairis.Controllers
                 model.ImageHolders = user.ImageHolders;
 
                 model.IsApproved = true;
-                var updated = await AccountController.UpdateUser(model, null, selectedInterests);
+                var updated = await AccountController.UpdateUser(model, null);
                 if (updated)
                 {
                     if (mainImage != null)
@@ -171,7 +169,6 @@ namespace CodeFirstAltairis.Controllers
         {
             var schoolsTask = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
             var gradesTask = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
-            var interestesTask = await Db.Interests.ToListAsync();
             var ownerTypesSelectList = new List<SelectListItem>();
 
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
@@ -186,26 +183,24 @@ namespace CodeFirstAltairis.Controllers
             ViewBag.OwnerTypesSelectList = ownerTypesSelectList;
             ViewBag.Schools = new SelectList(schoolsTask, "Id", "Name");
             ViewBag.Grades = new SelectList(gradesTask, "Id", "Name");
-            ViewBag.Interests = interestesTask;
 
 
             //RegisterModel model = new RegisterModel();
             //model.DDLSchool = GetDDLOptions("schools");
             //model.DDLGrade = GetDDLOptions("grades");
-            //model.User.Interests = Db.Interests.ToList();
             return true;
             //return model;
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<ActionResult> Register(RegisterModel model, string[] selectedInterests)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
                 model.User.SchoolId = model.SchoolId;
                 model.User.GradeId = model.GradeId;
 
-                var createStatus = await RegisterUser(model.User, model.Password, Role.RoleType.student, selectedInterests);
+                var createStatus = await RegisterUser(model.User, model.Password, Role.RoleType.student);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
@@ -251,7 +246,7 @@ namespace CodeFirstAltairis.Controllers
             return View(model);
         }
 
-        public static async Task<MembershipCreateStatus> RegisterUser(User model, string password, Role.RoleType roleType, string[] selectedInterests = null)
+        public static async Task<MembershipCreateStatus> RegisterUser(User model, string password, Role.RoleType roleType)
         {
             IMembershipService MembershipService = new AccountMembershipService();
             CuentosContext Db = new CuentosContext();
@@ -273,16 +268,7 @@ namespace CodeFirstAltairis.Controllers
                 user.IsApproved = model.IsApproved;
                 user.Owner = model.Owner;
 
-                if (selectedInterests != null)
-                {
-                    user.Interests.Clear();
-                    foreach (var selectedInterest in selectedInterests)
-                    {
-                        int interestId = Convert.ToInt32(selectedInterest);
-                        var interest = await Db.Interests.Where(i => i.Id == interestId).FirstAsync();
-                        user.Interests.Add(interest);
-                    }
-                }
+               
 
                 Db.SaveChanges();
             }
@@ -290,7 +276,7 @@ namespace CodeFirstAltairis.Controllers
             return createStatus;
         }
 
-        public static async Task<bool> UpdateUser(User model, string password = null, string[] selectedInterests = null)
+        public static async Task<bool> UpdateUser(User model, string password = null)
         {
             var result = false;
             try
@@ -314,17 +300,7 @@ namespace CodeFirstAltairis.Controllers
                     string generatedPW = MembershipService.ResetPassword(user.UserName);
                     MembershipService.ChangePassword(user.UserName, generatedPW, password);
                 }
-
-                user.Interests.Clear();
-                if (selectedInterests != null)
-                {
-                    foreach (var selectedInterest in selectedInterests)
-                    {
-                        int interestId = Convert.ToInt32(selectedInterest);
-                        var interest = await Db.Interests.Where(i => i.Id == interestId).FirstAsync();
-                        user.Interests.Add(interest);
-                    }
-                }
+                
 
                 Db.SaveChanges();
                 result = true;

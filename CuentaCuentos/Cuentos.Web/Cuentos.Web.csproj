@@ -239,7 +239,6 @@
     <Compile Include="Areas\Admin\Controllers\FeaturedController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\InterestsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Admin\Controllers\RatingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\BuilderGalleriesController.cs" />
@@ -297,7 +296,6 @@
     <Compile Include="Models\Imageble.cs" />
     <Compile Include="Models\ITimestamps.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Interest.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Page.cs" />
@@ -584,10 +582,6 @@
     <Content Include="Areas\Admin\Views\Schools\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Schools\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Schools\_Form.cshtml" />
-    <Content Include="Areas\Admin\Views\Interests\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Interests\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Interests\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Interests\_Form.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_Form.cshtml" />

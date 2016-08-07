@@ -16,8 +16,7 @@ namespace Cuentos.Controllers
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CuentosContext db = new CuentosContext();
-            var loggedUser = db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.Current.User.Identity.Name);
-           
+            var loggedUser = db.Users.Include("ImageHolders").FirstOrDefault(u => u != null && u.UserName == HttpContext.Current.User.Identity.Name);
             filterContext.Controller.ViewBag.LoggedUser = loggedUser;
         }
     }

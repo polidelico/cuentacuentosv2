@@ -273,14 +273,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <div class="intereses">
-                                <h4>Intereses</h4>
-                                @foreach (var interest in ViewBag.Interests)
-                                {
-                                    <label for="interest-@interest.Id"><input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id" @(Model.Interests.Where(i => i.Name == interest.Name).Count() > 0 ? "checked" : "") /> @interest.Name</label>
-                                }
-
-                            </div>
+                            
                             <div class="avatar clearfix">
                                 @{
                         var image = Model.ImageHolders.getImagesByTarget(ImageTarget.MAIN).First();

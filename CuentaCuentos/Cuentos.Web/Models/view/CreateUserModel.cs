@@ -28,7 +28,5 @@ namespace Cuentos.Models.view
 
         public bool TermsConditions { get; set; }
 
-        [Display(Name = "Intereses")]
-        public List<Interest> Interests { get; set; }
     }
 }

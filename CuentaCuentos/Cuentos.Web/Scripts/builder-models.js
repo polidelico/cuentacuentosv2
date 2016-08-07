@@ -51,11 +51,6 @@ App.Models.Category = Backbone.Model.extend({});
 App.Models.Grade = Backbone.Model.extend({});
 
 /* --------------------------------------------
-|  Interest Model
-----------------------------------------------*/
-App.Models.Interest = Backbone.Model.extend({});
-
-/* --------------------------------------------
 |  ImageCategory Model
 ----------------------------------------------*/
 App.Models.ImageCategory = Backbone.Model.extend({});

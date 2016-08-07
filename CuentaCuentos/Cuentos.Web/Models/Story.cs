@@ -79,9 +79,6 @@ namespace Cuentos.Models
         [Display(Name = "Apto para")]
         public virtual ICollection<Grade> Grades { get; set; }
 
-        [Display(Name = "Intereses")]
-        public virtual ICollection<Interest> Interests { get; set; }
-
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string Pages { get; set; }

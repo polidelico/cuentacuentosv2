@@ -85,21 +85,7 @@
                 </div>
 
 
-                <div class="intereses">
-                    <h3>INTERESES</h3>
-                    <div class="checkboxes fila">
-                        @{
-                            var leftOrRight = true;
-                        }
-                        @foreach (var interest in ViewBag.Interests)
-                        {
-                            <label for="interest-@interest.Id" class="@(leftOrRight ? "left":"right")"><input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id" /> @interest.Name</label>
-                            if (leftOrRight == false) { leftOrRight = true; } else { leftOrRight = false; }
-
-                        }
-                        <div class="clearfix"></div>
-                     </div>
-                    </div>
+               
 
 
                 <label class="terminos" for="TermsConditions"><input type="checkbox" id="TermsConditions" name="TermsConditions" value="true" />Aceptos los <a href="@Url.RouteUrl("Terminos")" target="_blank">Términos y Condiciones</a></label>

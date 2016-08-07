@@ -12,7 +12,6 @@ namespace Cuentos.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<Grade> Grades { get; set; }
-        public DbSet<Interest> Interests { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -40,28 +39,7 @@ namespace Cuentos.Models
                 m.MapRightKey("RoleName");
             });
 
-            // Maps to the expected many-to-many join table name for interests to users.
-            modelBuilder.Entity<User>()
-            .HasMany(u => u.Interests)
-            .WithMany(r => r.Users)
-            .Map(m =>
-            {
-                m.ToTable("UserInterests");
-                m.MapLeftKey("UserName");
-                m.MapRightKey("InterestId");
-            });
-
-            // Maps to the expected many-to-many join table name for interests to users.
-            modelBuilder.Entity<Story>()
-            .HasMany(s => s.Interests)
-            .WithMany(i => i.Stories)
-            .Map(m =>
-            {
-                m.ToTable("StoryInterests");
-                m.MapLeftKey("StoryId");
-                m.MapRightKey("InterestId");
-            });
-
+           
             // Maps to the expected many-to-many join table name for Categories to Story.
             modelBuilder.Entity<Story>()
             .HasMany(s => s.Categories)

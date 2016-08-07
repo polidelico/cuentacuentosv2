@@ -44,7 +44,6 @@ namespace Cuentos.Controllers
 
             var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
             var grades = await Db.Grades.Select(g => new { g.Id, g.Name, g.Position }).OrderBy(g => g.Position).ToListAsync();
-            var interests = await Db.Interests.Select(i => new { i.Id, i.Name }).ToListAsync();
             var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
             var galleries = await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
                 || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
@@ -64,7 +63,6 @@ namespace Cuentos.Controllers
                 Summary = story.Summary,
                 Categories = story.Categories.Select(c => new Category { Id = c.Id, Name = c.Name }).ToList(),
                 Grades = story.Grades.Select(g => new Grade { Id = g.Id, Name = g.Name }).ToList(),
-                Interests = story.Interests.Select(i => new Interest { Id = i.Id, Name = i.Name }).ToList(),
             };
             
             foreach (BuilderGallery gallery in galleries)
@@ -102,7 +100,6 @@ namespace Cuentos.Controllers
 
             //ViewBag.Pages = story.Pages;
             ViewBag.Grades = grades;
-            ViewBag.Interests = interests;
             ViewBag.Categories = categories;
             ViewBag.ImageCategories = imageCategories;
             ViewBag.PageTypes = templates;
@@ -114,7 +111,7 @@ namespace Cuentos.Controllers
 
         [Authorize]
         [WebMethod, HttpPost]
-        public async Task<ActionResult> Save(int id, string name, string summary, string selectedCategories, string selectedGrades, string selectedInterests)
+        public async Task<ActionResult> Save(int id, string name, string summary, string selectedCategories, string selectedGrades)
         {
             var result = false;
             try
@@ -122,14 +119,12 @@ namespace Cuentos.Controllers
                 var story = await Db.Stories.FindAsync(id);
                 dynamic newCategories = JsonConvert.DeserializeObject(selectedCategories);
                 dynamic newGrades = JsonConvert.DeserializeObject(selectedGrades);
-                dynamic newInterests = JsonConvert.DeserializeObject(selectedInterests);
                 int integer;
 
                 story.Name = name;
                 story.Summary = summary;
                 story.Categories.Clear();
                 story.Grades.Clear();
-                story.Interests.Clear();
 
                 foreach (string categoryId in newCategories)
                 {
@@ -149,14 +144,7 @@ namespace Cuentos.Controllers
                     }
                 }
 
-                foreach (string interestId in newInterests)
-                {
-                    if (Int32.TryParse(interestId, out integer))
-                    {
-                        var interest = Db.Interests.Find(integer);
-                        story.Interests.Add(interest);
-                    }
-                }
+               
 
                 Db.SaveChanges();
                 result = true;

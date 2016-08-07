@@ -40,17 +40,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Interests, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @foreach (var interest in ViewBag.Interests)
-                {
-                    <input type="checkbox" value="@interest.Id" name="selectedInterests" id="interest-@interest.Id"
-                           @(Model.Interests.Where(c => c.Id == interest.Id).Count() > 0 ? "checked" : "") />
-                    <label for="interest-@interest.Id">@interest.Name</label>
-                }
-            </div>
-        </div>
+      
 
         <div class="form-group">
             @Html.LabelFor(model => model.Summary, new { @class = "control-label col-lg-2" })

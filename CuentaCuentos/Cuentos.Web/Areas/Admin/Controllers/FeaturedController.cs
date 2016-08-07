@@ -109,7 +109,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
 
 
-        public List<KeyValuePair<String, String>> Breadcrumbs(KeyValuePair<String, String> currentItem, Interest mmodel = null)
+        public List<KeyValuePair<String, String>> Breadcrumbs(KeyValuePair<String, String> currentItem)
         {
             List<KeyValuePair<String, String>> breadcrumbs = base.Breadcrumbs();
 
@@ -121,10 +121,7 @@ namespace Cuentos.Areas.Admin.Controllers
             foreach (KeyValuePair<string, string> item in controllerBreadcrumbs)
                 breadcrumbs.Add(item);
 
-            if (mmodel != null)
-            {
-                var item = new KeyValuePair<string, string>(@Url.Action("Index", "Featured", new { id = mmodel.Id }), mmodel.Name);
-            }
+          
 
             if (currentItem.Key != "")
                 breadcrumbs.Add(currentItem);

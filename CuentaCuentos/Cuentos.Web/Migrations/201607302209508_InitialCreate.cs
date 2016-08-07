@@ -121,16 +121,6 @@ namespace Cuentos.Migrations
                 .Index(t => t.StoryId)
                 .Index(t => t.UserName);
             
-            CreateTable(
-                "dbo.Interests",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        CreatedAt = c.DateTime(),
-                        UpdatedAt = c.DateTime(),
-                    })
-                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Ratings",
@@ -214,31 +204,9 @@ namespace Cuentos.Migrations
                 .Index(t => t.StoryId)
                 .Index(t => t.GradeId);
             
-            CreateTable(
-                "dbo.StoryInterests",
-                c => new
-                    {
-                        StoryId = c.Int(nullable: false),
-                        InterestId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.StoryId, t.InterestId })
-                .ForeignKey("dbo.Stories", t => t.StoryId, cascadeDelete: true)
-                .ForeignKey("dbo.Interests", t => t.InterestId, cascadeDelete: true)
-                .Index(t => t.StoryId)
-                .Index(t => t.InterestId);
             
-            CreateTable(
-                "dbo.UserInterests",
-                c => new
-                    {
-                        UserName = c.String(nullable: false, maxLength: 100),
-                        InterestId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.UserName, t.InterestId })
-                .ForeignKey("dbo.Users", t => t.UserName, cascadeDelete: true)
-                .ForeignKey("dbo.Interests", t => t.InterestId, cascadeDelete: true)
-                .Index(t => t.UserName)
-                .Index(t => t.InterestId);
+            
+          
             
             CreateTable(
                 "dbo.RoleMemberships",
@@ -339,14 +307,10 @@ namespace Cuentos.Migrations
             DropForeignKey("dbo.Users", "SchoolId", "dbo.Schools");
             DropForeignKey("dbo.RoleMemberships", "RoleName", "dbo.Roles");
             DropForeignKey("dbo.RoleMemberships", "UserName", "dbo.Users");
-            DropForeignKey("dbo.UserInterests", "InterestId", "dbo.Interests");
-            DropForeignKey("dbo.UserInterests", "UserName", "dbo.Users");
             DropForeignKey("dbo.Users", "ImageHolders_Id", "dbo.Imagebles");
             DropForeignKey("dbo.Users", "GradeId", "dbo.Grades");
             DropForeignKey("dbo.Ratings", "UserName", "dbo.Users");
             DropForeignKey("dbo.Ratings", "StoryId", "dbo.Stories");
-            DropForeignKey("dbo.StoryInterests", "InterestId", "dbo.Interests");
-            DropForeignKey("dbo.StoryInterests", "StoryId", "dbo.Stories");
             DropForeignKey("dbo.StoryGrades", "GradeId", "dbo.Grades");
             DropForeignKey("dbo.StoryGrades", "StoryId", "dbo.Stories");
             DropForeignKey("dbo.Comments", "UserName", "dbo.Users");
@@ -363,10 +327,6 @@ namespace Cuentos.Migrations
             DropIndex("dbo.BuilderGalleries", new[] { "Id" });
             DropIndex("dbo.RoleMemberships", new[] { "RoleName" });
             DropIndex("dbo.RoleMemberships", new[] { "UserName" });
-            DropIndex("dbo.UserInterests", new[] { "InterestId" });
-            DropIndex("dbo.UserInterests", new[] { "UserName" });
-            DropIndex("dbo.StoryInterests", new[] { "InterestId" });
-            DropIndex("dbo.StoryInterests", new[] { "StoryId" });
             DropIndex("dbo.StoryGrades", new[] { "GradeId" });
             DropIndex("dbo.StoryGrades", new[] { "StoryId" });
             DropIndex("dbo.StoryCategories", new[] { "CategoryId" });
@@ -385,15 +345,12 @@ namespace Cuentos.Migrations
             DropTable("dbo.PageTypes");
             DropTable("dbo.BuilderGalleries");
             DropTable("dbo.RoleMemberships");
-            DropTable("dbo.UserInterests");
-            DropTable("dbo.StoryInterests");
             DropTable("dbo.StoryGrades");
             DropTable("dbo.StoryCategories");
             DropTable("dbo.ImageCategories");
             DropTable("dbo.Contacts");
             DropTable("dbo.Roles");
             DropTable("dbo.Ratings");
-            DropTable("dbo.Interests");
             DropTable("dbo.Comments");
             DropTable("dbo.Categories");
             DropTable("dbo.Grades");

@@ -27,7 +27,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
             if (IsSuperAdmin)
             {
-                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.IsApproved == false).ToListAsync();
+                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Where(u => u.IsApproved == false).ToListAsync();
                 stories = await  Db.Stories.Include("User.School").Where(s => s.Status == StatusStory.InApproval).ToListAsync();
                 comments = await  Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false).ToListAsync();
 
@@ -36,7 +36,7 @@ namespace Cuentos.Areas.Admin.Controllers
             else
             {
                 var user = LoggedUser;
-                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Include("Interests").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
+                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
                 stories = await Db.Stories.Include("Ratings").Include("User.School").Where(s => s.User.SchoolId == user.SchoolId).Where(s => s.Status == StatusStory.InApproval).ToListAsync();
                 comments = await Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
@@ -117,7 +117,7 @@ namespace Cuentos.Areas.Admin.Controllers
             return Json(values, JsonRequestBehavior.AllowGet);
         }
 
-        public List<KeyValuePair<String, String>> Breadcrumbs(KeyValuePair<String, String> currentItem, Interest mmodel = null)
+        public List<KeyValuePair<String, String>> Breadcrumbs(KeyValuePair<String, String> currentItem)
         {
             List<KeyValuePair<String, String>> breadcrumbs = base.Breadcrumbs();
 
@@ -129,10 +129,7 @@ namespace Cuentos.Areas.Admin.Controllers
             foreach (KeyValuePair<string, string> item in controllerBreadcrumbs)
                 breadcrumbs.Add(item);
 
-            if (mmodel != null)
-            {
-                var item = new KeyValuePair<string, string>(@Url.Action("Index", "Approvals", new { id = mmodel.Id }), mmodel.Name);
-            }
+            
 
             if (currentItem.Key != "")
                 breadcrumbs.Add(currentItem);

@@ -110,20 +110,19 @@ namespace Cuentos.Areas.Admin.Controllers
 
 
             setDropDowns();
-            ViewBag.Interests = await Db.Interests.ToListAsync();
             ViewBag.Edit = false;
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(CreateUserModel model, string[] selectedInterests)
+        public async Task<ActionResult> Create(CreateUserModel model)
         {
             
             if (ModelState.IsValid)
             {
                 var role = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), model.Role, true);
-                var createStatus = await AccountController.RegisterUser(model.User, model.Password, role, selectedInterests);
+                var createStatus = await AccountController.RegisterUser(model.User, model.Password, role);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -136,14 +135,12 @@ namespace Cuentos.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
                     setDropDowns();
-                    ViewBag.Interests = await Db.Interests.ToListAsync();
                 }
             }
 
             User emptyUser = new User();
             InitializeModelImages(emptyUser);
 
-            ViewBag.Interests = await Db.Interests.ToListAsync();
             setDropDowns();
 
             return View();
@@ -189,13 +186,12 @@ namespace Cuentos.Areas.Admin.Controllers
             InitializeModelImages(user);
             setDropDowns();
             ViewBag.Edit = true;
-            ViewBag.Interests = await Db.Interests.ToListAsync();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(CreateUserModel model, HttpPostedFileBase mainImage, string[] selectedInterests)
+        public async Task<ActionResult> Edit(CreateUserModel model, HttpPostedFileBase mainImage)
         {
             if (ModelState.IsValid)
             {
@@ -216,7 +212,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
                 model.User.Roles = roles;
                 model.User.ImageHolders = user.ImageHolders;
-                var updated = await AccountController.UpdateUser(model.User, model.Password, selectedInterests);
+                var updated = await AccountController.UpdateUser(model.User, model.Password);
                 if (updated)
                 {
                     if (mainImage != null)
@@ -270,19 +266,9 @@ namespace Cuentos.Areas.Admin.Controllers
                 }
             }
 
-            commentsTask =  Db.Comments.Include("Story.User.School").Where(c => c.UserName == id).ToListAsync();
-            var userTask =  Db.Users.Include("School").Where(u => u.UserName == id).FirstAsync();
-            User user = null;
-            try
-            {
-                Task.WaitAll(userTask, commentsTask);
-
-                comments = commentsTask.Result;
-                 user = userTask.Result;
-            }catch (AggregateException e)
-            {
-
-            }
+            comments = await Db.Comments.Include("Story.User.School").Where(c => c.UserName == id).ToListAsync();
+            var user = await Db.Users.Include("School").Where(u => u.UserName == id).FirstAsync();
+           
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {
                 new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),

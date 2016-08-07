@@ -114,9 +114,6 @@ namespace Cuentos.Models
 
         public virtual ICollection<Role> Roles { get; set; }
 
-        [Display(Name = "Intereses")]
-        public virtual ICollection<Interest> Interests { get; set; }
-
         public bool Featured { get; set; }
 
         public Imageble ImageHolders { get; set; }
@@ -156,22 +153,6 @@ namespace Cuentos.Models
             }
 
 
-        }
-
-        public string InterestsByComma
-        {
-            get
-            {
-                var result = "";
-
-                foreach (var interest in this.Interests)
-                {
-                    result += interest.Name + ", ";
-                }
-                result = string.IsNullOrEmpty(result) ? "" : result.Substring(0, result.Length - 2);
-
-                return result;
-            }
         }
 
         public Size GetImageDimensions(string target = "")

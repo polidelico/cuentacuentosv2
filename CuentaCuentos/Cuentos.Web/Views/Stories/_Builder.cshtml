@@ -193,16 +193,6 @@
             {{/each}}
         </div>
 
-        <div class="categorias">
-            <h3>Intereses</h3>
-            {{#each allInterests}}
-            <label for="{{Name}}">
-                <input id="{{Name}}" name="interest" type="checkbox" value="{{Id}}" {{isChecked ../story.Interests Id}} />
-                {{Name}}
-            </label>
-            {{/each}}
-        </div>
-
         <div>
             <input id="submit-details" type="submit" value="Guardar" />
         </div>

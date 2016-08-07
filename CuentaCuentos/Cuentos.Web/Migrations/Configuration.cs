@@ -12,7 +12,7 @@ namespace Cuentos.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Cuentos.Models.CuentosContext";
         }
 
@@ -35,7 +35,6 @@ namespace Cuentos.Migrations
                 AddCities(context);
                 AddGrade(context);
                 FillSchools(context);
-                FillInterests(context);
                 FillRoles(context);
             try
             {
@@ -159,14 +158,6 @@ namespace Cuentos.Migrations
 
             context.Schools.AddOrUpdate(new Models.School() { Name = "José S. Alegría", Details = "Escuela Pública", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 1,Zip = "00646" });
             context.Schools.AddOrUpdate(new Models.School() { Name = "Colegio de la Vega", Details = "Escuela Privada", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 2, Zip = "12346" });
-        }
-
-        private void FillInterests(Cuentos.Models.CuentosContext context)
-        {
-            context.Interests.AddOrUpdate(new Models.Interest() { Name = "Dibujar" });
-            context.Interests.AddOrUpdate(new Models.Interest() { Name = "Pintar" });
-            context.Interests.AddOrUpdate(new Models.Interest() { Name = "Escribir" });
-            context.Interests.AddOrUpdate(new Models.Interest() { Name = "Deportes" });
         }
 
         private void FillRoles(Cuentos.Models.CuentosContext context)

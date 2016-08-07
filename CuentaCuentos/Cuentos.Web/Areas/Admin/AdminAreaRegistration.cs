@@ -48,7 +48,6 @@ namespace Cuentos.Areas.Admin
             );
 
             ModelBinders.Binders.Add(typeof(School), new PartialModelBinder());
-            ModelBinders.Binders.Add(typeof(Interest), new PartialModelBinder());
             ModelBinders.Binders.Add(typeof(Comment), new PartialModelBinder());
             ModelBinders.Binders.Add(typeof(Rating), new PartialModelBinder());
             ModelBinders.Binders.Add(typeof(Story), new PartialModelBinder());

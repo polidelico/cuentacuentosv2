@@ -69,7 +69,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").Include("Interests").FirstAsync(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
             IEnumerable<StatusStory> statuses = Enum.GetValues(typeof(StatusStory)).Cast<StatusStory>();
             var statusSelect = new List<SelectListItem>();
 
@@ -85,13 +85,11 @@ namespace Cuentos.Areas.Admin.Controllers
             ViewBag.StatusDDL = statusSelect;
             var grades = await Db.Grades.ToListAsync();
             var categories = await Db.Categories.Where(c => c.Active).ToListAsync();
-            var interest = await Db.Interests.ToListAsync();
 
 
 
             ViewBag.Grades = grades;
             ViewBag.Categories = categories;
-            ViewBag.Interests = interest;
 
             InitializeModelImages(story);
 
@@ -102,7 +100,7 @@ namespace Cuentos.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(Story model, HttpPostedFileBase mainImage, int[] selectedGrades, int[] selectedCategories, int[] selectedInterests)
+        public async Task<ActionResult> Edit(Story model, HttpPostedFileBase mainImage, int[] selectedGrades, int[] selectedCategories)
         {
             if (ModelState.IsValid)
             {
@@ -143,15 +141,7 @@ namespace Cuentos.Areas.Admin.Controllers
                     }
                 }
 
-                model.Interests.Clear();
-                if (selectedInterests != null)
-                {
-                    foreach (var interestId in selectedInterests)
-                    {
-                        var interest = await Db.Interests.FindAsync(interestId);
-                        model.Interests.Add(interest);
-                    }
-                }
+               
 
                 Db.SaveChanges();
 
