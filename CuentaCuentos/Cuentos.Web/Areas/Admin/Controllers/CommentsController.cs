@@ -20,7 +20,7 @@ namespace Cuentos.Areas.Admin.Controllers
         {
             var model = await Db.Comments.Include("User").Include("Story.User.School").FirstOrDefaultAsync(c => c.StoryId == id);
 
-            var story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            var story = await Db.Stories.Include("Images").Include("Categories").FirstAsync(s => s.Id == id);
            ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {
                 new KeyValuePair<String, String>(Url.Action("Index","Home"), "Inicio"),
@@ -37,7 +37,7 @@ namespace Cuentos.Areas.Admin.Controllers
         {
             var model = await Db.Comments.FindAsync(id);
 
-            var story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == model.StoryId);
+            var story = await Db.Stories.Include("Images").Include("Categories").FirstAsync(s => s.Id == model.StoryId);
 
             ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>
             {

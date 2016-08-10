@@ -11,7 +11,6 @@ namespace Cuentos.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<School> Schools { get; set; }
-        public DbSet<Grade> Grades { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -52,15 +51,7 @@ namespace Cuentos.Models
             });
 
             // Maps to the expected many-to-many join table name for Grades to Story.
-            modelBuilder.Entity<Story>()
-            .HasMany(s => s.Grades)
-            .WithMany(c => c.Stories)
-            .Map(m =>
-            {
-                m.ToTable("StoryGrades");
-                m.MapLeftKey("StoryId");
-                m.MapRightKey("GradeId");
-            });
+            
         }
 
     }

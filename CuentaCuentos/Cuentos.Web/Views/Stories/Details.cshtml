@@ -72,7 +72,7 @@
                     {
                         for (var i = 0; i < Model.Grades.Count; i++)
                         {
-                            <span class="grades">@Model.Grades.ElementAt(i).Name</span>
+                            <span class="grades">@Model.Grades.ElementAt(i).ToString()</span>
                             @( i == Model.Grades.Count - 2 ? "y" : (i == Model.Grades.Count - 1 ? "" : ","))
                         }
                     }

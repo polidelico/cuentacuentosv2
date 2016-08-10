@@ -49,7 +49,6 @@ namespace CodeFirstAltairis.Controllers
 
             var model =  await Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
             var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
-            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
 
             var user = LoggedUser;
             var StoriesNotApproved =  await Db.Stories.Where(s =>
@@ -62,7 +61,6 @@ namespace CodeFirstAltairis.Controllers
                                                    && (s.Status == StatusStory.Published)).ToListAsync();
             
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
-            ViewBag.Grades = new SelectList(grades, "Id", "Name");
             ViewBag.StoriesNotApproved = StoriesNotApproved;
             ViewBag.StoriesApproved = storiesApproved;
             InitializeModelImages(model);
@@ -168,7 +166,6 @@ namespace CodeFirstAltairis.Controllers
         private async Task<bool> setRegisterModel()
         {
             var schoolsTask = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
-            var gradesTask = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
             var ownerTypesSelectList = new List<SelectListItem>();
 
             foreach (var ownerType in Enum.GetValues(typeof(User.OwnerType)).Cast<User.OwnerType>())
@@ -182,7 +179,6 @@ namespace CodeFirstAltairis.Controllers
 
             ViewBag.OwnerTypesSelectList = ownerTypesSelectList;
             ViewBag.Schools = new SelectList(schoolsTask, "Id", "Name");
-            ViewBag.Grades = new SelectList(gradesTask, "Id", "Name");
 
 
             //RegisterModel model = new RegisterModel();
@@ -198,7 +194,7 @@ namespace CodeFirstAltairis.Controllers
             if (ModelState.IsValid)
             {
                 model.User.SchoolId = model.SchoolId;
-                model.User.GradeId = model.GradeId;
+                model.User.Grade = model.Grade;
 
                 var createStatus = await RegisterUser(model.User, model.Password, Role.RoleType.student);
                 if (createStatus == MembershipCreateStatus.Success)
@@ -261,7 +257,6 @@ namespace CodeFirstAltairis.Controllers
                 user.Name = model.Name == null ? string.Empty : model.Name;
                 user.LastName = model.LastName;
                 user.SchoolId = model.SchoolId;
-                user.GradeId = model.GradeId;
                 user.Age = model.Age;
                 user.Email = model.Email;
                 user.Roles.Add(role);
@@ -427,12 +422,11 @@ namespace CodeFirstAltairis.Controllers
                     }
                 case "grades":
                     {
-                        List<Grade> options = null;
-
-                        options = await Db.Grades.OrderBy(c => c.Position).ToListAsync();
                         result = new List<SelectListItem>();
                         result.Add(new SelectListItem { Text = "Selecciona", Value = "" });
-                        result.AddRange(options.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString() }));
+                        var names = Enum.GetNames(typeof(Grade));
+                        for(int i = 0; i < names.Length; i++)
+                            result.Add(new SelectListItem { Text = names[i], Value = i.ToString() });
                         break;
                     }
             }

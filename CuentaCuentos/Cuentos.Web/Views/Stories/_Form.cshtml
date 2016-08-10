@@ -18,11 +18,11 @@
     </p>
 
     <div>
-        @foreach (var grade in ViewBag.Grades)
+        @for(int i = 0; i < Enum.GetNames(typeof(Grade)).Length; i++)
         {
-            <input type="checkbox" value="@grade.Id" name="selectedGrades" id="grade-@grade.Id"
-                   @(Model.Grades != null && Model.Grades.Where(g => g.Id == grade.Id).Count() > 0 ? "checked" : "") />
-            <label for="grade-@grade.Id">@grade.Name</label>
+            <input type="checkbox" value="@i.ToString()" name="selectedGrades" id="grade-@i.ToString()"
+                   @(Model.Grades != null && Model.Grades.Where(g => g == (Grade)i).Count() > 0 ? "checked" : "") />
+            <label for="grade-@i.ToString()">@((Grade)i).ToString()</label>
         }
     </div>
 

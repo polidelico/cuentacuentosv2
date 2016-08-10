@@ -31,7 +31,7 @@
     <script>
         App.StoryJson = @Html.Raw(Json.Encode(Model));
         App.CategoriesJson = @Html.Raw(Json.Encode(ViewBag.Categories));
-        App.GradesJson = @Html.Raw(Json.Encode(ViewBag.Grades));
+        App.GradesJson = @Html.Raw(Json.Encode(Enum.GetNames(typeof(Grade))));
         App.PageTypesJson = @Html.Raw(Json.Encode(ViewBag.PageTypes));
         App.ImagesJson = @Html.Raw(Json.Encode(ViewBag.Images));
         App.ImagesCategoriesJson = @Html.Raw(Json.Encode(ViewBag.ImageCategories));

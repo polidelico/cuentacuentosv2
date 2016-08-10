@@ -43,7 +43,6 @@ namespace Cuentos.Controllers
             var story = await Db.Stories.FindAsync(id);
 
             var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
-            var grades = await Db.Grades.Select(g => new { g.Id, g.Name, g.Position }).OrderBy(g => g.Position).ToListAsync();
             var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
             var galleries = await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
                 || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
@@ -62,7 +61,7 @@ namespace Cuentos.Controllers
                 Name = story.Name,
                 Summary = story.Summary,
                 Categories = story.Categories.Select(c => new Category { Id = c.Id, Name = c.Name }).ToList(),
-                Grades = story.Grades.Select(g => new Grade { Id = g.Id, Name = g.Name }).ToList(),
+                Grades = story.Grades,
             };
             
             foreach (BuilderGallery gallery in galleries)
@@ -99,7 +98,6 @@ namespace Cuentos.Controllers
             }
 
             //ViewBag.Pages = story.Pages;
-            ViewBag.Grades = grades;
             ViewBag.Categories = categories;
             ViewBag.ImageCategories = imageCategories;
             ViewBag.PageTypes = templates;
@@ -139,7 +137,7 @@ namespace Cuentos.Controllers
                 {
                     if (Int32.TryParse(gradeId, out integer))
                     {
-                        var grade = Db.Grades.Find(integer);
+                        var grade = (Grade)integer;
                         story.Grades.Add(grade);
                     }
                 }
@@ -407,12 +405,10 @@ namespace Cuentos.Controllers
                 {
                     int gradeId = Convert.ToInt32(strGradeId);
                     gradeStories = stories != null ? gradeStories.Union(stories
-                                                                        .Where(s => 
-                                                                        s.Grades.Select(g => g.Id)
-                                                                        .Contains(gradeId)))
+                                                                        .Where(s => s.Grades.Contains((Grade)gradeId)))
                         : gradeStories.Union(await Db.Stories.Include("User").Include("Categories")
-                                                             .Where(s => s.Grades.Select(g => g.Id)
-                                                             .Contains(gradeId)).ToListAsync());
+                                                             .Where(s => s.Grades.Contains((Grade)gradeId))
+                                                             .ToListAsync());
                 }
 
                 stories = gradeStories;
@@ -445,11 +441,9 @@ namespace Cuentos.Controllers
                                           .Where(s => s.Status == StatusStory.Published).ToListAsync();
 
             model.Stories = stories.ToPagedList(pageNumber, pageSize);
-            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
             var categories = await Db.Categories.Where(c => c.Active).ToListAsync();
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
             ViewBag.Cities = new SelectList(cities, "Id", "Name");
-            ViewBag.Grades = grades;
             ViewBag.Categories = categories;
 
             return View(model);

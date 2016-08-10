@@ -69,7 +69,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Categories").FirstAsync(s => s.Id == id);
             IEnumerable<StatusStory> statuses = Enum.GetValues(typeof(StatusStory)).Cast<StatusStory>();
             var statusSelect = new List<SelectListItem>();
 
@@ -83,12 +83,10 @@ namespace Cuentos.Areas.Admin.Controllers
             }
 
             ViewBag.StatusDDL = statusSelect;
-            var grades = await Db.Grades.ToListAsync();
             var categories = await Db.Categories.Where(c => c.Active).ToListAsync();
 
 
 
-            ViewBag.Grades = grades;
             ViewBag.Categories = categories;
 
             InitializeModelImages(story);
@@ -126,7 +124,7 @@ namespace Cuentos.Areas.Admin.Controllers
                 {
                     foreach (var gradeId in selectedGrades)
                     {
-                        var grade = await Db.Grades.FindAsync(gradeId);
+                        var grade = (Grade)gradeId;
                         model.Grades.Add(grade);
                     }
                 }

@@ -51,9 +51,9 @@
                 <div class="fila">
                     <div class="box">
  
-                        @Html.LabelFor(m => m.GradeId)
-                        @Html.DropDownListFor(m => m.GradeId, (SelectList)ViewBag.Grades, "Selecciona un Grado", new { @name = "grado"})
-                        @Html.ValidationMessageFor(m => m.GradeId)
+                        @Html.LabelFor(m => m.Grade)
+                        @Html.EnumDropDownListFor(m => m.Grade);
+                        @Html.ValidationMessageFor(m => m.Grade)
                     </div>
 
                     <div class="box">

@@ -33,7 +33,6 @@ namespace Cuentos.Migrations
             //
            
                 AddCities(context);
-                AddGrade(context);
                 FillSchools(context);
                 FillRoles(context);
             try
@@ -137,21 +136,7 @@ namespace Cuentos.Migrations
 
         }
 
-        public void AddGrade(Cuentos.Models.CuentosContext context)
-        {
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Primero", Position = 1 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Segundo", Position = 2 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Tercero", Position = 3 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Cuarto", Position = 4 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Quinto", Position = 5 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Sexto", Position = 6 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Septimo", Position = 7 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Octavo", Position = 8 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Noveno", Position = 9 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Décimo", Position = 10 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Undécimo", Position = 11 });
-            context.Grades.AddOrUpdate(new Models.Grade() { Name = "Duodécimo", Position = 12 });
-        }
+       
 
         private void FillSchools(Cuentos.Models.CuentosContext context)
         {

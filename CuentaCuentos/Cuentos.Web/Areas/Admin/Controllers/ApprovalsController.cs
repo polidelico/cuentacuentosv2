@@ -27,7 +27,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
             if (IsSuperAdmin)
             {
-                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Where(u => u.IsApproved == false).ToListAsync();
+                users = await Db.Users.Include("Roles").Include("School").Where(u => u.IsApproved == false).ToListAsync();
                 stories = await  Db.Stories.Include("User.School").Where(s => s.Status == StatusStory.InApproval).ToListAsync();
                 comments = await  Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false).ToListAsync();
 
@@ -36,7 +36,7 @@ namespace Cuentos.Areas.Admin.Controllers
             else
             {
                 var user = LoggedUser;
-                users = await Db.Users.Include("Roles").Include("School").Include("Grade").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
+                users = await Db.Users.Include("Roles").Include("School").Where(u => u.SchoolId == user.SchoolId).Where(u => u.IsApproved == false).ToListAsync();
                 stories = await Db.Stories.Include("Ratings").Include("User.School").Where(s => s.User.SchoolId == user.SchoolId).Where(s => s.Status == StatusStory.InApproval).ToListAsync();
                 comments = await Db.Comments.Include("User").Include("Story.User.School").Where(c => c.IsApproved == false && c.User.SchoolId == user.SchoolId).ToListAsync();
                 ViewBag.breadcrumbs = new List<KeyValuePair<String, String>>

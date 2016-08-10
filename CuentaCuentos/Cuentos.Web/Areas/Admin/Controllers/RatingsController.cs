@@ -23,7 +23,7 @@ namespace Cuentos.Areas.Admin.Controllers
         public async Task<ActionResult> Details(int id)
         {
 
-            Story story = await Db.Stories.Include("Images").Include("Grades").Include("Categories").FirstAsync(s => s.Id == id);
+            Story story = await Db.Stories.Include("Images").Include("Categories").FirstAsync(s => s.Id == id);
             List < Rating > ratings = await Db.Ratings.Where(r => r.StoryId == id).ToListAsync();
            
 

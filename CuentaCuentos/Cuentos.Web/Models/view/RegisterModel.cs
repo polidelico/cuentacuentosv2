@@ -15,7 +15,7 @@ namespace Cuentos.Models.view
 
         [Required(ErrorMessage="Grado requrido")]
         [Display(Name = "Grado")]
-        public int? GradeId { get; set; }
+        public Grade Grade { get; set; }
 
         [Required(ErrorMessage="Escuela requerida")]
         [Display(Name = "Escuela")]

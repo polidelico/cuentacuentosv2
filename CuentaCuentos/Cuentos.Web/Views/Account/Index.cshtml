@@ -251,9 +251,8 @@
                                 @Html.ValidationMessageFor(m => m.SchoolId)
                             </div>
                             <div class="middle pr">
-                                @Html.LabelFor(m => m.GradeId)
-                                @Html.DropDownListFor(m => m.GradeId, (SelectList)ViewBag.Grades, "Selecciona un Grado")
-                                @Html.ValidationMessageFor(m => m.GradeId)
+                                @Html.LabelFor(m => m.Grade);
+                                @Html.EnumDropDownListFor(m => m.Grade);
                             </div>
 
                             <div class="middle pl">

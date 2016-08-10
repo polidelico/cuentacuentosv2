@@ -33,7 +33,6 @@ namespace Cuentos.Models
             Name = user.Name;
             LastName = user.LastName;
             Age = user.Age;
-            GradeId = user.GradeId;
             Grade = user.Grade;
             SchoolId = user.SchoolId;
             School = user.School;
@@ -61,13 +60,11 @@ namespace Cuentos.Models
         [Display(Name = "Edad")]
         public int? Age { get; set; }
 
-        [Display(Name = "Grado")]
-        public int? GradeId { get; set; }
-
         [Required(ErrorMessage = "Requerido")]
         [Display(Name = "¿Quien eres?")]
         public string Owner { get; set; }
 
+        [Display(Name = "Grado: ")]
         public virtual Grade Grade { get; set; }
 
         [Display(Name = "Escuela")]

@@ -329,7 +329,6 @@ namespace Cuentos.Areas.Admin.Controllers
         public async void setDropDowns()
         {
             //var schools = Db.Schools.ToList().OrderBy(s => s.Name);
-            var grades = await Db.Grades.OrderBy(g => g.Position).ToListAsync();
             var sprAdminRole = Role.RoleType.superAdmin.ToString();
             var ownerTypesSelectList = new List<SelectListItem>();
             IEnumerable<School> schools = null;
@@ -358,8 +357,7 @@ namespace Cuentos.Areas.Admin.Controllers
             ViewBag.OwnerTypesSelectList = ownerTypesSelectList;
             ViewBag.Roles = new SelectList(roles, "RoleName", "RoleName");
             ViewBag.Schools = new SelectList(schools, "Id", "Name");
-            ViewBag.Grades = new SelectList(grades, "Id", "Name");
-
+            
         }
 
         [HttpPost]

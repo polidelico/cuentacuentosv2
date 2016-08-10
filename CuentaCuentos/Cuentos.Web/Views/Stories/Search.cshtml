@@ -26,10 +26,9 @@
                 </div>
                 <div class="checks clearfix">
                     <h4>GRADO</h4>
-                    @foreach (var grade in ViewBag.Grades)
+                    @for  (int i = 0; i < Enum.GetNames(typeof(Grade)).Length; i++)
                     {
-                        <label for="grade-@grade.Id"><input type="checkbox" value="@grade.Id" name="selectedGrades" id="grade-@grade.Id" @(Array.Find(Model.selectedGrades, e => e.Equals(grade.Id.ToString())) != null ? "checked" : "") /> @grade.Name </label>
-
+                        <label for="grade-@i.ToString()"><input type="checkbox" value="@i.ToString()" name="selectedGrades" id="grade-@i.ToString()" @(Array.Find(Model.selectedGrades, e => int.Parse(e) == i)) != null ? "checked" : "") /> @((Grade)i).ToString()</label>
                     }
                 </div>
                 <div>

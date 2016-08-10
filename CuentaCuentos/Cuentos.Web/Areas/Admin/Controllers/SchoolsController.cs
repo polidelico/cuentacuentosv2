@@ -190,7 +190,7 @@ namespace Cuentos.Areas.Admin.Controllers
                                                line.LastName,
                                                line.Age,
                                                line.School.Name,
-                                               line.GradeId,
+                                               line.Grade,
                                                line.IsApproved.ToString(),
                                                line.DateCreated.ToShortDateString()));
                 }

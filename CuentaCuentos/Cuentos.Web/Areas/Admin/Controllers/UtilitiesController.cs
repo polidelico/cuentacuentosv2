@@ -45,7 +45,7 @@ namespace Cuentos.Areas.Admin.Controllers
                         var dobCustom = importedUser.DOB.Replace("/", "");
                         var dob = DateTime.ParseExact(importedUser.DOB, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
                         var userAge = DateTime.Now.Year - dob.Year;
-                        var userGrade = getGrade(importedUser.Grade);
+                        var userGrade = await getGrade(importedUser.Grade);
                         var user = new User
                         {
                             UserName = importedUser.Username,
@@ -61,7 +61,7 @@ namespace Cuentos.Areas.Admin.Controllers
 
                         if (userGrade != null)
                         {
-                            user.GradeId = userGrade.Id;
+                            user.Grade = userGrade;
                         }
 
                         var createStatus = await AccountController.RegisterUser(user, importedUser.Username + dobCustom, Role.RoleType.student);
@@ -115,49 +115,8 @@ namespace Cuentos.Areas.Admin.Controllers
 
         public async Task<Grade> getGrade(string grade)
         {
-            Grade result = new Grade();
-            switch (grade)
-            {
-                case "1":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "primero").FirstOrDefaultAsync();
-                    break;
-                case "2":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "segundo").FirstOrDefaultAsync();
-                    break;
-                case "3":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "tercero").FirstOrDefaultAsync();
-                    break;
-                case "4":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "cuerto").FirstOrDefaultAsync();
-                    break;
-                case "5":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "quinto").FirstOrDefaultAsync();
-                    break;
-                case "6":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "sexto").FirstOrDefaultAsync();
-                    break;
-                case "7":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "septimo").FirstOrDefaultAsync();
-                    break;
-                case "8":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "octavo").FirstOrDefaultAsync();
-                    break;
-                case "9":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "noveno").FirstOrDefaultAsync();
-                    break;
-                case "10":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "décimo").FirstOrDefaultAsync();
-                    break;
-                case "11":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "undécimo").FirstOrDefaultAsync();
-                    break;
-                case "12":
-                    result = await Db.Grades.Where(g => g.Name.ToLower() == "duodécimo").FirstOrDefaultAsync();
-                    break;
-                default:
-                    result = null;
-                    break;
-            }
+            var result = Grade.First;
+            Enum.TryParse<Grade>(grade, out result);
 
             return result;
         }
