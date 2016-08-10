@@ -28,7 +28,7 @@
                     <h4>GRADO</h4>
                     @for  (int i = 0; i < Enum.GetNames(typeof(Grade)).Length; i++)
                     {
-                        <label for="grade-@i.ToString()"><input type="checkbox" value="@i.ToString()" name="selectedGrades" id="grade-@i.ToString()" @(Array.Find(Model.selectedGrades, e => int.Parse(e) == i)) != null ? "checked" : "") /> @((Grade)i).ToString()</label>
+                        <label for="grade-@i.ToString()"><input type="checkbox" value="@i.ToString()" name="selectedGrades" id="grade-@i.ToString()" @(Array.Find(Model.selectedGrades, e => int.Parse(e) == i)  != null ? "checked" : "") /> @((Grade)i)</label>
                     }
                 </div>
                 <div>
