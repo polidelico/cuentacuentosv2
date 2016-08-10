@@ -436,7 +436,7 @@ namespace Cuentos.Controllers
             if (stories != null)
                 stories = stories.Where(s => s.Status == StatusStory.Published);
             else
-                stories = await Db.Stories.Include("User").Include("Grades")
+                stories = await Db.Stories.Include("User")
                                           .Include("Categories").Include("Images")
                                           .Where(s => s.Status == StatusStory.Published).ToListAsync();
 
