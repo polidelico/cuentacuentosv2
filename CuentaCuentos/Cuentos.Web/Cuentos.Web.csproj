@@ -1106,6 +1106,7 @@
     <Content Include="Scripts\vendor\sweetalert\sweet-alert.min.js" />
     <Content Include="Scripts\vendor\underscore-min.js" />
     <Content Include="Scripts\vendor\modernizr-2.6.2.min.js" />
+    <Content Include="Content\css\navbar.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

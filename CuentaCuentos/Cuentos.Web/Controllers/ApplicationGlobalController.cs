@@ -18,7 +18,7 @@ namespace Cuentos.Controllers
             CuentosContext db = new CuentosContext();
             var loggedUser = db.Users.Include("ImageHolders").FirstOrDefault(u => u != null && u.UserName == HttpContext.Current.User.Identity.Name);
             filterContext.Controller.ViewBag.LoggedUser = loggedUser;
-        }
+        }    
     }
 
     [AdminGlobalControllerFilter]

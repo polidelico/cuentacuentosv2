@@ -1,4 +1,12 @@
-﻿@if (Request.IsAuthenticated) {
+﻿@if (Request.IsAuthenticated)
+{
+
+
+    <div class="col-sm-3 col-md-3 buttons pull-right navcontent">
+        <button type="button" class="btn btn-success registerBtn">@ViewBag.LoggedUser.UserName</button>
+        <button type="button" class="btn btn-primary loginBtn">Logout</button>
+    </div>
+    <!--
     <div class="buttons">
         <a href="@Url.RouteUrl("MiCuenta")" class="blue login-btn"> @ViewBag.LoggedUser.UserName </a>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
@@ -7,14 +15,23 @@
             <a href="javascript:document.getElementById('logoutForm').submit()" class="yellow">Log Out</a>
         }
     </div>
+    -->
 
 }
 else
 {
+
+    <div class="col-sm-3 col-md-3 buttons pull-right navcontent">
+        <button type="button" class="btn btn-success registerBtn">Registrate</button>
+        <button type="button" class="btn btn-primary loginBtn">Login</button>
+    </div>
+
+    <!--
     <div class="buttons">
         <a href="@Url.RouteUrl("LoginMiCuenta")" class="blue">Mi Cuenta</a>
         <a href="@Url.RouteUrl("RegistraMiCuenta")" class="yellow">Registrate Aquí</a>
-    </div>
+    </div>-->
+
 }
 
 

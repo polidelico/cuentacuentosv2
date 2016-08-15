@@ -1,23 +1,36 @@
-﻿<div id="html5Loader" style="font-size:100px;"></div>
-<!--[if lt IE 7]>
+﻿<!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<div class="header">
-    <div class="wp">
-        <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" class="logo" /></a>
-
-        <nav>
-            <ul>
-                <li><a href="@Url.RouteUrl("CreaTuCuento")">Crea Tu Cuento</a></li>
-                <li><a href="@Url.RouteUrl("BuscarCuento")">Lee Cuentos</a></li>
-                <li><a href="@Url.RouteUrl("Educadores")"> Educadores </a></li>
-                <li><a href="@Url.RouteUrl("Padres")"> Padres </a></li>
-                <li><a href="@Url.RouteUrl("SobreNosotros")"> Sobre Nosotros </a></li>
-            </ul>
-        </nav>
-
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <img class="logo" src="http://www.cuentacuentospr.com/Content/img/logo.png">
+        </div>
+        <div class="col-sm-3 col-md-3 searchBox">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar" name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
         @Html.Partial("_LoginPartial")
 
-        <div class="clearfix"></div>
+
     </div>
-</div>
+    <div class="container-fluid">
+        <ul class="nav navbar-nav center">
+            <li class="active"><a href="#">Inicio</a></li>
+            <li><a href="#">Album de Cuentos</a></li>
+            <li><a href="#">Educadores</a></li>
+            <li><a href="#">Padres</a></li>
+            <li><a href="#">Conocenos</a></li>
+        </ul>
+    </div>
+    <div>
+
+    </div>
+</nav>
+        
