@@ -1,0 +1,37 @@
+.mainSection{
+  background-image: url("../img/Padres/pinkbackground.png");
+}
+.mainSectionTitle{
+  color:white;
+  font-weight: bold;
+}
+
+.mainSectionSubTitle{
+  color:white;
+}
+
+.mainTitle{
+  color:#4AA7FF;
+}
+.secondTitle{
+ color:grey;
+}
+
+.secondMainTitle{
+  color:#339933;
+}
+.paragraph{
+  text-align: center;
+  font-weight:600;
+}
+.btn-register{
+  background-color: orange;
+  font-weight: bold;
+  color:white;
+}
+
+
+.graphImage{
+  width:35%;
+  height: auto;
+}

@@ -401,6 +401,11 @@ namespace CodeFirstAltairis.Controllers
             return View();
         }
 
+        public async void ExternalLogin(string provider)
+        {
+            Redirect("http://redirectiontksflksd");
+        }
+
         public async Task<List<SelectListItem>> GetDDLOptions(string type, string selected = "")
         {
             List<SelectListItem> result = null;
@@ -433,6 +438,8 @@ namespace CodeFirstAltairis.Controllers
 
             return result;
         }
+
+
 
         public void InitializeModelImages(User user)
         {

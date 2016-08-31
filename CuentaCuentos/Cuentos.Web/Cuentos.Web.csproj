@@ -105,6 +105,26 @@
       <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.10.10910.1511\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.10.10910.1511\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office365.Discovery, Version=1.0.21.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office365.Discovery.1.0.21\lib\portable-net40+sl5+wp8+win8+MonoAndroid10+MonoTouch10+WindowsPhoneApp81\Microsoft.Office365.Discovery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office365.OAuth, Version=1.0.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office365.OAuth.AspNet.1.0.22\lib\net45\Microsoft.Office365.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office365.OAuth.Web, Version=1.0.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office365.OAuth.AspNet.1.0.22\lib\net45\Microsoft.Office365.OAuth.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -419,6 +439,7 @@
     <Content Include="Areas\Admin\Content\kendo\kendo.all.min.js" />
     <Content Include="Areas\Admin\Content\kendo\kendo.common.min.css" />
     <Content Include="Areas\Admin\Content\kendo\kendo.default.min.css" />
+    <Content Include="Content\css\about.css" />
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -433,8 +454,13 @@
     <Content Include="Content\css\main_micuentos.css" />
     <Content Include="Content\css\main_rodri.css" />
     <Content Include="Content\css\normalize.css" />
+    <Content Include="Content\css\padres.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\About\greenbackground.png" />
+    <Content Include="Content\img\About\icon1.png" />
+    <Content Include="Content\img\About\icon2.png" />
+    <Content Include="Content\img\About\icon3.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\aniadir.png" />
     <Content Include="Content\img\arrow_h3.jpg" />
@@ -497,6 +523,11 @@
     <Content Include="Content\img\ico_salir.png" />
     <Content Include="Content\img\ico_tw.jpg" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\Nav\album.svg" />
+    <Content Include="Content\img\Nav\conocenos.svg" />
+    <Content Include="Content\img\Nav\home.svg" />
+    <Content Include="Content\img\Nav\maestros.svg" />
+    <Content Include="Content\img\Nav\padres.svg" />
     <Content Include="Content\img\num_1.png" />
     <Content Include="Content\img\num_2.png" />
     <Content Include="Content\img\num_3.png" />
@@ -504,6 +535,9 @@
     <Content Include="Content\img\padres-02.jpg" />
     <Content Include="Content\img\padres-03.jpg" />
     <Content Include="Content\img\padres-04.jpg" />
+    <Content Include="Content\img\Padres\grafica.svg" />
+    <Content Include="Content\img\Padres\menino.png" />
+    <Content Include="Content\img\Padres\pinkbackground.png" />
     <Content Include="Content\img\paginas\1.png" />
     <Content Include="Content\img\paginas\2.png" />
     <Content Include="Content\img\paginas\3.png" />

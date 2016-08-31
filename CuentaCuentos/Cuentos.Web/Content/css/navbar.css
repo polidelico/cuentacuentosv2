@@ -16,3 +16,9 @@
   position: relative;;
   left: 25%;
 }
+
+.navigationBtn
+{
+  display:inline-block;
+  padding-right:10px;
+}

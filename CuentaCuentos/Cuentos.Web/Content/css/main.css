@@ -124,8 +124,7 @@ a:focus{
 }
 
 body{
-    background: #1F6969;
-    border-top: solid 3px #38A399;
+    background: white;
 }
 
 .wp{
@@ -1543,13 +1542,12 @@ form input.error{
 /** FOOTER **/
 
 footer{
-    padding-top: 30px;
-    padding-bottom: 100px;
-    border-top: solid 7px #34AEAE;
+    background-color: lightseagreen;
+    border-top: solid 7px white;
 }
 
 footer p{
-    color: #FFF;
+    color: black;
     font: 400 13px 'Open Sans', sans-serif;
     float: left;
     margin: 0px;
@@ -1572,7 +1570,7 @@ footer nav ul li{
 }
 
 footer nav ul li a{
-    color: #FFF;
+    color: black;
     font: 400 13px 'Open Sans', sans-serif;
     text-decoration: none;
     background: url(../img/bg_nav_footer_separator.png) no-repeat 0% 50%;
@@ -1585,12 +1583,12 @@ footer nav ul li:first-child a{
 }
 
 footer nav ul li a:hover{
-    color: #FFF;
+    color: black;
     text-decoration: none;
 }
 
 footer nav ul li a:focus{
-    color: #FFF;
+    color: black;
     text-decoration: none;
 }
 

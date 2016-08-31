@@ -26,6 +26,9 @@
     <link href="~/Content/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="~/Content/css/mainOverride.css" rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="~/Content/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/about.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/padres.css" />
+
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
     @Scripts.Render("~/bundles/modernizr")
@@ -72,11 +75,23 @@
     @Scripts.Render("~/bundles/jqueryvalidate")
     @Scripts.Render("~/bundles/publicscripts")
 
-    @*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="~/Scripts/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script>
+        $(document).ready(function () {
+            console.log("Document Ready.");
+           
+            var url = window.location;
+            console.log(url);
+        $('.navbar .nav').find('.active').removeClass('active');
+        $('.navbar .nav li a').each(function () {
+            if (this.href == url) {
+                $(this).parent().addClass('active');
+            }
+        });
+    });</script>
 
-
-        <script src="~/Scripts/bootstrap.js"></script>
+        @*@<script src="~/Scripts/bootstrap.js"></script>
         <script src="~/Scripts/vendor/slick/slick.js"></script>
         <script src="~/Scripts/vendor/sweetalert/sweet-alert.js"></script>
         <script src="~/Scripts/main.js"></script>

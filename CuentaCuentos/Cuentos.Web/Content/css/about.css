@@ -1,0 +1,89 @@
+.greensection {
+  background-image: url("../img/about/greenbackground.png");
+}
+.jumboText {
+  color:white;
+}
+.subheadingtxt{
+  color : grey;
+}
+.sobrenosotros{
+  color:#4AA7FF;
+  font-weight: bold;
+}
+
+.row-centered {
+  display: table-row;
+}
+// Apply this to the cols within the row
+.col-centered {
+  display: table-cell;
+  float: none;
+  vertical-align: top;
+}
+.quote {
+background-color: #4AA7FF;
+color:white;
+font-style: italic;
+box-shadow: 10px 10px grey;
+}
+.author {
+  text-align: center;
+  font-style:normal;
+}
+.etc{
+  text-align: center;
+  font-style:normal;
+}
+.projectBox {
+  padding-top: 10px;
+  margin-top: 10px;
+  box-shadow: 3px 3px grey;
+}
+
+.boxContent{
+  color:white;
+  text-align: center;
+}
+
+.boxTitle{
+  font-weight: bold;
+  color:white;
+  text-align: center;
+}
+
+.lightBlueBox{
+background-color:#4AA7FF;
+}
+.purpleBox{
+background-color:#6600ff;
+}
+.blueBox{
+  background-color: #00ccff;
+}
+.pinkBox{
+  background-color: #ff66cc
+}
+.orangeBox{
+  background-color: #ff9933;
+}
+.peachBox{
+  background-color:#ff9966;
+}
+
+.imageTitle{
+  font-weight: bold;
+  color:white;
+  text-align: center;
+}
+.imageContent{
+  font-weight: normal;
+  color:white;
+  text-align: center;
+}
+
+.btn-comeinza{
+  background-color: white;
+  color:#00cc66;
+  font-weight: bold;
+}

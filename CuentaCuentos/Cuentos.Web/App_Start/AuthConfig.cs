@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using Cuentos.Models;
+using Microsoft.Office365.OAuth;
 
 namespace Cuentos
 {
@@ -27,6 +28,7 @@ namespace Cuentos
             //    appSecret: "");
 
             //OAuthWebSecurity.RegisterGoogleClient();
+   
         }
     }
 }
