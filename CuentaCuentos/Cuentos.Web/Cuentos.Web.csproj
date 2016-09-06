@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,8 +34,18 @@
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>
       <Objects>
+        <ObjectGroup Name="CuentosConnection-Deployment" Order="1" xmlns="">
+          <Destination Path="Data Source=tcp:cuentosdb.database.windows.net,1433%3bInitial Catalog=cuentosdb%3bPersist Security Info=False%3bUser ID=blurryrobot%3bPassword=tryagain1!%3bMultipleActiveResultSets=False%3bConnect Timeout=30%3bEncrypt=True%3bTrustServerCertificate=False" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=%28LocalDb%29\MSSQLLocalDB%3bAttachDbFilename=|DataDirectory|\cuentacuentosdb.mdf%3bInitial Catalog=aspnet-Cuentos-20141007095140%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\CuentosConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
       </Objects>
     </PublishDatabaseSettings>
+    <IncludeIisSettings>true</IncludeIisSettings>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -125,6 +136,30 @@
       <HintPath>..\packages\Microsoft.Office365.OAuth.AspNet.1.0.22\lib\net45\Microsoft.Office365.OAuth.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.ActiveDirectory, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.ActiveDirectory.3.0.1\lib\net45\Microsoft.Owin.Security.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Jwt, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Jwt.3.0.1\lib\net45\Microsoft.Owin.Security.Jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -135,6 +170,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PagedList">
@@ -157,6 +196,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
       <Private>True</Private>
@@ -251,6 +294,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminGlobalController.cs" />
@@ -298,10 +342,6 @@
     <Compile Include="Lib\Interfaces.cs" />
     <Compile Include="Lib\Utils\Uploader.cs" />
     <Compile Include="Lib\Validations\CustomDataAnnotation.cs" />
-    <Compile Include="Migrations\201607302209508_InitialCreate.cs" />
-    <Compile Include="Migrations\201607302209508_InitialCreate.Designer.cs">
-      <DependentUpon>201607302209508_InitialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -335,6 +375,12 @@
     <Compile Include="Models\view\EmailShare.cs" />
     <Compile Include="Models\view\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\application.css" />
@@ -445,6 +491,7 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap_alerts.css" />
+    <Content Include="Content\css\educadores.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\fontsOpenSans.css" />
     <Content Include="Content\css\main.css" />
@@ -455,6 +502,7 @@
     <Content Include="Content\css\main_rodri.css" />
     <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\padres.css" />
+    <Content Include="Content\css\registro.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\About\greenbackground.png" />
@@ -499,6 +547,7 @@
     <Content Include="Content\img\bg_nav_footer_separator.png" />
     <Content Include="Content\img\bg_nav_separator.jpg" />
     <Content Include="Content\img\bg_title_ventajas.png" />
+    <Content Include="Content\img\blue_section.png" />
     <Content Include="Content\img\border_nav_paginas.png" />
     <Content Include="Content\img\btn_add.png" />
     <Content Include="Content\img\btn_next-new.png" />
@@ -508,6 +557,18 @@
     <Content Include="Content\img\cancel-circle.png" />
     <Content Include="Content\img\cuento-thumb.png" />
     <Content Include="Content\img\educadores-01.jpg" />
+    <Content Include="Content\img\Educadores\autoestima.svg" />
+    <Content Include="Content\img\Educadores\bluebackground.png" />
+    <Content Include="Content\img\Educadores\checkmark.svg" />
+    <Content Include="Content\img\Educadores\creatividad.svg" />
+    <Content Include="Content\img\Educadores\doodle_left.svg" />
+    <Content Include="Content\img\Educadores\doodle_right.svg" />
+    <Content Include="Content\img\Educadores\escritura.svg" />
+    <Content Include="Content\img\Educadores\expresion.svg" />
+    <Content Include="Content\img\Educadores\gramatica.svg" />
+    <Content Include="Content\img\Educadores\imaginacion.svg" />
+    <Content Include="Content\img\Educadores\lectura.svg" />
+    <Content Include="Content\img\Educadores\Tere.png" />
     <Content Include="Content\img\emails\bg_footer.jpg" />
     <Content Include="Content\img\emails\bg_top.jpg" />
     <Content Include="Content\img\emails\dummy_b.png" />
@@ -547,6 +608,13 @@
     <Content Include="Content\img\rate-start-empty.png" />
     <Content Include="Content\img\rate-start-full.png" />
     <Content Include="Content\img\rate-start-half.png" />
+    <Content Include="Content\img\Registro\add.svg" />
+    <Content Include="Content\img\Registro\checkbox.svg" />
+    <Content Include="Content\img\Registro\dragon_amigo.svg" />
+    <Content Include="Content\img\Registro\estudiante_icon.svg" />
+    <Content Include="Content\img\Registro\maestro_icon.svg" />
+    <Content Include="Content\img\Registro\padres_icon.svg" />
+    <Content Include="Content\img\Registro\visitante_icon.svg" />
     <Content Include="Content\img\sobre-01.jpg" />
     <Content Include="Content\img\sobre-02.jpg" />
     <Content Include="Content\img\sobre-03.jpg" />
@@ -638,6 +706,11 @@
     <Content Include="Scripts\confirmPublish.js" />
     <Content Include="Scripts\dropdown.js" />
     <Content Include="Scripts\fixImagesSize.js" />
+    <None Include="Properties\PublishProfiles\cuentostest - Web Deploy.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -1194,6 +1267,7 @@
     <Content Include="Views\Shared\_FBappSDK.cshtml" />
     <Content Include="Views\Stories\_Viewer.cshtml" />
     <Content Include="Views\Stories\_EmailShare.cshtml" />
+    <Content Include="Service References\AzureAD\ConnectedService.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1206,11 +1280,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607302209508_InitialCreate.resx">
-      <DependentUpon>201607302209508_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

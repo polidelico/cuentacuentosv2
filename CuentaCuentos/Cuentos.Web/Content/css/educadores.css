@@ -1,0 +1,60 @@
+.mainSectionEdu{
+  background-image: url("../img/Educadores/bluebackground.png");
+}
+.lastSectionEdu{
+  background-image: url("../img/blue_section.png");
+}
+.mainSectionTitleEducator{
+  color:white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.mainSectionSubTitle{
+  color:white;
+}
+
+.mainTitle{
+  color:#4AA7FF;
+}
+.secondTitle{
+ color:grey;
+}
+
+.secondMainTitleEdu{
+  color:#0099ff;
+  font-weight: bold;
+  text-align: center;
+}
+.paragraph{
+  text-align: center;
+  font-weight:600;
+}
+.btn-register{
+  background-color: orange;
+  font-weight: bold;
+  color:white;
+}
+.introEdu{
+  font-weight: bold;
+  text-align: justify;
+}
+.tereQuote{
+  color:white;
+  text-align: center;
+}
+.TereQuoteAuthor{
+  color:white;
+  text-align: center;
+}
+.endMsg{
+  color:white;
+  font-size: xx-small;
+  text-align: center;
+}
+.footerlink{
+  color:white;
+}
+.featureDivider{
+    color:gray;
+}

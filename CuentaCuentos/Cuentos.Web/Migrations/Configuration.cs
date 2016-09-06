@@ -31,10 +31,10 @@ namespace Cuentos.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-           
-                AddCities(context);
-                FillSchools(context);
-                FillRoles(context);
+
+            AddCities(context);
+            FillSchools(context);
+            FillRoles(context);
             try
             {
                 context.SaveChanges();
@@ -136,12 +136,12 @@ namespace Cuentos.Migrations
 
         }
 
-       
+
 
         private void FillSchools(Cuentos.Models.CuentosContext context)
         {
 
-            context.Schools.AddOrUpdate(new Models.School() { Name = "José S. Alegría", Details = "Escuela Pública", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 1,Zip = "00646" });
+            context.Schools.AddOrUpdate(new Models.School() { Name = "José S. Alegría", Details = "Escuela Pública", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 1, Zip = "00646" });
             context.Schools.AddOrUpdate(new Models.School() { Name = "Colegio de la Vega", Details = "Escuela Privada", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 2, Zip = "12346" });
         }
 
@@ -150,6 +150,6 @@ namespace Cuentos.Migrations
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "superAdmin" });
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "schoolAdmin" });
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "student" });
-       }
+        }
     }
 }
