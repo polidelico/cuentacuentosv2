@@ -273,7 +273,7 @@ th {
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
-  position: relative;
+  
   top: 1px;
   display: inline-block;
   font-family: 'Glyphicons Halflings';
@@ -282,6 +282,9 @@ th {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  right: 0px;  
+  
 }
 .glyphicon-asterisk:before {
   content: "\2a";
@@ -887,7 +890,7 @@ th {
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  box-sizing:border-box;
 }
 *:before,
 *:after {
@@ -1770,7 +1773,7 @@ pre code {
     width: 33.33333333%;
   }
   .col-md-3 {
-    width: 25%;
+    width: 20%;
   }
   .col-md-2 {
     width: 16.66666667%;
@@ -2763,11 +2766,11 @@ select[multiple].form-group-lg .form-control {
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
-  border-radius: 4px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  
 }
 .btn:focus,
 .btn:active:focus,
@@ -2851,6 +2854,7 @@ fieldset[disabled] .btn-default.active {
   color: #ffffff;
   background-color: #337ab7;
   border-color: #2e6da4;
+  
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -3617,6 +3621,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   font-size: 0;
   white-space: nowrap;
+  padding-left:25%;
+  
+ 
 }
 .input-group-btn > .btn {
   position: relative;
@@ -4053,7 +4060,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-form .form-control {
     display: inline-block;
     width: auto;
-    vertical-align: middle;
+    margin: auto;
   }
   .navbar-form .form-control-static {
     display: inline-block;
@@ -4068,7 +4075,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     width: auto;
   }
   .navbar-form .input-group > .form-control {
-    width: 100%;
+    width: 140%;
+    margin:auto;
+    
   }
   .navbar-form .control-label {
     margin-bottom: 0;
@@ -4102,16 +4111,17 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-bottom: 0;
   }
 }
-@media (min-width: 768px) {
+@media  {
   .navbar-form {
     width: auto;
     border: 0;
-    margin-left: 0;
-    margin-right: 0;
-    padding-top: 0;
+    padding-top: 2.5%;
     padding-bottom: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+    margin:auto;
+    width:30%;
+  
   }
 }
 .navbar-nav > li > .dropdown-menu {
@@ -4163,6 +4173,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default {
   background-color: #f8f8f8;
   border-color: #e7e7e7;
+  width:100%;
 }
 .navbar-default .navbar-brand {
   color: #777777;
@@ -6091,6 +6102,7 @@ button.close {
 }
 .pull-right {
   float: right !important;
+ 
 }
 .pull-left {
   float: left !important;

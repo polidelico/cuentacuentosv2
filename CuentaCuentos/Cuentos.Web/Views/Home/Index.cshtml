@@ -7,59 +7,161 @@
 }
 
 <div class="content">
-    <div class="wp index">
-        <div class="col-izq">
-            <h1>
-                <div class="bold">Nace en ti el deseo de expresar lo que ves, <br /> que sientes y lo que piensas...</div><br />
-                ¡Libera tu imaginación y atrévete a soñar! Imagina tu cuento, constrúyelo y comparte con otros... Es tan fácil como:
-            </h1>
-            <div class="numeros" >
-                <div class="num_1"><img src="/Content/img/num_1.png">
-                    <h2>Piensa</h2>
-                    <p class="">Inspírate en hechos reales o ficticios de tus personajes, lugares, animales, vivencias y ocurrencias.</p>
-                </div>
-                <div class="num_1">
-                    <img src="~/Content/img/num_2.png" />
-                    <h2>Construye</h2>
-                    <p>Es el momento de crear, déjate sentir, ahora vas a poder comunicarte con palabras e imágenes. Da vida a tus personajes, maravíllate realizando tu cuento!</p>
-                </div>
-                <div class="num_1">
-                    <img src="~/Content/img/num_3.png" />
-                    <h2>Comparte</h2>
-                    <p>Expresa y muestra a otros tu obra maestra; motiva a otros estudiantes a publicar sus cuentos, deja tu legado a las generaciones futuras. Opina y evalúa acerca de lo que otros compartieron.</p>
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/Content/img/home/01Main_Slider_CuentaCuentos.png" alt="...">
+                <div class="carousel-caption">
+                    ...
                 </div>
             </div>
-            <div class="clearfix"></div>
-            <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">Crea tu cuento aquí</a>
-        </div>
-        <div class="col-der">
-            <div class="cuentos_destacados">Cuentos <span class="bold">Destacados</span></div>
-            <div style="margin-top:20px">
-                <ul class="bxslider">
-                    @foreach (var featured in Model.OrderBy(x => Guid.NewGuid()).Take(10)) {
+            <div class="item">
+                <img src="~/Content/img/home/02Main_Slider_CuentaCuentos.png" alt="Main_Slider">
+                <div class="carousel-caption">
+                    ...
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/Content/img/home/03Main_Slider_CuentaCuentos.png" alt="...">
+                <div class="carousel-caption">
+                </div>
 
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            </div>
+            <div class="main description">
+
+                    <img src="~/Content/img/Home/Cuento_icon.svg" alt="...">
+              
+                    <p>
+                        Cuenta Cuentos ayuda al estudiante afortalecer sus destrezas de escritura y <br /> dialecto.
+                        Es una estrategia divertida e innovadora que fomenta la creatividad<br />y diferencicion de cada alumno, mientras crea una cultura de colaboracion<br />
+                        entre el estudiante,los maestros y los padres.<href>¡Conocenos!</href>
+                    </p>
+                   
+                <div class="carousel1">
+                    <ul id="lightSlider">
                         <li>
-                            <div style="height:180px; margin-left:10px">
-                                <div style="float:left; width:190px">
-                                    <img src="@featured.CoverImage" alt="@featured.Name">
-                                </div>
-                                <div style="float:left; margin-left:15px; width:235px; margin-top:10px">
-                                    <div style="font-size:16px; font-weight:bold; color:#33adad">@featured.Name</div>
-                                    <div style="margin-top:5px">Por: <strong>@featured.User.Name</strong></div>
-                                    <div style="margin-top:5px"><div class="btn_naranja btn_leer"><a href="@Url.RouteUrl("VerCuento", new { id = featured.Id })">Leer este cuento</a></div></div>
-                                </div>
-                            </div>
+                            <h3>First Slide</h3>
+                            <p>Lorem ipsum Cupidatat quis pariatur anim.</p>
                         </li>
-                        }
+                        <li>
+                            <h3>Second Slide</h3>
+                            <p>Lorem ipsum Excepteur amet adipisicing fugiat velit nisi.</p>
+                        </li>
+                        ...
                     </ul>
                 </div>
+
+                    <div class="clearfix"></div>
+                    <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">Crea tu cuento aquí</a>
+                </div>
+
+                <div id="mp-Images">
+                    <img src="~/Content/img/Home/home_backdrop.svg" alt="...">
+
+                </div>
+                <div class="home_newsletter">
+                    <H1>UNETE A CUENTA CUENTOS</H1>
+                    <h3>Mantente informado de nuestros servicio,eventos y cuentos recientes.<br />¡Miles de escritors, artistas y lectores ya son parte de la comunidad en Cuenta Cuentos!</h3>
+                    <form action="demo_form.asp">
+                        First name: <input type="text" name="FirstName" value="Mickey"><br>
+                        Last name: <input type="text" name="LastName" value="Mouse"><br>
+                        <input type="submit" value="Submit">
+                    </form>
+
+                    <p>Click the "Submit" button and the form-data will be sent to a page on the server called "demo_form.asp".</p>
+
+                    </body>
+                    </html>
+
+                </div>
+                <div class="col-der">
+                    <div class="cuentos_destacados">Cuentos <span class="bold">Destacados</span></div>
+                   
+                <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
         </div>
-    </div>
 
 
     @section scripts {
+            
+    <!-- lightSlider Javascript file -->
+    <script type="text/javascript">  $(document).ready(function() {
+                        $("#lightSlider").lightSlider();
+                     });
+    </script>
+        <script type="text/javascript">
+    $(document).ready(function() {
+        $("#lightSlider").lightSlider({
+            item: 3,
+            autoWidth: false,
+            slideMove: 1, // slidemove will be 1 if loop is true
+            slideMargin: 10,
+
+            addClass: '',
+            mode: "slide",
+            useCSS: true,
+            cssEasing: 'ease', //'cubic-bezier(0.25, 0, 0.25, 1)',//
+            easing: 'linear', //'for jquery animation',////
+
+            speed: 400, //ms'
+            auto: false,
+            loop: false,
+            slideEndAnimation: true,
+            pause: 2000,
+
+            keyPress: false,
+            controls: true,
+            prevHtml: '',
+            nextHtml: '',
+
+            rtl:false,
+            adaptiveHeight:false,
+
+            vertical:false,
+            verticalHeight:500,
+            vThumbWidth:100,
+
+            thumbItem:10,
+            pager: true,
+            gallery: false,
+            galleryMargin: 5,
+            thumbMargin: 5,
+            currentPagerPosition: 'middle',
+
+            enableTouch:true,
+            enableDrag:true,
+            freeMove:true,
+            swipeThreshold: 40,
+
+            responsive : [],
+
+            onBeforeStart: function (el) {},
+            onSliderLoad: function (el) {},
+            onBeforeSlide: function (el) {},
+            onAfterSlide: function (el) {},
+            onBeforeNextSlide: function (el) {},
+            onBeforePrevSlide: function (el) {}
+        });
+    });
+        </script>
 
         <!-- bxSlider Javascript file -->
         <script src="~/Scripts/vendor/jquery.bxslider/jquery.bxslider.min.js"></script>

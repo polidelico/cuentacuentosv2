@@ -1,19 +1,24 @@
 .logo
 {
-  height: auto%;
-  width: 50%;
+  height: 64px;
+  width: 128px;
 }
 .navcontent
 {
   padding-top: 1%;
+  width:15%;
+  position:absolute; 
+  top:22px;
+  right:25px; 
 }
 .searchBox
 {
     padding-top:0.5%;
+        
 }
 
 .center {
-  position: relative;;
+  position: relative;
   left: 25%;
 }
 
@@ -21,4 +26,18 @@
 {
   display:inline-block;
   padding-right:10px;
+}
+
+.div_searchBox{
+  top:0px;
+
+}
+
+.logo-header{
+    margin:initial;
+    padding-left:5%;
+    float:left;
+
+
+
 }

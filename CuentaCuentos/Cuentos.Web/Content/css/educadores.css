@@ -1,5 +1,9 @@
 .mainSectionEdu{
-  background-image: url("../img/Educadores/bluebackground.png");
+  background-image:url("../img/Educadores/educadoresbackground.png");
+  width:1592px;
+  height:1362px;
+  
+
 }
 .lastSectionEdu{
   background-image: url("../img/blue_section.png");

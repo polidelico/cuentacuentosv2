@@ -35,6 +35,7 @@ namespace Cuentos.Migrations
             AddCities(context);
             FillSchools(context);
             FillRoles(context);
+            FillStories(context);
             try
             {
                 context.SaveChanges();
@@ -150,6 +151,15 @@ namespace Cuentos.Migrations
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "superAdmin" });
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "schoolAdmin" });
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "student" });
+        }
+
+        private void FillStories(Cuentos.Models.CuentosContext context)
+        {
+            var story = new Models.Story()
+            {
+
+            };
+            context.Stories.AddOrUpdate(story);
         }
     }
 }

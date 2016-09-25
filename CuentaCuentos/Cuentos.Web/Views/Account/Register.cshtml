@@ -7,16 +7,36 @@
 
 
 
-<div class="content registro">
-    <div class="wp">
-        <h1>Regístrate para crear tu cuenta</h1>
-        <h2>Entra tus datos para crear tu cuenta.</h2>
+    <div class="content registro">
 
-        @*<div class="col-izq">*@
-            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm" })) {
+        <div class="wp">
+
+            <h1>¡BIENVENIDOS A CUENTA CUENTOS!</h1>
+            <h2>¿Cual de estos perfiles te describe?</h2>
+            <img class="medium"><img src="~/Content/img/Registro/maestro_icon.svg" alt="maestro" height="128" width="128"></img>
+            <img class="medium"><img src="~/Content/img/Registro/estudiante_icon.svg" alt="estudiante" height="128" width="128"></img>
+            <img class="medium"><img src="~/Content/img/Registro/padres_icon.svg" alt="padre" height="128" width="128"></img>
+            <img class="medium"><img src="~/Content/img/Registro/visitante_icon.svg" alt="visitante" height="128" width="128"></img>
+            <div id="centerDiv">
+            <form action="test.asp" id="form1">
+                <input type="radio" name="Usertype" value="Maestro"> Maestro<br>
+                <input type="radio" name="Usertype" value="Estudiante"> Estudiante<br>
+                <input type="radio" name="Usertype" value="Padre"> Padre<br>
+                <input type="radio" name="Usertype" value="Visitante"> Visitante
+
+            </form>
+            </div>
+            
+
+
+            @*<div class="col-izq">*@
+            
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm" }))
+            {
+                <img class="medium"><img src="~/Content/img/Registro/add.svg" alt="visitante" height="64" width="64"></img>
                 @Html.ValidationSummary(true, AccountValidation.ErrorSummary)
                 <div class="line"></div>
-                
+
                 @Html.LabelFor(m => m.User.UserName)
                 @Html.TextBoxFor(m => m.User.UserName, new { @class = "large first" })
                 @Html.ValidationMessageFor(m => m.User.UserName)
@@ -28,8 +48,8 @@
                         @Html.ValidationMessageFor(m => m.User.Owner)
                     </div>
                 </div>
-                
-                <div class="fila">                    
+
+                <div class="fila">
                     <div class="box">
                         @Html.LabelFor(m => m.User.Name)
                         @Html.TextBoxFor(m => m.User.Name)
@@ -43,14 +63,14 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                
+
                 @Html.LabelFor(m => m.SchoolId)
                 @Html.DropDownListFor(m => m.SchoolId, (SelectList)ViewBag.Schools, "Selecciona una Escuela", new { @class = "large" })
                 @Html.ValidationMessageFor(m => m.SchoolId)
 
                 <div class="fila">
                     <div class="box">
- 
+
                         @Html.LabelFor(m => m.Grade)
                         @Html.EnumDropDownListFor(m => m.Grade);
                         @Html.ValidationMessageFor(m => m.Grade)
@@ -64,7 +84,7 @@
                     <div class="clearfix"></div>
                 </div>
 
-                
+
                 @Html.LabelFor(m => m.User.Email)
                 @Html.TextBoxFor(m => m.User.Email, new { @class = "large" })
                 @Html.ValidationMessageFor(m => m.User.Email)
@@ -85,60 +105,61 @@
                 </div>
 
 
-               
 
+                <img class="medium"><img src="~/Content/img/Registro/dragon_amigo.svg" alt="maestro" height="128" width="256"></img>
 
                 <label class="terminos" for="TermsConditions"><input type="checkbox" id="TermsConditions" name="TermsConditions" value="true" />Aceptos los <a href="@Url.RouteUrl("Terminos")" target="_blank">Términos y Condiciones</a></label>
 
 
                 @Html.ValidationMessageFor(m => m.TermsConditions)
 
-                <input type="submit" class="btn_naranja btn_registro" value="REGISTRARSE" />
+                <input type="submit" class="btn_naranja btn_registro" value="Enviar" />
             }
-        @*</div>*@
+            @*</div>*@
 
-@*        <div class="col-der">
-            <div class="title"><h3>Ventajas al registrarte</h3></div>
+            @*        <div class="col-der">
+                    <div class="title"><h3>Ventajas al registrarte</h3></div>
 
-            <div class="ventajas">
-                <div class="vent">
-                    <img src="~/Content/img/basura/vent1.jpg" />
-                    <h5>Ventaja #1</h5>
-                    <p>Lorem ipsum odor.</p>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="vent">
-                    <img src="~/Content/img/basura/vent2.jpg" />
-                    <h5>Ventaja #2</h5>
-                    <p>Probo sapientem adversarium</p>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="vent">
-                    <img src="~/Content/img/basura/vent1.jpg" />
-                    <h5>Ventaja #3</h5>
-                    <p>Vim saepe eirmod aliquid.</p>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="vent">
-                    <img src="~/Content/img/basura/vent2.jpg" />
-                    <h5>Ventaja #4</h5>
-                    <p>Mazim forensibus nec, diorem accumus refordans.</p>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+                    <div class="ventajas">
+                        <div class="vent">
+                            <img src="~/Content/img/basura/vent1.jpg" />
+                            <h5>Ventaja #1</h5>
+                            <p>Lorem ipsum odor.</p>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="vent">
+                            <img src="~/Content/img/basura/vent2.jpg" />
+                            <h5>Ventaja #2</h5>
+                            <p>Probo sapientem adversarium</p>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="vent">
+                            <img src="~/Content/img/basura/vent1.jpg" />
+                            <h5>Ventaja #3</h5>
+                            <p>Vim saepe eirmod aliquid.</p>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="vent">
+                            <img src="~/Content/img/basura/vent2.jpg" />
+                            <h5>Ventaja #4</h5>
+                            <p>Mazim forensibus nec, diorem accumus refordans.</p>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
 
-            <div class="adicional">
-                <h4>Información adicional</h4>
-                <img src="~/Content/img/cuento-thumb.png" width="224" height="169"/>
-                <div class="text">
-                    <p>Todas las personas registradas deben pertenecer alguna escuela. Los padres deben registrarse bajo la escuela donde asista su hijo.</p>
-                    <p>Lorem ipsum dolor sit amet, ut his alterum inciderint, no his tale voluptatum, an probo volumus per.</p>
-                </div>
-            </div>
-        </div>*@
-        <div class="clearfix"></div>
+                    <div class="adicional">
+                        <h4>Información adicional</h4>
+                        <img src="~/Content/img/cuento-thumb.png" width="224" height="169"/>
+                        <div class="text">
+                            <p>Todas las personas registradas deben pertenecer alguna escuela. Los padres deben registrarse bajo la escuela donde asista su hijo.</p>
+                            <p>Lorem ipsum dolor sit amet, ut his alterum inciderint, no his tale voluptatum, an probo volumus per.</p>
+                        </div>
+                    </div>
+                </div>*@
+            <div class="clearfix"></div>
+
+        </div>
     </div>
-</div>
 
 @section scripts {
 <script src="@Url.Content("~/Scripts/vendor/jquery.validate.js")" type="text/javascript"></script>

@@ -1,5 +1,7 @@
 .mainSection{
-  background-image: url("../img/Padres/pinkbackground.png");
+  background-image: url("../img/Padres/padresbackground.png");
+  width:1920px;
+  height:964px;
 }
 .mainSectionTitle{
   color:white;

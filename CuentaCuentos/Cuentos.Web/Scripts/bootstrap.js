@@ -232,7 +232,8 @@ if (typeof jQuery === 'undefined') {
 
 /* ========================================================================
  * Bootstrap: carousel.js v3.3.1
- * http://getbootstrap.com/javascript/#carousel
+ * http://getbootstrap.com/javascript/#fcarousel
+
  * ========================================================================
  * Copyright 2011-2014 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)

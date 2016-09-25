@@ -563,8 +563,10 @@
     <Content Include="Content\img\Educadores\creatividad.svg" />
     <Content Include="Content\img\Educadores\doodle_left.svg" />
     <Content Include="Content\img\Educadores\doodle_right.svg" />
+    <Content Include="Content\img\Educadores\educadoresbackground.png" />
     <Content Include="Content\img\Educadores\escritura.svg" />
     <Content Include="Content\img\Educadores\expresion.svg" />
+    <Content Include="Content\img\Educadores\fortalece.png" />
     <Content Include="Content\img\Educadores\gramatica.svg" />
     <Content Include="Content\img\Educadores\imaginacion.svg" />
     <Content Include="Content\img\Educadores\lectura.svg" />
@@ -573,6 +575,36 @@
     <Content Include="Content\img\emails\bg_top.jpg" />
     <Content Include="Content\img\emails\dummy_b.png" />
     <Content Include="Content\img\emails\logo.jpg" />
+    <Content Include="Content\img\home\01Main_Slider_CuentaCuentos.png" />
+    <Content Include="Content\img\home\02Main_Slider_CuentaCuentos.png" />
+    <Content Include="Content\img\home\03Main_Slider_CuentaCuentos.png" />
+    <Content Include="Content\img\home\album.svg" />
+    <Content Include="Content\img\home\background.png" />
+    <Content Include="Content\img\home\background.svg" />
+    <Content Include="Content\img\home\background_effect.svg" />
+    <Content Include="Content\img\home\blue_box.svg" />
+    <Content Include="Content\img\home\blue_section.png" />
+    <Content Include="Content\img\home\buscar.svg" />
+    <Content Include="Content\img\home\conocenos.svg" />
+    <Content Include="Content\img\home\cuento_icon.svg" />
+    <Content Include="Content\img\home\facebook_icon.svg" />
+    <Content Include="Content\img\home\green_box.svg" />
+    <Content Include="Content\img\home\hambuerger.svg" />
+    <Content Include="Content\img\home\home.svg" />
+    <Content Include="Content\img\home\home_backdrop.svg" />
+    <Content Include="Content\img\home\home_backdrop_opcio╠ün2.svg" />
+    <Content Include="Content\img\home\home_dragon.svg" />
+    <Content Include="Content\img\home\left_arrow.svg" />
+    <Content Include="Content\img\home\logo.png" />
+    <Content Include="Content\img\home\maestros.svg" />
+    <Content Include="Content\img\home\padres.svg" />
+    <Content Include="Content\img\home\pressed_menu_button.svg" />
+    <Content Include="Content\img\home\purple_section.png" />
+    <Content Include="Content\img\home\rating_star.svg" />
+    <Content Include="Content\img\home\rating_star_white.svg" />
+    <Content Include="Content\img\home\red_box.svg" />
+    <Content Include="Content\img\home\right_arrow.svg" />
+    <Content Include="Content\img\home\shadow_effect.svg" />
     <Content Include="Content\img\ico_ayuda.png" />
     <Content Include="Content\img\ico_fb.jpg" />
     <Content Include="Content\img\ico_gp.jpg" />
@@ -598,6 +630,7 @@
     <Content Include="Content\img\padres-04.jpg" />
     <Content Include="Content\img\Padres\grafica.svg" />
     <Content Include="Content\img\Padres\menino.png" />
+    <Content Include="Content\img\Padres\padresbackground.png" />
     <Content Include="Content\img\Padres\pinkbackground.png" />
     <Content Include="Content\img\paginas\1.png" />
     <Content Include="Content\img\paginas\2.png" />
@@ -1106,6 +1139,7 @@
     <Content Include="Areas\Admin\Views\Utilities\ImportUsers.cshtml" />
     <Content Include="ConnectionStrings.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Admin\Views\Users\UserStories.cshtml" />
     <None Include="Properties\PublishProfiles\Azure %28cuentos.cloudapp.net%29.pubxml" />
