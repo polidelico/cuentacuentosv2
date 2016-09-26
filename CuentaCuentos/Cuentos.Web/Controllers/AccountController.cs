@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -23,7 +23,6 @@ using Mandrill;
 using Cuentos.Lib.Helpers;
 using Mandrill.Models;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace CodeFirstAltairis.Controllers
 {
@@ -51,8 +50,7 @@ namespace CodeFirstAltairis.Controllers
             var model =  await Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
             var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
 
-            var user = await LoggedUser();
-            
+            var user = LoggedUser;
             var StoriesNotApproved =  await Db.Stories.Where(s =>
                                                       s.UserName == user.UserName
                                                       && (s.Status == StatusStory.Draft || 
@@ -374,8 +372,7 @@ namespace CodeFirstAltairis.Controllers
                     email.AddGlobalVariable("TITLE", "Hemos creado una nueva contraseña.");
                     email.AddGlobalVariable("CONTENT", "Puede volver a tener acceso a tu cuenta con la sigiguiente contraseña: <strong>" + newPassword + "</strong>.");
                     email.AddGlobalVariable("CALLTOACTION", "Accesede tu cuenta <a href=\"" + Url.Action("Login", "Account", Request.Url.Scheme) + "\"> aqui </a>");
-                    System.IO.File.WriteAllText("C:\\newpass",newPassword);
-                   //var sent = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
+                   var sent = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
 
                 }
             }

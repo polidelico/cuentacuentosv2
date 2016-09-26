@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -139,7 +139,7 @@ namespace CodeFirstAltairis.Models
     {
         public void SignIn(string userName, bool createPersistentCookie)
         {
-            if (string.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
 
             FormsAuthentication.SetAuthCookie(userName, createPersistentCookie);
         }

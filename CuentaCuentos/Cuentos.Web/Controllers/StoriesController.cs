@@ -1,4 +1,4 @@
-using Cuentos.Lib;
+﻿using Cuentos.Lib;
 using Cuentos.Lib.Extensions;
 using Cuentos.Models;
 using Cuentos.Models.view;
@@ -27,12 +27,10 @@ namespace Cuentos.Controllers
     {
 
         [Authorize]
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
             var story = new Story(true);
-            var user = await LoggedUser();
-
-            story.UserName = user.UserName;
+            story.UserName = LoggedUser.UserName;
             Db.Stories.Add(story);
             Db.SaveChanges();
 
@@ -43,12 +41,11 @@ namespace Cuentos.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var story = await Db.Stories.FindAsync(id);
-            var user = await LoggedUser();
 
             var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
             var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
             var galleries = await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
-                || (g.UserName == user.UserName && g.Active == true)).ToListAsync();
+                || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
 
             if (story == null)
             {
@@ -207,11 +204,9 @@ namespace Cuentos.Controllers
             {
                 //var story = Db.Stories.Find(storyId);
                 var story = await Db.Stories.Include("User.ImageHolders").Include("User").Where(s => s.Id == storyId).FirstAsync();
-                var user = await LoggedUser();
-
                 var comment = new Comment
                 {
-                    UserName = user.UserName,
+                    UserName = LoggedUser.UserName,
                     Text = newComment
                 };
                 story.Comments.Add(comment);
@@ -255,15 +250,13 @@ namespace Cuentos.Controllers
 
             try
             {
-                var user = await LoggedUser();
-
-                var ratings = await Db.Ratings.Where(r => r.UserName == user.UserName && r.StoryId == storyId).ToListAsync();
-                if (user != null && ratings.Count == 0)
+                var ratings = await Db.Ratings.Where(r => r.UserName == LoggedUser.UserName && r.StoryId == storyId).ToListAsync();
+                if (LoggedUser != null && ratings.Count == 0)
                 {
                     var story = await Db.Stories.FindAsync(storyId);
                     var rating = new Rating
                     {
-                        UserName = user.UserName,
+                        UserName = LoggedUser.UserName,
                         Rate = rate
                     };
 
@@ -509,15 +502,13 @@ namespace Cuentos.Controllers
             {
                 if (!string.IsNullOrEmpty(model.To))
                 {
-                    var user = await LoggedUser();
-
                     MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
                     var email = new EmailMessage();
                     email.To = new List<EmailAddress> { new EmailAddress { Email = model.To } };
-                    email.Subject = user.Fullname + " ha compartido un cuento contigo";
+                    email.Subject = LoggedUser.Fullname + " ha compartido un cuento contigo";
                     email.AddGlobalVariable("NAME", model.To);
                     email.AddGlobalVariable("TITLE", model.Story.Name + " por " + model.Story.User.Name + " - En Cuenta Cuentos");
-                    email.AddGlobalVariable("CONTENT", user.Fullname + " ha compartido el cuento " + model.Story.Name + "contigo.");
+                    email.AddGlobalVariable("CONTENT", LoggedUser.Fullname + " ha compartido el cuento " + model.Story.Name + "contigo.");
                     email.AddGlobalVariable("CALLTOACTION", "Lee el cuento <a href=\"" + Url.Action("Details", "Stories", new { id = model.Story.Id }, Request.Url.Scheme) + "\"> aqui </a>");
                     var res = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
 
