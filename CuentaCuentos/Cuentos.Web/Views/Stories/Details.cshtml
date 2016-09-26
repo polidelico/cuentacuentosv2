@@ -17,6 +17,14 @@
 
 <div class="content cuentos">
     <div class="wp">
+        @if (Model == null)
+        {
+            <h3> Model null.</h3>
+        }
+        else
+        {
+        
+
         <div class="cont-cuento">
             <h1>@Model.Name <a href="#" id="request-full-screen" class="btn_blue right">Full Screen</a></h1>
             <div id="pages-designer" class="slide-cuento">
@@ -30,22 +38,7 @@
         </div>
         <div class="aside-desc">
             <div class="opiniones">
-                <span>OPINIONES</span>
-                <span class="stars-container @(ViewBag.LoggedUser != null ? "logged" : "")" data-average="@ViewBag.Average" data-storyid="@Model.Id" data-url="@Url.Action("RateStory", "Stories")">
-                    @for (int i = 1; i <= 5; i++)
-                    {
-                        string cssClass = "";
-                        if (ViewBag.Average > 0)
-                        {
-                            cssClass = i <= ViewBag.Average ? "iconStar" : (ViewBag.Average > i - 1 ? "iconStarHalf" : "iconStarZero");
-                        }
-                        else
-                        {
-                            cssClass = "iconStarZero";
-                        }
-                        <i class="fa star @cssClass" data-star-num="@i"></i>
-                    }
-                </span>
+               
             </div>
             <div class="autor">
                 <h2>AUTOR</h2>
@@ -161,6 +154,7 @@
         </div>
 
         <div class="clearfix"></div>
+        }
     </div>
 </div>
 @{

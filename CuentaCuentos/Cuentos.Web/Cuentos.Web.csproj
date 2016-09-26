@@ -372,6 +372,7 @@
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\TimeStamps.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Videos.cs" />
     <Compile Include="Models\view\ApprovalsModel.cs" />
     <Compile Include="Models\view\ChangePasswordModel.cs" />
     <Compile Include="Models\view\ContactUsModel.cs" />
@@ -1310,6 +1311,7 @@
     <Content Include="Views\Stories\_Viewer.cshtml" />
     <Content Include="Views\Stories\_EmailShare.cshtml" />
     <Content Include="Service References\AzureAD\ConnectedService.json" />
+    <Content Include="Views\Stories\Videos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

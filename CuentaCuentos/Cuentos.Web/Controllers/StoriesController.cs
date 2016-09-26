@@ -110,6 +110,13 @@ namespace Cuentos.Controllers
             return View(returnStory);
         }
 
+        public async Task<ActionResult> Videos()
+        {
+            var stories = await Db.Stories.ToListAsync();
+            var videos = new Videos() { Stories = stories.ToArray() };
+            return View(videos);
+        }
+
         [Authorize]
         [WebMethod, HttpPost]
         public async Task<ActionResult> Save(int id, string name, string summary, string selectedCategories, string selectedGrades)
@@ -189,8 +196,9 @@ namespace Cuentos.Controllers
                 //TODO: Mex adding a cookie to if cookie exist not add more views
 
                 Db.SaveChanges();
+                ViewBag.LoggedUser = await LoggedUser();
                 ViewBag.Average = average;
-
+                
                 return View(story);
             }
 
