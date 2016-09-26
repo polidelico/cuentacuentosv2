@@ -67,6 +67,9 @@ namespace Cuentos.Models
 
         public bool Featured { get; set; }
 
+        public StoryType StoryType { get; set; }
+        public string VideoUrl { get; set; }
+
         //[Required]
         [Display(Name = "Resumen del cuento")]
         public string Summary { get; set; }
@@ -88,7 +91,7 @@ namespace Cuentos.Models
         public DateTime? UpdatedAt { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
-
+        
         public string ApprovedBy { get; set; }
 
         [Display(Name = "Estado")]
@@ -226,6 +229,13 @@ namespace Cuentos.Models
 
         [Display(Name = "Eliminado")]
         Deleted = 4
+    }
+
+    public enum StoryType
+    {
+        None = 0,
+        Story = 1,
+        Videos = 2,
     }
 
 
