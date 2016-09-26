@@ -1,0 +1,23 @@
+﻿@model Cuentos.Models.Videos
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    New Page
+        @foreach(var story in Model.Stories)
+        {
+            <h3>@story</h3>
+            
+        }
+    </div>
+</body>
+</html>

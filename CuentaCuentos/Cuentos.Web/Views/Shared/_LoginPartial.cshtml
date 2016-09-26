@@ -3,9 +3,13 @@
 
 
     <div class="col-sm-3 col-md-3 buttons navcontent pull-right">
-        <button type="button" class="btn btn-success registerBtn">@ViewBag.LoggedUser.UserName</button>
-        <button type="button" class="btn btn-primary loginBtn">Logout</button>
-    </div>
+        <a href="@Url.RouteUrl("CreaTuCuento")">
+                  <div class="btn btn-success registerBtn">Crear</div>
+        </a>
+        <a href="@Url.RouteUrl("Logoff")">
+            <div  class="btn btn-primary loginBtn">Logout</div>
+        </a>
+</div>
     <!--
     <div class="buttons">
         <a href="@Url.RouteUrl("MiCuenta")" class="blue login-btn"> @ViewBag.LoggedUser.UserName </a>

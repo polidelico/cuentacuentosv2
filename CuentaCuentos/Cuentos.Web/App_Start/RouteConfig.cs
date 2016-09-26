@@ -1,4 +1,4 @@
-﻿using Cuentos.Lib.Binders;
+using Cuentos.Lib.Binders;
 using Cuentos.Models;
 using System;
 using System.Collections.Generic;
@@ -87,6 +87,11 @@ namespace Cuentos
                namespaces: webNamespace,
                defaults: new { controller = "Schools", action = "Index" }
            );
+            routes.MapRoute(
+                name: "Logoff", 
+                url: "logoff",
+                namespaces: webNamespace,
+                defaults : new { controller = "Account", action = "Logoff"});
 
             routes.MapRoute(
                name: "Contactanos",

@@ -1,4 +1,4 @@
-﻿using Cuentos.Lib;
+using Cuentos.Lib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -130,6 +130,7 @@ namespace Cuentos.Models
 
         public bool isViewable(int id)
         {
+            return true;
             CuentosContext db = new CuentosContext();
             var result = false;
             var username = System.Web.HttpContext.Current.User.Identity.Name;
