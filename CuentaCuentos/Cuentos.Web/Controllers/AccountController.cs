@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -50,7 +50,8 @@ namespace CodeFirstAltairis.Controllers
             var model =  await Db.Users.Include("ImageHolders").Where(u => u.UserName == User.Identity.Name).FirstAsync();
             var schools = await Db.Schools.OrderBy(s => s.Name).ToListAsync();
 
-            var user = LoggedUser;
+            var user = await LoggedUser();
+            ;
             var StoriesNotApproved =  await Db.Stories.Where(s =>
                                                       s.UserName == user.UserName
                                                       && (s.Status == StatusStory.Draft || 

@@ -1,4 +1,4 @@
-﻿using Cuentos.Lib;
+using Cuentos.Lib;
 using Cuentos.Models;
 using Newtonsoft.Json;
 using System;
@@ -124,7 +124,8 @@ namespace Cuentos.Controllers
 
             var result = false;
             var imageObj = await Db.Images.FindAsync(id);
-            var userGal = await Db.BuilderGalleries.Where(bg => bg.UserName == LoggedUser.UserName).FirstOrDefaultAsync();
+            var user = await LoggedUser();
+            var userGal = await Db.BuilderGalleries.Where(bg => bg.UserName == user.UserName).FirstOrDefaultAsync();
 
 
             
@@ -147,14 +148,18 @@ namespace Cuentos.Controllers
 
             if (onlyUserImages)
             {
-                galleries  = await  Db.BuilderGalleries.Include("Images")
-                                    .Where(g => g.UserName == LoggedUser.UserName
+                var user = await LoggedUser();
+
+                galleries = await  Db.BuilderGalleries.Include("Images")
+                                    .Where(g => g.UserName == user.UserName
                                      && g.Active == true).ToListAsync();
             }
             else
             {
+                var user = await LoggedUser();
+
                 galleries =  await Db.BuilderGalleries.Include("Images").Where(g => (g.Active == true && g.UserName == null)
-                    || (g.UserName == LoggedUser.UserName && g.Active == true)).ToListAsync();
+                    || (g.UserName == user.UserName && g.Active == true)).ToListAsync();
             }
 
             ///List<ImageCategory> allImageCategories = await Db.ImageCategories.ToListAsync();
