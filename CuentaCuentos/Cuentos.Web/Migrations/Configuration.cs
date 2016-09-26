@@ -6,7 +6,11 @@ namespace Cuentos.Migrations
     using System.Collections;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
+    using System.Web.Security;
     using System.Linq;
+    using CodeFirstAltairis.Models;
+    using System.Security.Cryptography;
+    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Cuentos.Models.CuentosContext>
     {
@@ -31,11 +35,11 @@ namespace Cuentos.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
-            AddCities(context);
-            FillSchools(context);
-            FillRoles(context);
-            FillStories(context);
+            //AddCities(context);
+            //FillSchools(context);
+            //FillRoles(context);
+            //FillStories(context);
+            FillUsers(context);
             try
             {
                 context.SaveChanges();
@@ -63,6 +67,7 @@ namespace Cuentos.Migrations
                 throw new Exception(string.Join(",", outputLines.ToArray()));
 
             }
+            
         }
 
         public void AddCities(Cuentos.Models.CuentosContext context)
@@ -74,16 +79,16 @@ namespace Cuentos.Migrations
             context.Cities.AddOrUpdate(new Models.City() { Name = "Aibonito" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Arecibo" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Arroyo" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Añasco" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Aï¿½asco" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Barceloneta" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Barranquitas" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Bayamon" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Cabo Rojo" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Caguas" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Camuy" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Canóvanas" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Canï¿½vanas" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Carolina" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Cataño" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Cataï¿½o" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Ceiba" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Ciales" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Cidra" });
@@ -96,7 +101,7 @@ namespace Cuentos.Migrations
             context.Cities.AddOrUpdate(new Models.City() { Name = "Florida" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Guayama" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Guayanilla" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Guánica" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Guï¿½nica" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Hatillo" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Hormigueros" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Humacao" });
@@ -106,23 +111,23 @@ namespace Cuentos.Migrations
             context.Cities.AddOrUpdate(new Models.City() { Name = "Juncos" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Lajas" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Lares" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Las Marías" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Las Marï¿½as" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Las Piedras" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Luquillo" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Manatí" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Manatï¿½" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Maricao" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Maunabo" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Mayagüez" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Mayagï¿½ez" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Moca" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Morovis" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Naguabo" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Naranjito" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Orocovis" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Peñuelas" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Peï¿½uelas" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Ponce" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Quebradillas" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Rincón" });
-            context.Cities.AddOrUpdate(new Models.City() { Name = "Río Grande" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Rincï¿½n" });
+            context.Cities.AddOrUpdate(new Models.City() { Name = "Rï¿½o Grande" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Sabana Grande" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Santa Isabel" });
             context.Cities.AddOrUpdate(new Models.City() { Name = "Toa Alta" });
@@ -142,7 +147,7 @@ namespace Cuentos.Migrations
         private void FillSchools(Cuentos.Models.CuentosContext context)
         {
 
-            context.Schools.AddOrUpdate(new Models.School() { Name = "José S. Alegría", Details = "Escuela Pública", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 1, Zip = "00646" });
+            context.Schools.AddOrUpdate(new Models.School() { Name = "Josï¿½ S. Alegrï¿½a", Details = "Escuela Pï¿½blica", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 1, Zip = "00646" });
             context.Schools.AddOrUpdate(new Models.School() { Name = "Colegio de la Vega", Details = "Escuela Privada", Address1 = "Direccion1", Address2 = "Direccion2", CityId = 2, Zip = "12346" });
         }
 
@@ -153,12 +158,67 @@ namespace Cuentos.Migrations
             context.Roles.AddOrUpdate(new Models.Role() { RoleName = "student" });
         }
 
-        private void FillStories(Cuentos.Models.CuentosContext context)
+        private void FillUsers(Cuentos.Models.CuentosContext context)
         {
-            var story = new Models.Story()
+            var service = new AccountMembershipService(null);
+            var salt = getSalt();
+            var salt64 = Convert.ToBase64String(salt);
+            var user = new Models.User()
             {
+                Name = "Rufo",
+                UserName = "Rufo",
+                Age = 27,
+                DateCreated = DateTime.Now,
+                Grade = Grade.Eighth,
+                Featured = false,
+                Email = "rafael.valle03@gmail.com",
+                LastName = "valle",
+                Roles = context.Roles.Where(r => r.RoleName == "superAdmin").ToArray(),
+                PasswordHash = EncodePassword("tryagain1", salt64),
+                PasswordSalt = salt,
+                DateLastActivity = DateTime.Now,
+                DateLastLogin = DateTime.Now,
+                ApprovedDate = DateTime.Now,
+                DateLastPasswordChange = DateTime.Now,
+                IsApproved = true,
+                
+                Owner = "Student",
 
             };
+            context.Users.AddOrUpdate(user);
+        }
+        public byte[] EncodePassword(string pass, string saltBase64)
+        {
+            byte[] bytes = Encoding.Unicode.GetBytes(pass);
+            byte[] src = Convert.FromBase64String(saltBase64);
+            byte[] dst = new byte[src.Length + bytes.Length];
+            Buffer.BlockCopy(src, 0, dst, 0, src.Length);
+            Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
+            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
+            byte[] inArray = algorithm.ComputeHash(dst);
+            return inArray;
+        }
+        private static byte[] getSalt()
+        {
+            var random = new RNGCryptoServiceProvider();
+
+            // Maximum length of salt
+            int max_length = 64;
+
+            // Empty salt array
+            byte[] salt = new byte[max_length];
+
+            // Build the random bytes
+            random.GetNonZeroBytes(salt);
+
+            // Return the string encoded salt
+            return salt;
+        }
+
+        private void FillStories(Cuentos.Models.CuentosContext context)
+        {
+            var story = new Models.Story(true);
+           
             context.Stories.AddOrUpdate(story);
         }
     }

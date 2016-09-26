@@ -1,4 +1,4 @@
-﻿using Cuentos.Lib;
+using Cuentos.Lib;
 using Cuentos.Lib.Utils;
 using Cuentos.Models;
 using System;
@@ -34,12 +34,10 @@ namespace Cuentos.Controllers
             }
         }
 
-        public User LoggedUser
+        public async Task<User> LoggedUser()
         {
-            get
-            {
-                return Db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.User.Identity.Name).First();
-            }
+                return await Db.Users.Include("ImageHolders").Where(u => u.UserName == HttpContext.User.Identity.Name).FirstOrDefaultAsync();
+            
         }
 
         public void UploadImage(HttpPostedFileBase imageFile, Image imageModel, bool emptyDir = true, int width = 0, int height = 0)

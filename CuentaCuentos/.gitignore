@@ -183,5 +183,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 Cuentos.Web/Content/dynamic/
-*ConnectionStrings.config
 .vs/
