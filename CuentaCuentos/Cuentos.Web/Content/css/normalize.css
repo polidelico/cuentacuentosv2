@@ -134,7 +134,8 @@ h2 {
 }
 
 h3 {
-    font-size: 53pt;
+    font-size: 1.17em;
+    margin: 1em 0;
 }
 
 h4 {
@@ -207,6 +208,7 @@ mark {
 
 p,
 pre {
+    margin: 1em 0;
 }
 
 /**
