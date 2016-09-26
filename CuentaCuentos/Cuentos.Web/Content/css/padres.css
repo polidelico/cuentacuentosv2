@@ -1,7 +1,17 @@
-.mainSection{
+.mainSection { 
+  min-width: 768px;
   background-image: url("../img/Padres/padresbackground.png");
-  width:1920px;
-  height:964px;
+  padding: 48px 0;
+  height:748px;
+  }
+}
+/*img.resize{
+    width:768px; /* you can use % */
+    /*height: auto;
+}*/
+   
+.mt-col{
+    width:128px;
 }
 .mainSectionTitle{
   color:white;

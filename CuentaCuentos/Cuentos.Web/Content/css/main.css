@@ -112,8 +112,9 @@ h1 {
 }
 
 h2 {
-    font: 300 26px/120% 'Open Sans', sans-serif;
-    color: #1F6868;
+    font-weight: bold;
+    font: 300 40px/120% 'Open Sans', sans-serif;
+    color: #e3f4f4;
     text-align: center;
     margin-top: 10px;
     letter-spacing: -1px;
@@ -1574,6 +1575,8 @@ footer {
 }
 
     footer p {
+        padding-top: 25px;
+        padding-bottom: 25px;
         color: white;
         font: 400 13px 'Open Sans', sans-serif;
         float: left;
@@ -1581,13 +1584,13 @@ footer {
     }
 
     footer nav {
+        position: relative;
         float: right;
         text-align: right;
-        width: 445px;
     }
 
         footer nav ul {
-            padding: 0px;
+            padding-top: 22px;
             margin: 0px;
         }
 

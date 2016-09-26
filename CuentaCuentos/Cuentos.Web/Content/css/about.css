@@ -1,89 +1,107 @@
 .greensection {
-  background-image: url("../img/about/greenbackground.png");
+    background-image: url("../img/about/greenbackground.png");
 }
+
 .jumboText {
-  color:white;
+    color: white;
 }
-.subheadingtxt{
-  color : grey;
+
+.subheadingtxt {
+    font-size: 27pt;
+    color: grey;
 }
-.sobrenosotros{
-  color:#4AA7FF;
-  font-weight: bold;
+
+.sobrenosotros {
+    color: rgb(0, 0, 187);
+    font-weight: bold;
 }
 
 .row-centered {
-  display: table-row;
+    display: table-row;
 }
-// Apply this to the cols within the row
-.col-centered {
-  display: table-cell;
-  float: none;
-  vertical-align: top;
+
+// Apply this to the cols within the row .col-centered {
+    display: table-cell;
+    float: none;
+    vertical-align: top;
 }
+
 .quote {
-background-color: #4AA7FF;
-color:white;
-font-style: italic;
-box-shadow: 10px 10px grey;
+    margin-left: 50px;
+    background-color: #4AA7FF;
+    color: white;
+    font-style: italic;
+    box-shadow: 10px 10px grey;
 }
+
 .author {
-  text-align: center;
-  font-style:normal;
+    text-align: center;
+    font-style: normal;
 }
-.etc{
-  text-align: center;
-  font-style:normal;
+
+.etc {
+    text-align: center;
+    font-style: normal;
 }
+
 .projectBox {
-  padding-top: 10px;
-  margin-top: 10px;
-  box-shadow: 3px 3px grey;
+    padding-top: 10px;
+    margin-top: 10px;
+    box-shadow: 3px 3px grey;
 }
 
-.boxContent{
-  color:white;
-  text-align: center;
+.boxContent {
+    color: white;
+    text-align: center;
 }
 
-.boxTitle{
-  font-weight: bold;
-  color:white;
-  text-align: center;
+.boxTitle {
+    font-size: 27pt;
+    font-weight: bold;
+    color: white;
+    text-align: center;
 }
 
-.lightBlueBox{
-background-color:#4AA7FF;
-}
-.purpleBox{
-background-color:#6600ff;
-}
-.blueBox{
-  background-color: #00ccff;
-}
-.pinkBox{
-  background-color: #ff66cc
-}
-.orangeBox{
-  background-color: #ff9933;
-}
-.peachBox{
-  background-color:#ff9966;
+.lightBlueBox {
+    background-color: rgb(0, 186, 211);
 }
 
-.imageTitle{
-  font-weight: bold;
-  color:white;
-  text-align: center;
-}
-.imageContent{
-  font-weight: normal;
-  color:white;
-  text-align: center;
+.purpleBox {
+    background-color: rgb(107, 135, 174);
 }
 
-.btn-comeinza{
-  background-color: white;
-  color:#00cc66;
-  font-weight: bold;
+.blueBox {
+    background-color: #00ccff;
+}
+
+.pinkBox {
+    background-color: rgb(222, 138, 175);
+}
+
+.orangeBox {
+    background-color: rgb(248, 153, 62);
+}
+
+.peachBox {
+    background-color: #ff9966;
+}
+
+.imageTitle {
+    font-size: 20pt;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.imageContent {
+    font-size: 20pt;
+    font-weight: normal;
+    color: white;
+    text-align: center;
+}
+
+.btn-comeinza {
+    background-color: white;
+    color: rgb(7, 183, 156);
+    font-weight: bold;
 }
