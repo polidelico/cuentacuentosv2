@@ -72,7 +72,21 @@ video {
 /*
  * Remove default fieldset styles.
  */
-
+.mp-book{
+    width:100%;
+    margin-top:5%;
+    margin-bottom:3%;
+    margin-left:45%;
+}
+.mp-md-book{
+    width:10%;
+    height:auto;
+}
+.mp-md-p{
+    font-size:1.6em;
+    color:white;
+    text-align:center;
+}
 fieldset {
     border: 0;
     margin: 0;
