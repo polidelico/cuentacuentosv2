@@ -7,6 +7,7 @@ namespace Cuentos.Models
 {
     public class Videos
     {
+        public string Token;
         public Story[] Stories { get; set; }
     }
 }

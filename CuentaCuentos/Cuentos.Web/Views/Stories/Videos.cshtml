@@ -11,13 +11,39 @@
     <title></title>
 </head>
 <body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <div>
-    New Page
-        @foreach(var story in Model.Stories)
+        New Page
+        @foreach (var story in Model.Stories)
         {
-            <h3>@story</h3>
-            
+            <h3>@story.Name</h3>
+
         }
+        <iframe id="editor">
+
+        </iframe>
+        <script>
+            $(document).ready(function () {
+                console.log("Logging in...");
+                $.ajax(
+                "http://awstest.wevideo.com/api/3/sso/login/" + "@Model.Token",
+                {
+                    success: function () {
+                        console.log("Logged in");
+                        $("iframe#editor").attr("src", "http://awstest.wevideo.com/c/CuentaCuentos");
+                    },
+                    error: function () {
+                        console.log("Failed login");
+                    },
+                    xhrFields: { withCredentials: true }
+                }
+                );
+            });
+            
+
+        </script>
     </div>
 </body>
 </html>

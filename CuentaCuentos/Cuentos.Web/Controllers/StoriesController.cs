@@ -20,11 +20,27 @@ using System.Net;
 using Mandrill.Models;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Wevideo;
 
 namespace Cuentos.Controllers
 {
     public class StoriesController : ApplicationGlobalController
     {
+
+        private Requester Requester;
+
+        public async Task InitializeRequestor()
+        {
+            string API_KEY = "3ng65RTWozM9W";
+            string SECRET_KEY = "JMHB9Ty0SqOOPEQMHZ8U18Abjkhst2ncq5ktZx7V";
+            string url = "http://awstest.wevideo.com/api";
+            string restURL = "/3/sso/auth";
+            Requester = new Requester(API_KEY, SECRET_KEY, url, restURL);
+            var task = await Requester.Auth("rafael.valle03@gmail.com");
+            System.Diagnostics.Debug.WriteLine("Got Token: " + Requester.LoginInfo.Token);
+            
+        }
+
 
         [Authorize]
         public async Task<ActionResult> Create()
@@ -113,7 +129,11 @@ namespace Cuentos.Controllers
         public async Task<ActionResult> Videos()
         {
             var stories = await Db.Stories.ToListAsync();
+            
             var videos = new Videos() { Stories = stories.ToArray() };
+            if (Requester == null)
+                await InitializeRequestor();
+            videos.Token = Requester.LoginInfo.Token;
             return View(videos);
         }
 

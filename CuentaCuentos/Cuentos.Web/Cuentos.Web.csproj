@@ -346,9 +346,9 @@
     <Compile Include="Lib\Interfaces.cs" />
     <Compile Include="Lib\Utils\Uploader.cs" />
     <Compile Include="Lib\Validations\CustomDataAnnotation.cs" />
-    <Compile Include="Migrations\201609260135098_Initial.cs" />
-    <Compile Include="Migrations\201609260135098_Initial.Designer.cs">
-      <DependentUpon>201609260135098_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201609270607096_Initial.cs" />
+    <Compile Include="Migrations\201609270607096_Initial.Designer.cs">
+      <DependentUpon>201609270607096_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -389,6 +389,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Requester.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -747,6 +748,7 @@
     <Content Include="Scripts\confirmUnPublish.js" />
     <Content Include="Scripts\confirmPublish.js" />
     <Content Include="Scripts\dropdown.js" />
+    <Content Include="Scripts\editorload.js" />
     <Content Include="Scripts\fixImagesSize.js" />
     <None Include="Properties\PublishProfiles\cuentostest - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -1326,8 +1328,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609260135098_Initial.resx">
-      <DependentUpon>201609260135098_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609270607096_Initial.resx">
+      <DependentUpon>201609270607096_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
