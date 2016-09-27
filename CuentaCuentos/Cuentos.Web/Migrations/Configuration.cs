@@ -39,7 +39,7 @@ namespace Cuentos.Migrations
             //FillSchools(context);
             //FillRoles(context);
             //FillStories(context);
-            FillUsers(context);
+            //FillUsers(context);
             try
             {
                 context.SaveChanges();

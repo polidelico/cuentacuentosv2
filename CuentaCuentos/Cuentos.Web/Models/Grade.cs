@@ -7,6 +7,7 @@ using System.Web;
 
     public enum Grade
     {
+        None,
         First,
         Second,
         Third,

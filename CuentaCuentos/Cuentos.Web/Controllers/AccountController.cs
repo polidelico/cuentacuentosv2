@@ -195,10 +195,14 @@ namespace CodeFirstAltairis.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                System.Diagnostics.Debug.WriteLine("Model is valid");
+                System.Diagnostics.Debug.WriteLine("Name? " + model.User.Name);
                 model.User.SchoolId = model.SchoolId;
                 model.User.Grade = model.Grade;
-
+                
                 var createStatus = await RegisterUser(model.User, model.Password, Role.RoleType.student);
+                System.Diagnostics.Debug.WriteLine(createStatus.ToString());
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
@@ -223,7 +227,7 @@ namespace CodeFirstAltairis.Controllers
                         email.AddGlobalVariable("TITLE", "Un nuevo usuario se ha registrado.");
                         email.AddGlobalVariable("CONTENT", "Para que el nuevo usuario pueda tener acceso a todas las funcionalidades de Cuenta Cuentos es necesario que sea aprovado.");
                         email.AddGlobalVariable("CALLTOACTION", "Apruebe el usuario <a href=\"" + Url.Action("Index", "Approvals", new { area = "admin" }, Request.Url.Scheme) + "\"> aqui </a>");
-                        var result = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
+                        //var result = await mandrill.SendMessage(new Mandrill.Requests.Messages.SendMessageRequest(email));
                     }
 
                     return RedirectToAction("Index", "Home").Success("Su cuenta ha sido creada satisfactoriamente, la misma esta en espera de aprobación.");
@@ -231,12 +235,13 @@ namespace CodeFirstAltairis.Controllers
                 else
                 {
                     ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
-                    setRegisterModel();
+                    var result = await setRegisterModel();
+                   
                 }
             }
             else
             {
-                setRegisterModel();
+                var result = await setRegisterModel();
             }
 
             // If we got this far, something failed, redisplay form
@@ -262,7 +267,7 @@ namespace CodeFirstAltairis.Controllers
                 user.Age = model.Age;
                 user.Email = model.Email;
                 user.Roles.Add(role);
-                user.IsApproved = model.IsApproved;
+                user.IsApproved = true;
                 user.Owner = model.Owner;
 
                

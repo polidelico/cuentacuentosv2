@@ -49,23 +49,20 @@ namespace Cuentos.Models
         [MaxLength(100)]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Nombre requerido")]
         [Display(Name = "Nombre")]
         public string Name { get; set; }
 
         [Display(Name = "Apellido")]
-        [Required(ErrorMessage = "Apellido requerido")]
         public string LastName { get; set; }
 
         [Display(Name = "Edad")]
         public int? Age { get; set; }
 
-        [Required(ErrorMessage = "Requerido")]
         [Display(Name = "¿Quien eres?")]
         public string Owner { get; set; }
 
         [Display(Name = "Grado: ")]
-        public virtual Grade Grade { get; set; }
+        public Grade Grade { get; set; }
 
         [Display(Name = "Escuela")]
         public int? SchoolId { get; set; }

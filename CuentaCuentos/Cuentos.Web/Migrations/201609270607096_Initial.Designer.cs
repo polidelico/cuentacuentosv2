@@ -13,7 +13,7 @@ namespace Cuentos.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201609260135098_Initial"; }
+            get { return "201609270607096_Initial"; }
         }
         
         string IMigrationMetadata.Source
