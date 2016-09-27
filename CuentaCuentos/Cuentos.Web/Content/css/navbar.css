@@ -41,3 +41,8 @@
 
 
 }
+.solid {
+    border-bottom: 1px groove;
+        border-color:dimgray;
+        padding-top:10px
+}

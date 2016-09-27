@@ -113,7 +113,7 @@ h1 {
 
 h2 {
     font: 300 26px/120% 'Open Sans', sans-serif;
-    color: #1F6868;
+    color: #00BAD3;
     text-align: center;
     margin-top: 10px;
     letter-spacing: -1px;
@@ -135,6 +135,7 @@ body {
 .wp {
     width: 1266px;
     margin: 0px auto;
+    padding-bottom:25px;
 }
 
 .header {
@@ -1578,12 +1579,17 @@ footer {
         font: 400 13px 'Open Sans', sans-serif;
         float: left;
         padding-left: 450px;
+        padding-top:25px;
     }
 
     footer nav {
         float: right;
         text-align: right;
         width: 445px;
+        position:absolute;
+        margin-left: 800px;
+        padding-top:21px
+
     }
 
         footer nav ul {

@@ -1887,7 +1887,7 @@ pre code {
     margin-left: 33.33333333%;
   }
   .col-md-offset-3 {
-    margin-left: 25%;
+    margin-left: 15%;
   }
   .col-md-offset-2 {
     margin-left: 16.66666667%;
@@ -2754,7 +2754,7 @@ select[multiple].form-group-lg .form-control {
 .btn {
   display: inline-block;
   margin-bottom: 0;
-  font-weight: normal;
+  font-weight: lighter;
   text-align: center;
   vertical-align: middle;
   -ms-touch-action: manipulation;
@@ -2898,8 +2898,9 @@ fieldset[disabled] .btn-primary.active {
 }
 .btn-success {
   color: #ffffff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #07B79C;
+  border-color: #07B79C;
+ 
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -2908,7 +2909,7 @@ fieldset[disabled] .btn-primary.active {
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
   color: #ffffff;
-  background-color: #449d44;
+  background-color: #00BAD3;
   border-color: #398439;
 }
 .btn-success:active,
@@ -3114,7 +3115,9 @@ fieldset[disabled] .btn-link:focus {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
-  border-radius: 6px;
+  margin-bottom:128px;
+  margin-top:60px;
+ 
 }
 .btn-sm,
 .btn-group-sm > .btn {
@@ -4632,7 +4635,6 @@ a.badge:focus {
 }
 .jumbotron {
   padding: 30px 15px;
-  margin-bottom: 30px;
   color: inherit;
   background-color: #eeeeee;
 }

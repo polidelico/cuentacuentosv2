@@ -20,11 +20,11 @@
 
 
     </div>
-    <p class="solid">A solid border.</p>
+    <p class="solid"></p>
     <div class="container-fluid">
         <ul class="nav navbar-nav center">
             <li><a href="/Home"><img src="~/Content/img/Nav/home.svg" class="img img-responsive navigationBtn">Inicio</a></li>
-            <li><a href="~/Views/Stories/Details.cshtml"><img src="~/Content/img/Nav/album.svg" class="img img-responsive navigationBtn"><span>Album de Cuentos</span></a></li>
+            <li><a href="@Url.Action("Videos","Stories")"><img src="~/Content/img/Nav/album.svg" class="img img-responsive navigationBtn"><span>Album de Cuentos</span></a></li>
             <li><a href="/Educadores"><img src="~/Content/img/Nav/maestros.svg" class="img img-responsive navigationBtn">Educadores</a></li>
             <li><a href="/Padres"><img src="~/Content/img/Nav/padres.svg" class="img img-responsive navigationBtn">Padres</a></li>
             <li><a href="/Home/about"><img src="~/Content/img/Nav/conocenos.svg" class="img img-responsive navigationBtn">Conocenos</a></li>

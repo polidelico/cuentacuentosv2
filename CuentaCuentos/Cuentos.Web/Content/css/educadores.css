@@ -1,12 +1,36 @@
 .mainSectionEdu{
-  background-image:url("../img/Educadores/educadoresbackground.png");
-  width:1592px;
-  height:1362px;
+  background-image: url("../img/Educadores/educadoresbackground.png");
+  width:100%;
+  height:960px; /*needs to be 735 */
+  padding-top:48px;
+  padding-bottom:48px;
+  background-size:100% 100%;
   
-
+}
+.ed-Fort{
+    margin-left:-10%;
+}
+.row-img{
+    margin-left:-22%;
+    width:100%;
+    height:auto;
+}
+.ed-center{
+    margin-top:35px;
+    margin-left:-10%;
+}
+.ed-Stitle {
+    width:712px;
+    margin-left:20%;
+}
+.ed-Stitle1 {
+    width:712px;
+    margin-left:10%;
+    display:inline;
 }
 .lastSectionEdu{
   background-image: url("../img/blue_section.png");
+  background-size:cover;
 }
 .mainSectionTitleEducator{
   color:white;
@@ -16,23 +40,44 @@
 
 .mainSectionSubTitle{
   color:white;
+  font-size:1.2em;
+  width:650px;
+  
+
 }
 
 .mainTitle{
-  color:#4AA7FF;
+  color:#00BAD3;
+  font-weight: bold;
+  font-size:53pt;
 }
 .secondTitle{
  color:grey;
+ font-size:27pt;
 }
 
 .secondMainTitleEdu{
-  color:#0099ff;
+  color:#00BAD3;
   font-weight: bold;
   text-align: center;
+  font-size:4em;
+  margin-top:55px;
+
+
+}
+.secondMainTitleEdu1{
+  color:#00BAD3;
+  font-weight: bold;
+  font-size:4em;
+  margin-top:55px;
+  
+
+
 }
 .paragraph{
   text-align: center;
   font-weight:600;
+  font-size:2em;
 }
 .btn-register{
   background-color: orange;
@@ -40,25 +85,59 @@
   color:white;
 }
 .introEdu{
-  font-weight: bold;
+  font-weight: normal;
   text-align: justify;
+  font-size:2em;
+  width:960px;
+  margin-left:-15%;
 }
 .tereQuote{
   color:white;
   text-align: center;
+  font-size:2em
 }
 .TereQuoteAuthor{
   color:white;
   text-align: center;
 }
 .endMsg{
-  color:white;
-  font-size: xx-small;
+  color:#ffffff;
+  font-size: 1.6em;
   text-align: center;
+  font-weight:lighter;
+}
+.endMsg1{
+  color:#ffffff;
+  font-size: 1.3em;
+  text-align: center;
+  font-weight:lighter;
 }
 .footerlink{
   color:white;
 }
 .featureDivider{
-    color:gray;
+    color:lightgray;
+    
+
 }
+.row-Features{
+    width:75%;
+    margin-left:15%;
+    margin-bottom:15%;
+}
+.row-quote{
+   width:88%;
+   height:256px;
+   margin-left:10%;
+
+}
+.col-quote1{
+   
+
+}
+.row-btn {
+    margin-top:5%;
+    margin-bottom:2%;
+
+}
+

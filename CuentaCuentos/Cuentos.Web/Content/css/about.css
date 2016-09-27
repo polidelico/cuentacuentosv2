@@ -1,15 +1,20 @@
 .greensection {
   background-image: url("../img/about/greenbackground.png");
+  background-size:cover;
+  height:831px;
 }
 .jumboText {
   color:white;
+  font-size:50pt;
 }
 .subheadingtxt{
-  color : grey;
+  color : #535456;
+  font-size:27pt;
 }
 .sobrenosotros{
-  color:#4AA7FF;
+  color:#00BAD3;
   font-weight: bold;
+  font-size:53pt;
 }
 
 .row-centered {
@@ -25,7 +30,7 @@
 background-color: #4AA7FF;
 color:white;
 font-style: italic;
-box-shadow: 10px 10px grey;
+box-shadow: 10px 10px #DDDEE0;
 }
 .author {
   text-align: center;
@@ -44,46 +49,53 @@ box-shadow: 10px 10px grey;
 .boxContent{
   color:white;
   text-align: center;
+  font-size:12pt;
+  
 }
 
 .boxTitle{
   font-weight: bold;
   color:white;
   text-align: center;
+  font-size:27pt;
 }
 
 .lightBlueBox{
-background-color:#4AA7FF;
+background-color:#00BAD3;
 }
 .purpleBox{
-background-color:#6600ff;
+background-color:#6B87AE;
 }
 .blueBox{
-  background-color: #00ccff;
+  background-color: #00A1DE;
 }
 .pinkBox{
-  background-color: #ff66cc
+  background-color: #DE8AAF
 }
 .orangeBox{
-  background-color: #ff9933;
+  background-color: #F8993E;
 }
 .peachBox{
-  background-color:#ff9966;
+  background-color:#F7976B;
 }
 
 .imageTitle{
   font-weight: bold;
   color:white;
   text-align: center;
+  font-size:20pt;
 }
 .imageContent{
   font-weight: normal;
   color:white;
   text-align: center;
+  font-size:20pt;
 }
 
 .btn-comeinza{
   background-color: white;
-  color:#00cc66;
+  color:#07B79C;
   font-weight: bold;
+  margin-top:0;
+  margin-bottom:5%;
 }
