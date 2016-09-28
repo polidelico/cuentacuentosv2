@@ -21,9 +21,7 @@
             <h3>@story.Name</h3>
 
         }
-        <iframe id="editor">
-
-        </iframe>
+       
         <script>
             $(document).ready(function () {
                 console.log("Logging in...");
@@ -33,6 +31,10 @@
                     success: function () {
                         console.log("Logged in");
                         $("iframe#editor").attr("src", "http://awstest.wevideo.com/c/CuentaCuentos");
+                        $("iframe#editor").css("width", "1200px");
+
+                        $("iframe#editor").css("height", "1000px");
+                        
                     },
                     error: function () {
                         console.log("Failed login");
@@ -45,5 +47,7 @@
 
         </script>
     </div>
+    <iframe id="editor" style="width: 100%; height: auto"></iframe>
+
 </body>
 </html>

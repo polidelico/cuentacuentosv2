@@ -29,18 +29,22 @@ namespace Cuentos.Controllers
 
         private Requester Requester;
 
-        public async Task InitializeRequestor()
+        public void InitializeRequestor()
         {
             string API_KEY = "3ng65RTWozM9W";
             string SECRET_KEY = "JMHB9Ty0SqOOPEQMHZ8U18Abjkhst2ncq5ktZx7V";
             string url = "http://awstest.wevideo.com/api";
             string restURL = "/3/sso/auth";
             Requester = new Requester(API_KEY, SECRET_KEY, url, restURL);
-            var task = await Requester.Auth("rafael.valle03@gmail.com");
-            System.Diagnostics.Debug.WriteLine("Got Token: " + Requester.LoginInfo.Token);
             
         }
-
+        
+        public async Task<string> GetToken()
+        {
+            var task = await Requester.Auth("rafael.valle03@gmail.com");
+            System.Diagnostics.Debug.WriteLine("Got Token: " + Requester.LoginInfo.Token);
+            return Requester.LoginInfo.Token;
+        }
 
         [Authorize]
         public async Task<ActionResult> Create()
@@ -132,8 +136,9 @@ namespace Cuentos.Controllers
             
             var videos = new Videos() { Stories = stories.ToArray() };
             if (Requester == null)
-                await InitializeRequestor();
-            videos.Token = Requester.LoginInfo.Token;
+                InitializeRequestor();
+
+            videos.Token = await GetToken();
             return View(videos);
         }
 

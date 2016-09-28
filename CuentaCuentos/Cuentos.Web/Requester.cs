@@ -49,8 +49,8 @@ namespace Wevideo
             }
           
             ClearData();
-            var login = await Login();
-            Console.WriteLine(login.ToString());
+            //var login = await Login();
+            //Console.WriteLine(login.ToString());
             return result;
         }
 
