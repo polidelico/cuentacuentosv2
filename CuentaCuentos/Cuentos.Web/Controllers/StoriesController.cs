@@ -41,6 +41,8 @@ namespace Cuentos.Controllers
         
         public async Task<string> GetToken()
         {
+            if (Requester == null)
+                InitializeRequestor();
             var task = await Requester.Auth("rafael.valle03@gmail.com");
             System.Diagnostics.Debug.WriteLine("Got Token: " + Requester.LoginInfo.Token);
             return Requester.LoginInfo.Token;
@@ -64,6 +66,7 @@ namespace Cuentos.Controllers
         {
             var story = await Db.Stories.FindAsync(id);
             var user = await LoggedUser();
+            ViewBag.Token = await GetToken();
 
             var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
             var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
@@ -135,8 +138,6 @@ namespace Cuentos.Controllers
             var stories = await Db.Stories.ToListAsync();
             
             var videos = new Videos() { Stories = stories.ToArray() };
-            if (Requester == null)
-                InitializeRequestor();
 
             videos.Token = await GetToken();
             return View(videos);

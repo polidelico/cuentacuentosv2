@@ -3,8 +3,69 @@
     ViewBag.Title = "Editar Cuento";
     var imageCategoriesList = (List<ImageCategory>)ViewBag.ImageCategories;
 }
-
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head><div class="row pick">
+    <div class="col-md-2 col-md-offset-5">
+        <br /><br /><br /><br />
+        <h1><input type="radio" name="storyType" value="Story">Text</h1><br />
+        <h1><input type="radio" name="storyType" value="Video">Video</h1><br />
+    </div>
+</div>
+<iframe class="editor" id="editor"></iframe>
 @Html.Partial("_Builder")
+<script>
+
+    $(document).ready(function ()
+    {
+        $(".editor").hide();
+        $(".textEditor").hide();
+
+    });
+    $('input:radio[name="storyType"]').change(
+    function(){
+        if (this.checked && this.value == 'Story') {
+            // note that, as per comments, the 'changed'
+            // <input> will *always* be checked, as the change
+            // event only fires on checking an <input>, not
+            // on un-checking it.
+            // append goes here
+            
+            $( ".editor" ).hide();
+            $(".textEditor").show();
+            $(".pick").hide();
+
+        }else{
+            if(this.checked && this.value == 'Video')
+            {
+                $( ".textEditor" ).hide();
+                $(".editor").show();
+                console.log("Logging in...");
+                $.ajax(
+                "http://awstest.wevideo.com/api/3/sso/login/" + "@ViewBag.Token",
+                {
+                    success: function () {
+                        console.log("Logged in");
+                        $("iframe#editor").attr("src", "http://awstest.wevideo.com/c/CuentaCuentos");
+                        $("iframe#editor").css("width", "100%");
+
+                        $("iframe#editor").css("height", "1000px");
+                        $(".pick").hide();
+                    },
+                    error: function () {
+                        console.log("Failed login");
+                    },
+                    xhrFields: { withCredentials: true }
+                }
+                );
+
+
+
+            }
+
+        }
+    });
+</script>
 
 @section scripts{
     <script>var storyId = @Model.Id;</script>
