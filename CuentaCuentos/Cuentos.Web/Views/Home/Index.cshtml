@@ -47,18 +47,17 @@
                 </div>
             </div>
         </div>
-        </div>
-        <div class="main description">
-            <div class="mp-book">
-                <img class="mp-md-book" src="~/Content/img/Home/Cuento_icon.svg" alt="...">
-            </div>
-            <p class="mp-md-p">
-                Cuenta Cuentos ayuda al estudiante afortalecer sus destrezas de escritura y <br /> dialecto.
-                Es una estrategia divertida e innovadora que fomenta la creatividad<br />y diferencicion de cada alumno, mientras crea una cultura de colaboracion<br />
-                entre el estudiante,los maestros y los padres.<href>¡Conocenos!</href>
-            </p>
-        </div> 
-                <div class="purple-section">
+            <div class="main description">
+                <div class="mp-book">
+                    <img class="mp-md-book" src="~/Content/img/Home/Cuento_icon.svg" alt="...">
+                </div>
+                    <p class="mp-md-p">
+                        Cuenta Cuentos ayuda al estudiante afortalecer sus destrezas de escritura y <br /> dialecto.
+                        Es una estrategia divertida e innovadora que fomenta la creatividad<br />y diferencicion de cada alumno, mientras crea una cultura de colaboracion<br />
+                        entre el estudiante,los maestros y los padres.<href>¡Conocenos!</href>
+                    </p>
+                   
+                <div class="carousel1">
                     <ul id="lightSlider">
                         <li>
                             <h3>First Slide</h3>
@@ -73,36 +72,35 @@
                 </div>
 
                     <div class="clearfix"></div>
-                    @*<a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">Crea tu cuento aquí</a>*@
-                
+                    <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">Crea tu cuento aquí</a>
+                </div>
 
                 <div id="mp-Images">
-                    <img id="mp-center-img"  src="~/Content/img/Home/home_backdrop.svg" alt="...">
-                    <div id="red-box"><img class="mp-imgwtxttl" src="~/Content/img/home/red_box.svg" style="width:30%;height:auto;" /><p id="red-box-text"><span class="1" style="font-size:2em;font-weight:bolder;">DESCUBRE</span><span class="2" style="font-size:1.2em;padding-left:2%;">una comunidad de genios<br />creativos. Encuentra cuentos y videos de estudiantes<br />de otras escuelas alrededor del mundo. Ideentifica tus<br /> favoritos, provee comentarios y comparte con tus<br /> amigos.</span></p></div>
-                    <div id="green-box"><img class="mp-imgwtxttl" src="~/Content/img/home/green_box.svg" style="width:30%;height:auto;" /><p id="green-box-text"><span class="1" style="font-size:2em;font-weight:bolder;">CREA</span><span class="2" style="font-size:1.2em;padding-left:2%;">historias increibles con tus palabras e<br />imaginacion. Utiliza nuestras herramientas de creacion<br />de cuentos que te ayudaran as construir los cuentos en<br /> cuestion de minutos.Contamos con un banco de artes <br /> para buscar inspiracion y utilizar en tus historias.</span></p></div>
-                    <div id="blue-box"><img class="mp-imgwtxttl" src="~/Content/img/home/blue_box.svg" style="width:30%;height:auto;" /><p id="blue-box-text"><span class="1" style="font-size:2em;font-weight:bolder;">COMPARTE</span><span class="2" style="font-size:1.2em;padding-left:2%;">tus cuentos. Al otro <br />lado del mundo habra otros estudiantes que <br />le interesara leer o ver sobre tus historias,<br /> anecdotas o fantasias. <br /> </span></p></div>
+                    <img src="~/Content/img/Home/home_backdrop.svg" alt="...">
 
+                </div>
+                <div class="home_newsletter">
+                    <H1>UNETE A CUENTA CUENTOS</H1>
+                    <h3>Mantente informado de nuestros servicio,eventos y cuentos recientes.<br />¡Miles de escritors, artistas y lectores ya son parte de la comunidad en Cuenta Cuentos!</h3>
+                    <form action="demo_form.asp">
+                        First name: <input type="text" name="FirstName" value="Mickey"><br>
+                        Last name: <input type="text" name="LastName" value="Mouse"><br>
+                        <input type="submit" value="Submit">
+                    </form>
 
-                    <div class="home_newsletter">
-                        <H1>UNETE A CUENTA CUENTOS</H1>
-                        <h3 id="mp-news">Mantente informado de nuestros servicio,eventos y cuentos recientes.<br />¡Miles de escritores, artistas y lectores ya son parte de la comunidad en Cuenta Cuentos!</h3>
-                        <div id="newsltr-form">
-                            <form style="width:100%; display:inline;padding-bottom:5%" action="demo_form.asp">
-                                <input id="name-form"placeholder="Nombre" style="border-radius:12px;" type="text" name="Name"><br>
-                                <input id="email-form" placeholder="Email" style="border-radius:12px;" type="text" name="Email"><br>
-                                <input id="country-form" placeholder="Pais" style="border-radius:12px;" type="text" name="Country"><br>
-                                <input id="nws-submt-btn" type="submit" value="Suscribeme">
-                            </form>
-                        </div>
-                    </div>
-                    <div></div>
+                    <p>Click the "Submit" button and the form-data will be sent to a page on the server called "demo_form.asp".</p>
+
                     </body>
                     </html>
 
                 </div>
-        
+                <div class="col-der">
+                    <div class="cuentos_destacados">Cuentos <span class="bold">Destacados</span></div>
+                   
+                <div class="clearfix"></div>
+            </div>
         </div>
-    
+    </div>
 
 
     @section scripts {

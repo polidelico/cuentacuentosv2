@@ -21,7 +21,6 @@ textarea {
 html {
     font-size: 1em;
     line-height: 1.4;
-    overflow-x: hidden; 
 }
 
 /*
@@ -30,7 +29,10 @@ html {
  * Customize the background color to match your design.
  */
 
-
+#mp-Images {
+    margin-left: 256px;
+    margin-right: 256px;
+}
 
 ::-moz-selection {
     background: #b3d4fc;
@@ -84,7 +86,6 @@ video {
     font-size:1.6em;
     color:white;
     text-align:center;
-    padding-bottom:10%;
 }
 fieldset {
     border: 0;
@@ -117,7 +118,7 @@ textarea {
 
 h1 {
     font: 700 44px/120% 'Open Sans', sans-serif;
-    color: #FFF;
+    color: #33ACAC;
     letter-spacing: -2px;
     text-align: center;
     margin: 0px;
@@ -130,11 +131,6 @@ h2 {
     text-align: center;
     margin-top: 10px;
     letter-spacing: -1px;
-}
-#mp-news{
-    font-size:1.8em;
-    text-align:center;
-    
 }
 
 a:hover {
@@ -225,138 +221,7 @@ body {
             }
 
 /** INDEX **/
-#name-form {
-    margin-left:23%;
-    width:25%;
-    height:42px;
-    font-size:1.5em;
-    padding-left:1%;
-    
-}
-#email-form {
-    margin-left:50%;
-    margin-top:-42px;
-    width:25%;
-    height:42px;
-    position:absolute;
-    font-size:1.5em;
-    padding-left:1%;
 
-}
-#country-form {
-    margin-left:23%;
-    width:15%;
-    height:42px;
-    font-size:1.5em;
-    padding-left:1%;
-}
-#nws-submt-btn{
-    background-color:lightseagreen;
-    border:none;
-    padding:15px;
-    color:#fff;
-    font-size:1.2em;
-    position:absolute;
-    margin-left:68%;
-    margin-top:-2%
-
-
-}
-.home_newsletter {
-    padding-top:25%;
-    position:relative;
-
-}
-#newsletr-form{
-    width:100%;
-    display:inline;
-
-}
-.main description{
-     background: #F7FCFD url(../img/blue_section.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    
-}
-.purple-section {
-     background: #F7FCFD url(../img/home/purple_section.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height:1256px;
-}
-#mp-center-img {
- 
-   margin:auto;
-   width:110%;
-   
-   
-    
-}
-#mp-Images {
-   background: #F7FCFD url(../img/home/background.png) repeat-x center center fixed;
-   width:100%;
-   overflow:hidden;
-   height:auto;
-   padding-left:5%;
-   padding-bottom:10%;
-  
-    
-}
-.slides-purplsec{
-    background: #F7FCFD url(../img/home/purple_section.png) repeat-y center center fixed;
-    background-size:cover;
-    width:100%;
-    height:1256px;
-    margin-top:-2.3%
-
-
-}
-#red-box{
-    z-index:2;
-    position:relative;
-    margin-top:-145%;
-    margin-left:-3%;
-    
-    
-}
-
-#red-box-text {
-    margin-top:-10.7%;
-    margin-left:5%;
-    color:white;
-    
-}
-#green-box{
-    z-index:3;
-    position:relative;
-    width:100%;
-    margin-left:68%;
-    margin-top:54%
- 
-    
-}
-#green-box-text {
-    margin-top:-10.7%;
-    margin-left:5%;
-    color:white;
-    
-}
-#blue-box{
-    z-index:2;
-    position:relative;
-    margin-top:42%;
-    margin-left:-3%;
-   
-}
-#blue-box-text {
-    margin-top: -9%;
-    margin-left: 5%;
-    color:white;
-}
 .content {
     background: #F7FCFD url(../img/blue_section.png) no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -1082,14 +947,13 @@ div#centerDiv {
     margin-top: 15px;
 }
 
-.registro form .box input[type="text"], .registro form .box input[type="password"], .registro form .box select #MyForm #newsltrr {
+.registro form .box input[type="text"], .registro form .box input[type="password"], .registro form .box select {
     width: 267px;
     height: 44px;
     border: 1px solid #A9A9A9;
     padding-left: 10px;
     font: 400 13px/120% 'Open Sans', sans-serif;
     color: #666666;
-    border-radius:5px;
 }
 
 .registro form .box label {
