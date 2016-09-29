@@ -42,11 +42,11 @@
                 $(".editor").show();
                 console.log("Logging in...");
                 $.ajax(
-                "http://awstest.wevideo.com/api/3/sso/login/" + "@ViewBag.Token",
+                "https://awstest.wevideo.com/api/3/sso/login/" + "@ViewBag.Token",
                 {
                     success: function () {
                         console.log("Logged in");
-                        $("iframe#editor").attr("src", "http://awstest.wevideo.com/c/CuentaCuentos");
+                        $("iframe#editor").attr("src", "https://awstest.wevideo.com/c/CuentaCuentos");
                         $("iframe#editor").css("width", "100%");
 
                         $("iframe#editor").css("height", "1000px");
