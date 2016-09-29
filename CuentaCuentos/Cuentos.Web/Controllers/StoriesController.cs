@@ -33,7 +33,7 @@ namespace Cuentos.Controllers
         {
             string API_KEY = "3ng65RTWozM9W";
             string SECRET_KEY = "JMHB9Ty0SqOOPEQMHZ8U18Abjkhst2ncq5ktZx7V";
-            string url = "http://awstest.wevideo.com/api";
+            string url = "https://awstest.wevideo.com/api";
             string restURL = "/3/sso/auth";
             Requester = new Requester(API_KEY, SECRET_KEY, url, restURL);
             
