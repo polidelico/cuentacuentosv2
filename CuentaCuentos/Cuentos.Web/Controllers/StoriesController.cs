@@ -453,7 +453,7 @@ namespace Cuentos.Controllers
             if (model.q != null)
             {
                 stories = await Db.Stories
-                                  .Include("User").Include("Grades")
+                                  .Include("User")
                                   .Include("Categories").Include("Images")
                                   .Where(s => s.Name.Contains(model.q) &&
                                         s.Status == StatusStory.Published)
@@ -462,14 +462,14 @@ namespace Cuentos.Controllers
             if (model.CityId != null)
             {
                 stories = stories != null ? stories.Where(s => s.User.School.CityId == model.CityId)
-                    : await Db.Stories.Include("User").Include("Grades")
+                    : await Db.Stories.Include("User")
                                 .Include("Categories").Include("Images")
                                 .Where(s => s.User.School.CityId == model.CityId).ToListAsync();
             }
             if (model.SchoolId != null)
             {
                 stories = stories != null ? stories.Where(s => s.User.SchoolId == model.SchoolId)
-                    : await Db.Stories.Include("User").Include("Grades")
+                    : await Db.Stories.Include("User")
                                        .Include("Categories").Include("Images")
                                        .Where(s => s.User.SchoolId == model.SchoolId)
                                        .ToListAsync();

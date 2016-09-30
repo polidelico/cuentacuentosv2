@@ -7,9 +7,10 @@
             <img class="logo" src="~/Content/img/logo.png">
         </div>
         <div class="div_searchBox">
-            <form class="navbar-form" role="search">
+            <form class="navbar-form" role="search" action="~/stories/search" method="get">
+
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar" name="srch-term" id="srch-term">
+                    <input type="text" class="form-control" placeholder="Buscar" name="q" id="srch-term">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
