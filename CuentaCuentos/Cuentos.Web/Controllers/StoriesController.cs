@@ -21,6 +21,7 @@ using Mandrill.Models;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Wevideo;
+using System.Net.Mail;
 
 namespace Cuentos.Controllers
 {
@@ -28,24 +29,56 @@ namespace Cuentos.Controllers
     {
 
         private Requester Requester;
-
-        public void InitializeRequestor()
+        bool createdWebHook = false;
+        public async Task<string> InitializeRequestor()
         {
             string API_KEY = "3ng65RTWozM9W";
             string SECRET_KEY = "JMHB9Ty0SqOOPEQMHZ8U18Abjkhst2ncq5ktZx7V";
             string url = "https://awstest.wevideo.com/api";
             string restURL = "/3/sso/auth";
             Requester = new Requester(API_KEY, SECRET_KEY, url, restURL);
-            
+            var result = string.Empty;
+            if (!createdWebHook)
+            {
+                result = await CreateWebHook();
+            }
+            return result;
         }
-        
+
+        async Task<string> CreateWebHook()
+        {
+            var result = await Requester.CreateWebHook();
+            createdWebHook = true;
+            return result;
+        }
+
         public async Task<string> GetToken()
         {
+            var result = string.Empty;
             if (Requester == null)
-                InitializeRequestor();
-            var task = await Requester.Auth("rafael.valle03@gmail.com");
+               result = await InitializeRequestor();
+            var user = await LoggedUser();
+           
+            var task = await Requester.Auth(user.Email);
             System.Diagnostics.Debug.WriteLine("Got Token: " + Requester.LoginInfo.Token);
             return Requester.LoginInfo.Token;
+        }
+
+        [HttpPost]
+        public ActionResult WeVideoCallback()
+        {
+            System.IO.StreamReader reader = new System.IO.StreamReader(HttpContext.Request.InputStream);
+            string rawSendGridJSON = reader.ReadToEnd();
+
+            SmtpClient smptClient = new SmtpClient();
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.To.Add("rafael.valle03@gmail.com");
+            mailMessage.From = new MailAddress("cuentos@gmail.com");
+            mailMessage.Subject = "callback received";
+            mailMessage.Body = "Received data: " + rawSendGridJSON;
+            mailMessage.IsBodyHtml = false;
+            smptClient.Send(mailMessage);
+            return new HttpStatusCodeResult(200);
         }
 
         [Authorize]
@@ -142,6 +175,9 @@ namespace Cuentos.Controllers
             videos.Token = await GetToken();
             return View(videos);
         }
+
+
+
 
         [Authorize]
         [WebMethod, HttpPost]

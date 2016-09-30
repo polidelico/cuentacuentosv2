@@ -24,6 +24,7 @@ using Cuentos.Lib.Helpers;
 using Mandrill.Models;
 using System.Threading.Tasks;
 using System.IO;
+using Wevideo;
 
 namespace CodeFirstAltairis.Controllers
 {
@@ -33,6 +34,17 @@ namespace CodeFirstAltairis.Controllers
 
         public IFormsAuthenticationService FormsService { get; set; }
         public IMembershipService MembershipService { get; set; }
+
+        private Requester Requester;
+
+        public void InitializeRequestor()
+        {
+            string API_KEY = "3ng65RTWozM9W";
+            string SECRET_KEY = "JMHB9Ty0SqOOPEQMHZ8U18Abjkhst2ncq5ktZx7V";
+            string url = "https://awstest.wevideo.com/api";
+            string restURL = "/3/sso/auth";
+            Requester = new Requester(API_KEY, SECRET_KEY, url, restURL);
+        }
 
         protected override void Initialize(RequestContext requestContext)
         {
@@ -205,6 +217,10 @@ namespace CodeFirstAltairis.Controllers
                 System.Diagnostics.Debug.WriteLine(createStatus.ToString());
                 if (createStatus == MembershipCreateStatus.Success)
                 {
+
+                    if(Requester == null)
+                        InitializeRequestor();
+                    var result = await Requester.CreateUser(model.User.UserName, model.User.Name, model.User.LastName, model.User.Email, model.Password);
                     MandrillApi mandrill = new MandrillApi("GnPxzjqcdDv66CSmE-06DA");
                     var email = new EmailMessage();
                     var recipients = new List<EmailAddress>();
@@ -258,6 +274,7 @@ namespace CodeFirstAltairis.Controllers
 
             if (createStatus == MembershipCreateStatus.Success)
             {
+
                 var user = await Db.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
                 var role = await Db.Roles.FindAsync(roleType.ToString());
                
@@ -270,7 +287,6 @@ namespace CodeFirstAltairis.Controllers
                 user.IsApproved = true;
                 user.Owner = model.Owner;
 
-               
 
                 Db.SaveChanges();
             }

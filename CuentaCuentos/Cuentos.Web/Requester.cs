@@ -28,7 +28,7 @@ namespace Wevideo
         private string authheadval;
         private string url { get { return GetFullURL(); } }
 
-        public Requester(string key, string secret, string base_url,string  authURL)
+        public Requester(string key, string secret, string base_url, string authURL)
         {
             api_key = key;
             api_secret = secret;
@@ -54,6 +54,21 @@ namespace Wevideo
             return result;
         }
 
+        public async Task<string> CreateWebHook()
+        {
+            ClearData();
+            SetMethod("POST");
+            SetRestOfURL("/3/hooks/");
+            SetData("event", "exportStarting");
+            SetData("url", "https://cuentostest.azurewebsites.net/stories/WeVideoCallback/");
+            SetData("emails", new string[] { "rafael.valle03@gmail.com" });
+            var request = await Request();
+            System.Diagnostics.Debug.WriteLine(request);
+            return request;
+        }
+
+      
+
         public async Task<string> Login()
         {
             SetRestOfURL("/3/sso/login/" + loginInfo.Token);
@@ -62,6 +77,22 @@ namespace Wevideo
             Console.WriteLine(result);
             return result;
         }
+
+        public async Task<string> CreateUser(string username, string firstName, string lastName, string email, string password)
+        {
+            SetRestOfURL("/3/users/");
+            SetMethod("POST");
+            ClearData();
+            SetData("firstName", firstName);
+            SetData("lastName", lastName);
+            SetData("email", email);
+            SetData("userName", username);
+            SetData("password", password);
+            var result = await Request();
+            System.Diagnostics.Debug.WriteLine(result);
+            return result;
+        }
+
         public void SetMethod(string method)
         {
             this.method = method;
@@ -77,6 +108,20 @@ namespace Wevideo
         {
             restOfTheURL = url;
         }
+        public void SetData(string key, string[]values)
+        {
+            JObject obj = null;
+            if (!string.IsNullOrEmpty(data))
+                obj = JObject.Parse(data);
+            else
+                obj = new JObject();
+
+
+            JArray jarray = JArray.FromObject(values);
+            obj.Add(key, jarray);
+            data = obj.ToString();
+        }
+
 
         public void SetData(string name, string value)
         {
@@ -141,6 +186,7 @@ namespace Wevideo
                 var respStream = e.Response.GetResponseStream();
                 var reader = new StreamReader(respStream);
                 var log = reader.ReadToEnd();
+                System.Diagnostics.Debug.WriteLine(log);
             }
             Console.WriteLine(responseFromServer);
             
