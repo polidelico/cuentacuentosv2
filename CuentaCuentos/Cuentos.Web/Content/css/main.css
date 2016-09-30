@@ -225,6 +225,15 @@ body {
             }
 
 /** INDEX **/
+#carousel-inner{
+    background:inherit;
+}
+#slider1Title{
+    color:white;
+    text-align:center;
+    font-size:1.8em;
+    font-weight:bold;
+}
 #name-form {
     margin-left:23%;
     width:25%;

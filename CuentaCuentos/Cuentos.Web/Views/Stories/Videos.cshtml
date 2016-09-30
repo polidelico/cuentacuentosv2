@@ -1,4 +1,4 @@
-﻿@model Cuentos.Models.Videos
+﻿4@model Cuentos.Models.Videos
 
 @section Header {
     @Html.Partial("~/Views/Shared/_Header.cshtml")
@@ -11,6 +11,16 @@
     <title></title>
 </head>
 <body>
+
+    <div class="Video_Player">
+
+        <video width="720" controls autoplay>
+            <source src="~/Content/img/sample.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+
+       
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>

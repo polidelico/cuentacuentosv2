@@ -657,6 +657,7 @@
     <Content Include="Content\img\Registro\maestro_icon.svg" />
     <Content Include="Content\img\Registro\padres_icon.svg" />
     <Content Include="Content\img\Registro\visitante_icon.svg" />
+    <Content Include="Content\img\sample.mp4" />
     <Content Include="Content\img\sobre-01.jpg" />
     <Content Include="Content\img\sobre-02.jpg" />
     <Content Include="Content\img\sobre-03.jpg" />
