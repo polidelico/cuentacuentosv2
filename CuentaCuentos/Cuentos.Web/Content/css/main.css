@@ -225,6 +225,20 @@ body {
             }
 
 /** INDEX **/
+.row-mp{
+    width:100%;
+    float:right;
+    margin-top:-30%;
+    margin-right:-45%;
+   
+}
+.row-mp1{
+    width:100%;
+    float:left;
+    margin-top:-30%;
+    margin-left:-35%;
+   
+}
 #carousel-inner{
     background:inherit;
 }
@@ -435,12 +449,15 @@ body {
 
 .btn_naranja {
     display: block;
-    background: #33ADAD;
+    background: orange;
     border: none;
     font: 700 18px/120% 'Open Sans', sans-serif;
     color: #FFF;
     text-align: center;
-    padding-top: 12px;
+    padding: 15px;
+    width:25%;
+    margin:0 auto;
+    text-shadow:none;
 }
 
     .btn_naranja a {
