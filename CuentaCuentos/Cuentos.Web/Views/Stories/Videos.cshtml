@@ -1,4 +1,4 @@
-﻿4@model Cuentos.Models.Videos
+﻿@model Cuentos.Models.Videos
 
 @section Header {
     @Html.Partial("~/Views/Shared/_Header.cshtml")
@@ -11,53 +11,82 @@
     <title></title>
 </head>
 <body>
+    <div class="content lp-mainViewer">
+        <div  class="Video_Player">
 
-    <div class="Video_Player">
-
-        <video width="720" controls autoplay>
-            <source src="~/Content/img/sample.mp4" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>
-
-       
+            <video width="720" controls autoplay>
+                <source src="~/Content/img/sample.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
     </div>
+    <div id="lp-mainContent"><div id="lp-commentSec"><div class="container">
+    <div class="row">
+        <div class="col-md-8" style="margin-left:25%;">
+            <div class="page-header">
+                <h1 style="color:#0094ff;font-size:2em;font-weight:lighter; margin-left:-50%;"><small class="pull-right">45 comments</small> Unete a la conversacion </h1>
+            </div>
+            <div><img src="~/Content/img/user-thumb.jpg" /><p></p></div>
+            <div class="comments-list">
+                <div class="media">
+                    <p class="pull-right"><small>5 days ago</small></p>
+                    <a class="media-left" href="#">
+                        <img src="http://lorempixel.com/40/40/people/1/">
+                    </a>
+                    <div class="media-body">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-    <div>
-        New Page
-        @foreach (var story in Model.Stories)
-        {
-            <h3>@story.Name</h3>
+                        <h4 class="media-heading user_name">Baltej Singh</h4>
+                        Wow! this is really great.
 
-        }
-       
-        <script>
-            $(document).ready(function () {
-                console.log("Logging in...");
-                $.ajax(
-                "http://awstest.wevideo.com/api/3/sso/login/" + "@Model.Token",
-                {
-                    success: function () {
-                        console.log("Logged in");
-                        $("iframe#editor").attr("src", "http://awstest.wevideo.com/c/CuentaCuentos");
-                        $("iframe#editor").css("width", "1200px");
+                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                    </div>
+                </div>
+                <div class="media">
+                    <p class="pull-right"><small>5 days ago</small></p>
+                    <a class="media-left" href="#">
+                        <img src="http://lorempixel.com/40/40/people/2/">
+                    </a>
+                    <div class="media-body">
 
-                        $("iframe#editor").css("height", "1000px");
-                        
-                    },
-                    error: function () {
-                        console.log("Failed login");
-                    },
-                    xhrFields: { withCredentials: true }
-                }
-                );
-            });
-            
+                        <h4 class="media-heading user_name">Baltej Singh</h4>
+                        Wow! this is really great.
 
-        </script>
+                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                    </div>
+                </div>
+                <div class="media">
+                    <p class="pull-right"><small>5 days ago</small></p>
+                    <a class="media-left" href="#">
+                        <img src="http://lorempixel.com/40/40/people/3/">
+                    </a>
+                    <div class="media-body">
+
+                        <h4 class="media-heading user_name">Baltej Singh</h4>
+                        Wow! this is really great.
+
+                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                    </div>
+                </div>
+                <div class="media">
+                    <p class="pull-right"><small>5 days ago</small></p>
+                    <a class="media-left" href="#">
+                        <img src="http://lorempixel.com/40/40/people/4/">
+                    </a>
+                    <div class="media-body">
+
+                        <h4 class="media-heading user_name">Baltej Singh</h4>
+                        Wow! this is really great.
+
+                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
     </div>
-    <iframe id="editor" style="width: 100%; height: auto"></iframe>
+</div></div><div id="lp-otrosCuentos"></div></div>
 
 </body>
 </html>

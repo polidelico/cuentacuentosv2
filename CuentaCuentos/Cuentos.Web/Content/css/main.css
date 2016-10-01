@@ -2004,3 +2004,24 @@ footer {
         page-break-after: avoid;
     }
 }
+/* ==========================================================================
+   Base styles: Landing Page
+   ========================================================================== */
+#lp-mainContent{
+    background-color:#fff;
+    display:inline-block;
+}
+#lp-commenSec{
+    width:75%;
+
+}
+#lp-otrosCuentos{
+    width:25%;
+}
+.user_name{
+    font-size:14px;
+    font-weight: bold;
+}
+.comments-list .media{
+    border-bottom: 1px dotted #ccc;
+}

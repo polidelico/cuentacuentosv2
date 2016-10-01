@@ -27,12 +27,20 @@ summary {
  * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
  */
 
+.Video_Player{
+    padding-top:5%;
+    padding-bottom:10%;
+
+}
+
 audio,
 canvas,
 video {
-    display: inline-block;
+    display: block;
     *display: inline;
     *zoom: 1;
+    margin:0 auto;
+    
 }
 
 /**
