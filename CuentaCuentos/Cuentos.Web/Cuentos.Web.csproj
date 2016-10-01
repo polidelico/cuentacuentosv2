@@ -515,6 +515,15 @@
     <Content Include="Content\css\registro.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\00featureddummy.png" />
+    <Content Include="Content\img\01cuentodummy.png" />
+    <Content Include="Content\img\01videodummy.png" />
+    <Content Include="Content\img\02cuentodummy.png" />
+    <Content Include="Content\img\02videodummy.png" />
+    <Content Include="Content\img\03cuentodummy.png" />
+    <Content Include="Content\img\03videodummy.png" />
+    <Content Include="Content\img\04cuentodummy.png" />
+    <Content Include="Content\img\05cuentodummy.png" />
     <Content Include="Content\img\About\greenbackground.png" />
     <Content Include="Content\img\About\icon1.png" />
     <Content Include="Content\img\About\icon2.png" />

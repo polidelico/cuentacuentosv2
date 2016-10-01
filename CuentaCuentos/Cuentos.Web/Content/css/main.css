@@ -2037,5 +2037,9 @@ footer {
     margin-left:10%;
     margin-top:1%;
 }
+.carousel-control {
+  padding-top:10%;
+  width:5%;
+}
 
 
