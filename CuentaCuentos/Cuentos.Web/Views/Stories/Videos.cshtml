@@ -12,81 +12,113 @@
 </head>
 <body>
     <div class="content lp-mainViewer">
-        <div  class="Video_Player">
+        <p style="color:white; margin-left:22%; font-size:2em;margin-bottom:-3%;padding-top:3%;">CATEGORIAS > MISTERIO</p>
+        <div class="Video_Player">
 
-            <video width="720" controls autoplay>
+            <video width="1080" style="max-width:100%; height:auto;" controls autoplay>
                 <source src="~/Content/img/sample.mp4" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
-        </div>
-    </div>
-    <div id="lp-mainContent"><div id="lp-commentSec"><div class="container">
-    <div class="row">
-        <div class="col-md-8" style="margin-left:25%;">
-            <div class="page-header">
-                <h1 style="color:#0094ff;font-size:2em;font-weight:lighter; margin-left:-50%;"><small class="pull-right">45 comments</small> Unete a la conversacion </h1>
-            </div>
-            <div><img src="~/Content/img/user-thumb.jpg" /><p></p></div>
-            <div class="comments-list">
-                <div class="media">
-                    <p class="pull-right"><small>5 days ago</small></p>
-                    <a class="media-left" href="#">
-                        <img src="http://lorempixel.com/40/40/people/1/">
-                    </a>
-                    <div class="media-body">
-
-                        <h4 class="media-heading user_name">Baltej Singh</h4>
-                        Wow! this is really great.
-
-                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
-                    </div>
-                </div>
-                <div class="media">
-                    <p class="pull-right"><small>5 days ago</small></p>
-                    <a class="media-left" href="#">
-                        <img src="http://lorempixel.com/40/40/people/2/">
-                    </a>
-                    <div class="media-body">
-
-                        <h4 class="media-heading user_name">Baltej Singh</h4>
-                        Wow! this is really great.
-
-                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
-                    </div>
-                </div>
-                <div class="media">
-                    <p class="pull-right"><small>5 days ago</small></p>
-                    <a class="media-left" href="#">
-                        <img src="http://lorempixel.com/40/40/people/3/">
-                    </a>
-                    <div class="media-body">
-
-                        <h4 class="media-heading user_name">Baltej Singh</h4>
-                        Wow! this is really great.
-
-                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
-                    </div>
-                </div>
-                <div class="media">
-                    <p class="pull-right"><small>5 days ago</small></p>
-                    <a class="media-left" href="#">
-                        <img src="http://lorempixel.com/40/40/people/4/">
-                    </a>
-                    <div class="media-body">
-
-                        <h4 class="media-heading user_name">Baltej Singh</h4>
-                        Wow! this is really great.
-
-                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
-                    </div>
-                </div>
-            </div>
-
-
 
         </div>
     </div>
-</div></div><div id="lp-otrosCuentos"></div></div>
+    <div id="lp-mainContent">
+        <div class="row" style="margin-left:25%;">
+            <div class="col-lg-2" style="margin-top: -2%">
+                <center>
+                    <div style="background-color:white; border: 1px solid gray">
+                        <img class="img img-responsive" src="~/Content/img/user-thumb.jpg" />
+                    </div>
+                </center>
+            </div>
+            <div class="col-lg-6" style="margin-top:-7%;">
+                <div><h2 style="color:white;font-weight:lighter; margin-top:5%; margin-left:0; text-align:left;">Autor</h2></div>
+                <div style="margin-top: 5%; margin-bottom:-4%; font-size :2em; font-weight:500; color:green;">Peter Pan</div> <br />
+                ESCUELA: whatever<br />
+                GRADO: 3ro
+            </div>
+        </div>
+        <div id="lp-commentSec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8" style="margin-left:25%;">
+                        <div class="page-header">
+                            <h1 style="color:#0094ff;font-size:2em;font-weight:lighter; margin-left:-50%;"><small class="pull-right">45 comments</small> Unete a la conversacion </h1>
+                        </div>
+                        <div class="row" style="margin-top:-2%">
+                            <img style="margin:1% auto; margin-left:5%; border:groove; color:gray;" src="~/Content/img/user-thumb.jpg" />
+                            <textarea id="lp-ta-bs" rows="10" cols="70"></textarea>
+                            <a href="@Url.RouteUrl("CrearCuento")" style="margin-left:87%; margin-top:5%; margin-bottom:5%;" class="btn btn-success">COMENTAR</a>
+                        </div>
+                        <div class="comments-list">
+                            <div class="media">
+                                <p class="pull-right"><small>5 days ago</small></p>
+                                <a class="media-left" href="#">
+                                    <img src="http://lorempixel.com/40/40/people/1/">
+                                </a>
+                                <div class="media-body">
+
+                                    <h4 class="media-heading user_name">Baltej Singh</h4>
+                                    Wow! this is really great.
+
+                                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <p class="pull-right"><small>5 days ago</small></p>
+                                <a class="media-left" href="#">
+                                    <img src="http://lorempixel.com/40/40/people/2/">
+                                </a>
+                                <div class="media-body">
+
+                                    <h4 class="media-heading user_name">Baltej Singh</h4>
+                                    Wow! this is really great.
+
+                                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <p class="pull-right"><small>5 days ago</small></p>
+                                <a class="media-left" href="#">
+                                    <img src="http://lorempixel.com/40/40/people/3/">
+                                </a>
+                                <div class="media-body">
+
+                                    <h4 class="media-heading user_name">Baltej Singh</h4>
+                                    Wow! this is really great.
+
+                                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <p class="pull-right"><small>5 days ago</small></p>
+                                <a class="media-left" href="#">
+                                    <img src="http://lorempixel.com/40/40/people/4/">
+                                </a>
+                                <div class="media-body">
+
+                                    <h4 class="media-heading user_name">Baltej Singh</h4>
+                                    Wow! this is really great.
+
+                                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h1 style="color:#0094ff;font-size:2em;font-weight:lighter; margin-left:80%; position:absolute; margin-top:-45%;">OTROS CUENTOS POR PETER </h1>
+            </div>
+        </div>
+        
+        </div>
+        
+            
+    
 
 </body>
 </html>
