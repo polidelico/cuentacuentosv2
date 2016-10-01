@@ -171,8 +171,7 @@ namespace Cuentos.Controllers
             var stories = await Db.Stories.ToListAsync();
             
             var videos = new Videos() { Stories = stories.ToArray() };
-
-            videos.Token = await GetToken();
+            
             return View(videos);
         }
 

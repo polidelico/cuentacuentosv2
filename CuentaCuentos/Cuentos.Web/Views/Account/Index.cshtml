@@ -3,312 +3,155 @@
 @using Cuentos.Lib
 @using Cuentos.Lib.Helpers
 @model Cuentos.Models.User
-
 @{
     ViewBag.Title = "Mi Cuenta";
     var role = (Role.RoleType)Enum.Parse(typeof(Role.RoleType), @Model.Roles.FirstOrDefault().RoleName, true);
     List<Story> notApproved = ViewBag.StoriesNotApproved;
     List<Story> approved = ViewBag.StoriesApproved;
 }
-
-<div class="content miscuentos">
+<link href="~/Content/css/micuenta.css" rel='stylesheet' type='text/css'>
+<div class="miscuentos" style="background-color:white;">
     @Html.ValidationSummary(true)
-    <div class="wp">
-        <h1>Mi Cuenta</h1>
+    <div class="jumbotron line">
+    </div>
+    <div class="container" style="background-color:white;">
 
-        <div class="tabpanel" role="tabpanel">
-            <!-- Nav tabs -->
-            <a class="btn_naranja" href="@Url.RouteUrl("CrearCuento")"><span></span>CREAR CUENTO NUEVO</a>
-            <ul class="nav nav-tabs" role="tablist" id="myTab">
-                <li class="active" role="presentation"><a href="#miscuento" aria-controls="miscuento" role="tab" data-toggle="tab">MIS CUENTOS</a></li>
-                <li role="presentation"><a href="#ajustes" aria-controls="ajustes" role="tab" data-toggle="tab">AJUSTES</a></li>
-                @if (role == Role.RoleType.superAdmin || role == Role.RoleType.schoolAdmin)
-                {
-                    <li><a href="@Url.Action("Index", "Home", new { area = "admin"})">ADMINISTRACION</a></li>
-                }
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="miscuento">
-                    <h3>Cuentos No Publicados<span></span></h3>
+        <div class="row">
+            <div class="col-lg-2" style="margin-top: -8%">
+                <center>
 
-                    <div class="wrcuentos clearfix">
-
-                        @if (notApproved.Count > 0)
-                        {
-                            foreach (var story in notApproved)
-                            {
-                                <div class="cuento nopublic">
-
-                                    <div class="top main-image">
-
-                                        <div class="center-outer">
-                                            <div class="shade"></div>
-                                            <div class="center-inner">
-                                                <figure>
-                                                    <img src="@story.CoverImage" alt="@story.Name" />
-                                                </figure>
-                                            </div>
-                                        </div>
-
-                                        <h2 class="confirmName">@story.Name</h2>
-                                        <p>@String.Format("{0: dd 'de' MMMM 'de' yyyy}", @story.CreatedAt)</p>
-
-                                        @{
-                                var description = EnumHelper<StatusStory>.GetDisplayValue(@story.Status);
-                                        }
-                                    </div>
-                                    <div class="story-options">
-                                        <span> Estado:</span>
-                                        <span class="status-text"> @description </span>
-                                        <span class="status-circle @story.Status"></span>
-                                        <div class="popover-options">
-                                            <ul>
-                                                <li>
-                                                    <a href="@Url.RouteUrl("VerCuento", new { id = story.Id })">
-                                                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                                        Leer
-                                                    </a>
-                                                </li>
-
-                                                @if (story.Status != StatusStory.InApproval)
-                                                {
-                                                    <li>
-                                                        <a href="@(Url.RouteUrl("EditarCuento", new { id = story.Id }))" class="@(story.Status == StatusStory.InApproval ? "disabled":"" )">
-                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                            Editar
-                                                        </a>
-                                                    </li>
-                                                }
-
-                                                <li>
-                                                    <a href="#confirmDelete" class="delete-btn" data-id="@story.Id" data-toggle="modal" data-url="@Url.RouteUrl("BorrarCuento", new { id = story.Id })">
-                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                        Borrar
-                                                    </a>
-                                                </li>
-
-                                                @if (story.Status != StatusStory.InApproval)
-                                                {
-                                                    <li>
-                                                        <a href="#confirmPublish" class="publish-btn @(story.Status == StatusStory.InApproval ? "disabled":"" ) " data-id="@story.Id" data-toggle="modal" data-url="@Url.RouteUrl("PublicarCuento", new { id = story.Id })">
-                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                                            Publicar
-                                                        </a>
-                                                    </li>
-                                                }
-
-                                            </ul>
-                                        </div>
-
-                                        <a href="#" class="show-menu">
-                                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="no-content">
-                                <div class="circle">
-                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                </div>
-                                <p>
-                                    No hay cuentos sin publicar
-                                </p>
-                            </div>
-                        }
-
-
-
+                    <h4 style="margin-bottom: 2%;color:white;">Mi Cuenta</h4>
+                    <div style="background-color:white; border: 1px solid gray">
+                        <img class="img img-responsive" src="~/Content/img/user-thumb.jpg" />
                     </div>
 
-                    <h3>Cuentos Publicados<span></span></h3>
-
-                    <div class="wrcuentos ispublish clearfix">
-
-                        @if (approved.Count > 0)
-                        {
-                            foreach (var story in approved)
-                            {
-                                <div class="cuento public">
-                                    <div class="top main-image">
-
-                                        <div class="center-outer">
-                                            <div class="shade"></div>
-                                            <div class="center-inner">
-                                                <figure>
-                                                    <img src="@story.CoverImage" alt="@story.Name" />
-                                                </figure>
-                                            </div>
-                                        </div>
-
-                                        <h2 class="confirmName">@story.Name</h2>
-                                        <p>@String.Format("{0: dd 'de' MMMM 'de' yyyy}", @story.CreatedAt)</p>
-
-                                        @{
-                                var description = EnumHelper<StatusStory>.GetDisplayValue(@story.Status);
-                                        }
-                                    </div>
-                                    <div class="story-options">
-                                        <span> Estado:</span>
-                                        <span class="status-text"> @description </span>
-                                        <span class="status-circle @story.Status"></span>
-                                        <div class="popover-options">
-                                            <ul>
-                                                <li>
-                                                    <a href="@Url.RouteUrl("VerCuento", new { id = story.Id })">
-                                                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                                        Leer
-                                                    </a>
-                                                </li>
-
-                                                @if (story.Status != StatusStory.InApproval)
-                                                {
-                                                    <li>
-                                                        <a href="@(Url.RouteUrl("EditarCuento", new { id = story.Id }))" class="@(story.Status == StatusStory.InApproval ? "disabled":"" )">
-                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                            Editar
-                                                        </a>
-                                                    </li>
-                                                }
-
-                                                <li>
-                                                    <a href="#confirmDelete" class="delete-btn" data-id="@story.Id" data-toggle="modal" data-url="@Url.RouteUrl("BorrarCuento", new { id = story.Id })">
-                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                        Borrar
-                                                    </a>
-                                                </li>
-
-                                                @if (story.Status != StatusStory.InApproval)
-                                                {
-                                                    <li>
-                                                        <a href="#confirmUnPublish" class="un-publish-btn" data-id="@story.Id" data-toggle="modal" data-url="@Url.RouteUrl("AnularPublicacionCuento", new { id = story.Id })">
-                                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                                            No publicar
-                                                        </a>
-                                                    </li>
-                                                }
-
-                                            </ul>
-                                        </div>
-
-                                        <a href="#" class="show-menu">
-                                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                        </a>
-
-                                    </div>
-
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="no-content">
-                                <div class="circle">
-                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                </div>
-                                <p>
-                                    No hay cuentos publicados
-                                </p>
-                            </div>
-                        }
-
-                        
-                    </div>
-
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="ajustes">
-                    <h3>Ajustes a tu cuenta. Luego de hacer cambios oprime guardar para hacer los cambios permanentes.</h3>
-                    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "clearfix form-horizontal fill-up validatable" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-
-                        <fieldset>
-                            <div class="clearfix">
-                                @Html.LabelFor(m => m.UserName)
-                                @Html.TextBoxFor(m => m.UserName, new { @readonly = "readonly" })
-                                @Html.ValidationMessageFor(m => m.UserName)
-                            </div>
-
-                            <div class="middle pr">
-                                @Html.LabelFor(m => m.Name)
-                                @Html.TextBoxFor(m => m.Name)
-                                @Html.ValidationMessageFor(m => m.Name)
-                            </div>
-                            <div class="middle pl">
-                                @Html.LabelFor(m => m.LastName)
-                                @Html.TextBoxFor(m => m.LastName)
-                                @Html.ValidationMessageFor(m => m.LastName)
-                            </div>
-                            <div>
-                                @Html.LabelFor(m => m.SchoolId)
-                                @Html.DropDownListFor(m => m.SchoolId, (SelectList)ViewBag.Schools, "Selecciona una Escuela")
-                                @Html.ValidationMessageFor(m => m.SchoolId)
-                            </div>
-                            <div class="middle pr">
-                                @Html.LabelFor(m => m.Grade);
-                                @Html.EnumDropDownListFor(m => m.Grade);
-                            </div>
-
-                            <div class="middle pl">
-                                @Html.LabelFor(m => m.Age)
-                                @Html.TextBoxFor(m => m.Age)
-                                @Html.ValidationMessageFor(m => m.Age)
-                            </div>
-                            <div class="clearfix">
-                                @Html.LabelFor(m => m.Email)
-                                @Html.TextBoxFor(m => m.Email)
-                                @Html.ValidationMessageFor(m => m.Email)
-                            </div>
-
-                            <div class="clearfix">
-                                <label>Contraseña</label>
-                                <a href="@Url.RouteUrl("CambiarContrasena")" class="btn btn-default" role="button"> Cambiar contraseña </a>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            
-                            <div class="avatar clearfix">
-                                @{
-                        var image = Model.ImageHolders.getImagesByTarget(ImageTarget.MAIN).First();
-                                }
-
-                                <div class="preview-file-upload">
-                                    <div class="image-preview-back">
-                                        <figure>
-                                            <img class="image-preview" src="@image.ImagePath" width="143" height="131" />
-                                        </figure>
-                                    </div>
-                                    <input id="uploadMainImage" type="file" name="mainImage" class="img" />
-                                    <a href="javascript: void(0);" id="clickMainImage">Cambiar Foto...</a>
-                                    <div class="clear"></div>
-
-                                </div>
-
-
-
-
-                            </div>
-
-
-                            <div>
-                                <input class="btn_naranja" type="submit" value="Guardar" />
-                            </div>
-                        </fieldset>
-
-                    }
+                </center>
+            </div>
+            <div class="col-lg-4 ">
+                <div style="margin-top: 3%; margin-bottom:-4%; font-size :2em; font-weight:500; color:green">@Model.Fullname</div> <br />
+                ESCUELA: @Model.School.Name<br />
+                GRADO: @Model.Grade
+            </div>
+            <div class="col-lg-6">
+                <div style="color:white; font-size:1em; margin-left:10%; margin-top:-10%"><a href="#ajustes" style="color:white">Ajustes</a> | <a href="" style="color:white">Administracion</a></div>
+                <div style="margin-top:10%">
+                    <a href="@Url.RouteUrl("CrearCuento")"><div class="btn btn-warning">Crear Cuento</div></a>
+                    <div class="btn btn-success">Crear Videouentos</div>
                 </div>
             </div>
         </div>
+        <div class="row" style="margin-top:9%">
+            <div class="col-lg-8" style="font-size:2em;color:green;">
+                Mis Cuentos
+            </div>
+            <div class="col-lg-4" style="margin-top:3%">
+                8 CUENTOS | 4 VIDEOCUENTOS
+            </div>
 
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <br />
+                <strong>PUBLICADOS</strong>
+                <br /><br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <br />
+                <strong>No Publicados</strong>
+                <br /><br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+            <div class="col-lg-3">
+                <figure>
+                    <img class="img img-responsive" src="~/Content/img/cuento-thumb.png" />
+                    <figcaption>
+                        This is caption.<br />
+                        <strong>Publicado 12/03/15</strong>
+                    </figcaption>
+                    <hr />
+                </figure>
+            </div>
+        </div>
     </div>
-</div>
+    </div>
 
+   
 
 @section scripts {
     <script src="~/Scripts/confirmDelete.js"></script>
@@ -317,8 +160,6 @@
     <script src="~/Scripts/miCuenta.js"></script>
     <script src="~/Scripts/fixImagesSize.js"></script>
 }
-
 @Html.Partial("_PublishConfirm")
 @Html.Partial("_UnPublishConfirm")
 @Html.Partial("_DeleteConfirm")
-
