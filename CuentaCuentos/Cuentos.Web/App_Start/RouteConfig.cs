@@ -159,6 +159,13 @@ namespace Cuentos
            );
 
             routes.MapRoute(
+          name: "Editor",
+          url: "account/editor",
+          namespaces: webNamespace,
+          defaults: new { controller = "Account", action = "Editor" }
+      );
+
+            routes.MapRoute(
                name: "VerCuento",
                url: "mis-cuentos/{id}",
                namespaces: webNamespace,

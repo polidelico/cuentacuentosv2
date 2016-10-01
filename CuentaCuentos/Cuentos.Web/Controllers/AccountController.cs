@@ -54,6 +54,24 @@ namespace CodeFirstAltairis.Controllers
             base.Initialize(requestContext);
         }
 
+        public async Task<string> GetToken()
+        {
+            var result = string.Empty;
+            if (Requester == null)
+                InitializeRequestor();
+            var user = await LoggedUser();
+
+            var task = await Requester.Auth(user.Email);
+            System.Diagnostics.Debug.WriteLine("Got Token: " + Requester.LoginInfo.Token);
+            return Requester.LoginInfo.Token;
+        }
+
+        [Authorize]
+        public async Task<ActionResult> Editor()
+        {
+            ViewBag.Token = await GetToken();
+            return View();
+        }
         public async Task<ActionResult> Index()
         {
 
