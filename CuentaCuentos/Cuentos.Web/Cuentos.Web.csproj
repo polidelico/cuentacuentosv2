@@ -1323,6 +1323,7 @@
     <Content Include="Views\Stories\_EmailShare.cshtml" />
     <Content Include="Service References\AzureAD\ConnectedService.json" />
     <Content Include="Views\Stories\Videos.cshtml" />
+    <Content Include="Views\Account\Editor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

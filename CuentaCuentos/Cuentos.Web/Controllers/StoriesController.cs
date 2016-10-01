@@ -99,7 +99,6 @@ namespace Cuentos.Controllers
         {
             var story = await Db.Stories.FindAsync(id);
             var user = await LoggedUser();
-            ViewBag.Token = await GetToken();
 
             var categories = await Db.Categories.Select(c => new { c.Id, c.Name, c.Active }).Where(c => c.Active == true).ToListAsync();
             var pageTypes = await Db.PageTypes.Where(t => t.Active == true).OrderBy(t => t.Position).ToListAsync();
