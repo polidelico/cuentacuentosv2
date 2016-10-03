@@ -1,24 +1,19 @@
 .mainSectionEdu{
   background-image: url("../img/Educadores/educadoresbackground.png");
+  background-size:cover;
   width:100%;
-  height:960px; /*needs to be 735 */
+  height:1322px; /*needs to be 735 */
   padding-top:48px;
   padding-bottom:48px;
-  background-size:100% 100%;
   
 }
-.ed-Fort{
-    margin-left:-10%;
-}
+
 .row-img{
     margin-left:-22%;
     width:100%;
     height:auto;
 }
-.ed-center{
-    margin-top:35px;
-    margin-left:-10%;
-}
+
 .ed-Stitle {
     width:712px;
     margin-left:20%;
@@ -32,7 +27,14 @@
   background-image: url("../img/blue_section.png");
   background-size:cover;
 }
-.mainSectionTitleEducator{
+
+.mainSectionTitleEducator img{
+    margin:auto;
+    width:50%;
+    margin-top:-30px;
+}
+
+.mainSectionTitleEducator h3{
   color:white;
   text-align: center;
   font-weight: bold;
@@ -87,8 +89,9 @@
 .introEdu{
   font-weight: normal;
   text-align: justify;
-  font-size:2em;
+  font-size:1.5em;
   width:960px;
+  color:#5e6469;
   margin-left:-15%;
 }
 .tereQuote{
@@ -116,15 +119,16 @@
   color:white;
 }
 .featureDivider{
-    color:lightgray;
-    
-
+    width:100%;
+    border-bottom: 2px solid #e0e0e0;
+    color: #ebebeb;
 }
 .row-Features{
     width:75%;
     margin-left:15%;
     margin-bottom:15%;
 }
+
 .row-quote{
    width:88%;
    height:256px;
@@ -140,4 +144,16 @@
     margin-bottom:2%;
 
 }
+.media-body h5{
+    font-size:1.6em;
+    color:#6f7383;
+}
+.media-object{
+    height:40px;
+    margin-top:10px;
+}
 
+.btnspecial{
+    padding: 20px 30px 20px 30px;
+    font-size:1.5em;
+}

@@ -6,6 +6,8 @@
     ViewBag.BodyId = "home";
 }
 
+<html>
+<body>
 <div class="content">
     <div class="carousel-div">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -22,8 +24,9 @@
                     <img src="~/Content/img/home/01Main_Slider_CuentaCuentos.png" alt="...">
                     <div class="carousel-caption">
                         <div class="row-mp">
-                            <h1>Libera tu imaginación y atrévete a soñar.</h1>
-                            <p style="font-size:1.5em; text-align:left; padding-left:15%;">Inspírate en hechos reales o ficticios de tus personajes,<br /> lugares y ocurrencias.</p>
+                            <h1>Libera tu imaginación<br />y atrévete a soñar.</h1>
+                            <p style="font-size:1.3em; text-align:center;">Inspírate en hechos reales o ficticios de tus personajes,<br /> lugares y ocurrencias.</p>
+                            
                             <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">CREA TU CUENTO</a>
                         </div>
                     </div>
@@ -32,8 +35,8 @@
                     <img src="~/Content/img/home/02Main_Slider_CuentaCuentos.png" alt="Main_Slider">
                     <div class="carousel-caption">
                         <div class="row-mp1">
-                            <h1>Fortalece la escritura y el dialecto del estudiante.</h1>
-                            <p style="font-size:1.5em; text-align:left; padding-left:8%;">Mientras se divierte usando su imaginacion.</p>
+                            <h1>Fortalece la escritura y<br />el dialecto del estudiante.</h1>
+                            <p style="font-size:1.3em; text-align:center;">Mientras se divierte usando su imaginacion.</p>
                             <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">CONOCE MAS</a>
                         </div>
                     </div>
@@ -41,10 +44,10 @@
                     <div class="item">
                         <img src="~/Content/img/home/03Main_Slider_CuentaCuentos.png" alt="...">
                         <div class="carousel-caption">
-                            <div class="row-mp">
-                            <h1 style="text-align:left;">Nace en ti el deseo de expresar lo que ves <br /> lo que sientes y lo que piensas.</h1>
-                                <p style="font-size:1.5em; text-align:left;"> Imagina tu cuento, constrúyelo y comparte con otros.</p>
-                            <a style="margin-left:20%;" href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">PUBLICA TU PRIMER CUENTO</a>
+                            <div class="row-mp2">
+                            <h1 style="text-align:center;">Nace en ti el deseo de expresar lo que ves <br /> lo que sientes y lo que piensas.</h1>
+                                <p style="font-size:1.3em; text-align:center;"> Imagina tu cuento, constrúyelo y comparte con otros.</p>
+                            <a href="@Url.RouteUrl("CrearCuento")" class="btn_naranja btn_crea">PUBLICA TU PRIMER CUENTO</a>
                             </div>
                         </div>
 
@@ -68,13 +71,28 @@
             <p class="mp-md-p">
                 Cuenta Cuentos ayuda al estudiante afortalecer sus destrezas de escritura y <br /> dialecto.
                 Es una estrategia divertida e innovadora que fomenta la creatividad<br />y diferencicion de cada alumno, mientras crea una cultura de colaboracion<br />
-                entre el estudiante,los maestros y los padres.<href>¡Conocenos!</href>
+                entre el estudiante,los maestros y los padres. <a href="/home/about">¡Conócenos!</a>
             </p>
+
+            
         </div>
-        <div class="purple-section">
+    
+    <div class="featuredwrapper">
+        <center>
+            <div class="featuredbox">
+                <div class="featuredvideo"><img src="~/Content/img/00featureddummy.png" /></div>
+                <div class="featuredcontent"><h1>El Secreto de Mandy</h1><p>Por: Jaer Cabán</p></div>
+            </div>
+        </center>
+    </div>
+
+
+        <div class="purple-section" style="margin-top:320px; border-top: 1px solid #fff">
             <div class="container">
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-top:125px">
+                    <br />
                     <h3 id="slider1Title">VIDEOCUENTOS RECOMENDADOS</h3>
+
                     <div class="col-md-12">
                        
 
@@ -234,30 +252,51 @@
 
         <div id="mp-Images">
             <img id="mp-center-img" src="~/Content/img/Home/home_backdrop.svg" alt="...">
-            <div id="red-box"><img class="mp-imgwtxttl" src="~/Content/img/home/red_box.svg" style="width:30%;height:auto;" /><p id="red-box-text"><span class="1" style="font-size:2em;font-weight:bolder;">DESCUBRE</span><span class="2" style="font-size:1.2em;padding-left:2%;">una comunidad de genios<br />creativos. Encuentra cuentos y videos de estudiantes<br />de otras escuelas alrededor del mundo. Ideentifica tus<br /> favoritos, provee comentarios y comparte con tus<br /> amigos.</span></p></div>
-            <div id="green-box"><img class="mp-imgwtxttl" src="~/Content/img/home/green_box.svg" style="width:30%;height:auto;" /><p id="green-box-text"><span class="1" style="font-size:2em;font-weight:bolder;">CREA</span><span class="2" style="font-size:1.2em;padding-left:2%;">historias increibles con tus palabras e<br />imaginacion. Utiliza nuestras herramientas de creacion<br />de cuentos que te ayudaran as construir los cuentos en<br /> cuestion de minutos.Contamos con un banco de artes <br /> para buscar inspiracion y utilizar en tus historias.</span></p></div>
-            <div id="blue-box"><img class="mp-imgwtxttl" src="~/Content/img/home/blue_box.svg" style="width:30%;height:auto;" /><p id="blue-box-text"><span class="1" style="font-size:2em;font-weight:bolder;">COMPARTE</span><span class="2" style="font-size:1.2em;padding-left:2%;">tus cuentos. Al otro <br />lado del mundo habra otros estudiantes que <br />le interesara leer o ver sobre tus historias,<br /> anecdotas o fantasias. <br /> </span></p></div>
-
-
-            <div class="home_newsletter">
-                <H1>UNETE A CUENTA CUENTOS</H1>
-                <h3 id="mp-news">Mantente informado de nuestros servicio,eventos y cuentos recientes.<br />¡Miles de escritores, artistas y lectores ya son parte de la comunidad en Cuenta Cuentos!</h3>
-                <div id="newsltr-form">
-                    <form style="width:100%; display:inline;padding-bottom:5%" action="demo_form.asp">
-                        <input id="name-form" placeholder="Nombre" style="border-radius:12px;" type="text" name="Name"><br>
-                        <input id="email-form" placeholder="Email" style="border-radius:12px;" type="text" name="Email"><br>
-                        <input id="country-form" placeholder="Pais" style="border-radius:12px;" type="text" name="Country"><br>
-                        <input id="nws-submt-btn" type="submit" value="Suscribeme">
-                    </form>
+            
+            <!--red box-->
+            <div id="red-box"><img src="~/Content/img/home/red_box.svg" style="width:45%;height:auto;"/>
+                <div class="redboxtext">
+                    <h1>DESCUBRE</h1>
+                    <p>una comunidad de genios creativos. Encuentra cuentos y videos de estudiantes de otras escuelas alrededor del mundo. Identifica tus favoritos, provee comentarios y comparte con tus amigos.</p>
                 </div>
             </div>
-            <div></div>
-            </body>
-            </html>
-
-        </div>
-
+       
+            <!--green box-->
+            <div id="green-box"><img src="~/Content/img/home/green_box.svg" style="width:45%; height:auto;" />
+    <div class="greenboxtext">
+        <h1>CREA</h1>
+        <p>historias increibles con tus palabras e imaginacion. Utiliza nuestras herramientas de creacion de cuentos que te ayudaran as construir los cuentos en cuestion de minutos.Contamos con un banco de artes para buscar inspiracion y utilizar en tus historias.</p>
     </div>
+            </div>
+
+            <!--blue box-->
+            <div id="blue-box"><img src="~/Content/img/home/blue_box.svg" style="width:40%;height:auto;" />
+                <div class="blueboxtext">
+                    <h1>COMPARTE</h1>
+                    <p>tus cuentos con tus amigos y familiares desde nuestra plataforma. Communícate con otros estudiantes a quienes les interesará leer o ver sobre tus historias, anécdotas y opiniones. </p>
+                </div>
+          </div>
+            </div>      
+
+
+    <div class="home_newsletter">
+        <h1>ÚNETE A CUENTA CUENTOS</h1>
+        <h3 id="mp-news">Mantente informado de nuestros servicio,eventos y cuentos recientes.<br />¡Miles de escritores, artistas y lectores ya son parte de la comunidad en Cuenta Cuentos!</h3>
+        <div id="newsltr-form">
+            <form style="width:100%; display:inline;padding-bottom:5%" action="demo_form.asp">
+                <input id="name-form" placeholder="Nombre" style="border-radius:12px;" type="text" name="Name"><br>
+                <input id="email-form" placeholder="Email" style="border-radius:12px;" type="text" name="Email"><br>
+                <input id="country-form" placeholder="Pais" style="border-radius:12px;" type="text" name="Country"><br>
+                <input id="nws-submt-btn" type="submit" value="Suscribeme">
+            </form>
+        </div>
+    </div>
+
+    </body>
+    </html>
+
+</div>
+
 
 
 

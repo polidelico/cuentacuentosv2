@@ -1,7 +1,8 @@
-.logo
-{
-  height: 64px;
-  width: 128px;
+.logo {
+  width:250px;
+  height:auto;
+  padding-top:7px;
+
 }
 .navcontent
 {
@@ -11,10 +12,8 @@
   top:22px;
   right:25px; 
 }
-.searchBox
-{
-    padding-top:0.5%;
-        
+.searchBox {
+    padding-top: 0.5%;
 }
 
 .center {
@@ -30,7 +29,8 @@
 
 .div_searchBox{
   top:0px;
-
+  display:inline;
+  width:100%;
 }
 
 .logo-header{
@@ -42,7 +42,7 @@
 
 }
 .solid {
-    border-bottom: 1px groove;
-        border-color:dimgray;
-        padding-top:10px
+    border-bottom: 1px solid;
+    border-color:#adafb1;
+    padding-top:10px
 }

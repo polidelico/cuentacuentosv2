@@ -5,16 +5,29 @@
 }
 .jumboText {
   color:white;
-  font-size:50pt;
+  font-size:30pt;
 }
 .subheadingtxt{
   color : #535456;
-  font-size:27pt;
+  font-size:18pt;
 }
 .sobrenosotros{
   color:#00BAD3;
   font-weight: bold;
-  font-size:53pt;
+  font-size:24pt;
+}
+
+.abouttext {
+    color:#535456;
+    text-align:justify;
+    font-size:12pt;
+}
+
+.abouttext2{
+    color:#535456;
+    text-align:justify;
+    font-size:12pt;
+    margin-top:112px;
 }
 
 .row-centered {
@@ -27,11 +40,14 @@
   vertical-align: top;
 }
 .quote {
-background-color: #4AA7FF;
-color:white;
-font-style: italic;
-box-shadow: 10px 10px #DDDEE0;
+  background-color: #4AA7FF;
+  width:450px;
+  color:white;
+  font-style: italic;
+  box-shadow: 10px 10px #DDDEE0;
+  margin-top:10px;
 }
+
 .author {
   text-align: center;
   font-style:normal;
@@ -41,9 +57,11 @@ box-shadow: 10px 10px #DDDEE0;
   font-style:normal;
 }
 .projectBox {
-  padding-top: 10px;
+  padding-top:25px;
+  padding-bottom:25px;
+  width:420px;
   margin-top: 10px;
-  box-shadow: 3px 3px grey;
+  box-shadow: 3px 3px #DDDEE0;
 }
 
 .boxContent{
@@ -57,7 +75,7 @@ box-shadow: 10px 10px #DDDEE0;
   font-weight: bold;
   color:white;
   text-align: center;
-  font-size:27pt;
+  font-size:20pt;
 }
 
 .lightBlueBox{
@@ -89,7 +107,7 @@ background-color:#6B87AE;
   font-weight: normal;
   color:white;
   text-align: center;
-  font-size:20pt;
+  font-size:17pt;
 }
 
 .btn-comeinza{
