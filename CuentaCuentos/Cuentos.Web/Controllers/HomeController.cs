@@ -20,6 +20,11 @@ namespace Cuentos.Controllers
             return View(stories);
         }
 
+        public ActionResult Album()
+        {
+            return View();
+        }
+
         public ActionResult BuildYourStory()
         {
             ViewBag.Message = "Your app description page.";
