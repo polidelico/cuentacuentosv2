@@ -276,6 +276,18 @@ body {
     width:1322px;
     margin-top:-75px;
 }
+.featuredbox1{
+    width:1322px;
+    padding-top:10%;
+    padding-bottom:10%;
+    
+}
+.album-mc{
+    background:url(../img/home/background.png);
+    background-repeat:repeat-x;
+    background-size: 100% 100%;
+  
+}
 .featuredvideo{
     width:907px;
     height:491px;
