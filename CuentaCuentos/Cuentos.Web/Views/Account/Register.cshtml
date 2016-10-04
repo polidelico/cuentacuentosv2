@@ -9,25 +9,40 @@
 
     <div class="content registro">
 
-        <div class="wp">
+        <div style="margin-top:-50px; margin-bottom:200px" class="wp">
 
             <h1>¡BIENVENIDOS A CUENTA CUENTOS!</h1>
-            <h2>¿Cual de estos perfiles te describe?</h2>
-            <img class="medium"><img src="~/Content/img/Registro/maestro_icon.svg" alt="maestro" height="128" width="128"></img>
-            <img class="medium"><img src="~/Content/img/Registro/estudiante_icon.svg" alt="estudiante" height="128" width="128"></img>
-            <img class="medium"><img src="~/Content/img/Registro/padres_icon.svg" alt="padre" height="128" width="128"></img>
-            <img class="medium"><img src="~/Content/img/Registro/visitante_icon.svg" alt="visitante" height="128" width="128"></img>
-            <div id="centerDiv">
-            <form action="test.asp" id="form1">
-                <input type="radio" name="Usertype" value="Maestro"> Maestro<br>
-                <input type="radio" name="Usertype" value="Estudiante"> Estudiante<br>
-                <input type="radio" name="Usertype" value="Padre"> Padre<br>
-                <input type="radio" name="Usertype" value="Visitante"> Visitante
+            <h2>¿Cuál de estos perfiles te describe mejor?</h2>
+            <center>
+                
+                <div class="formwp">
+                    <form action="test.asp" id="form1" style="float:left">
+                        <div style="margin-top:20px" class="registro_radio">
+                            <div>
+                                <img class="medium"><img src="~/Content/img/Registro/maestro_icon.svg" alt="maestro" height="128" width="128">
+                                <p>Maestro</p><input type="radio" name="Usertype" value="Maestro">
+                            </div>
 
-            </form>
-            </div>
-            
+                            <div>
+                                <img class="medium"><img src="~/Content/img/Registro/estudiante_icon.svg" alt="estudiante" height="128" width="128">
+                                <p>Estudiante</p><input type="radio" name="Usertype" value="Estudiante">
+                            </div>
+                            <div>
+                                <img class="medium"><img src="~/Content/img/Registro/padres_icon.svg" alt="padre" height="128" width="128">
+                                <p>Padre</p><input type="radio" name="Usertype" value="Padre">
+                            </div>
+                            <div>
+                                <img class="medium"><img src="~/Content/img/Registro/visitante_icon.svg" alt="visitante" height="128" width="128">
+                                <p>Visitante</p><input type="radio" name="Usertype" value="Visitante" />
+                            </div>
 
+                        </div>
+                    </form>
+                </div>
+        </div>
+            </center>
+
+        <div style="padding-bottom:70px">
 
             @*<div class="col-izq">*@
             
@@ -114,8 +129,12 @@
                 @Html.ValidationMessageFor(m => m.TermsConditions)
 
                 <input type="submit" class="btn_naranja btn_registro" value="Enviar" />
+            
+              
             }
-            @*</div>*@
+            </div>
+        </div>
+
 
             @*        <div class="col-der">
                     <div class="title"><h3>Ventajas al registrarte</h3></div>
@@ -158,8 +177,7 @@
                 </div>*@
             <div class="clearfix"></div>
 
-        </div>
-    </div>
+        
 
 @section scripts {
 <script src="@Url.Content("~/Scripts/vendor/jquery.validate.js")" type="text/javascript"></script>

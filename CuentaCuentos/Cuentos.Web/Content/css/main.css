@@ -1111,6 +1111,23 @@ div#centerDiv {
     text-align: center;
 }
 
+
+
+.formwp{
+    width:100%;
+    margin-left:370px;
+}
+
+.registro_radio div p{
+    color:#fff;
+    font-size:12pt;
+    text-align:center;
+}
+
+.registro_radio div{
+    float:left;
+}
+
 #form1 radio { /** I need to give style to radio button **/
     border: 5px solid #fff;
     border-radius: 100%;
@@ -1140,14 +1157,14 @@ div#centerDiv {
     letter-spacing: -2px;
     text-align: center;
     margin-top: 40px;
-    padding-top: 15px;
+    padding-top: 55px;
 }
 
 .registro h2 {
     font: 300 26px/120% 'Open Sans', sans-serif;
     color: #FFF;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .registro .col-izq {
