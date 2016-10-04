@@ -1326,6 +1326,7 @@
     <Content Include="Service References\AzureAD\ConnectedService.json" />
     <Content Include="Views\Stories\Videos.cshtml" />
     <Content Include="Views\Account\Editor.cshtml" />
+    <Content Include="Views\Home\Album.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
