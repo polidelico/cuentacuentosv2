@@ -266,6 +266,10 @@ body {
     padding-bottom:10px;
 }
 
+.rating{
+    float:left;
+    padding-left:40px;
+}
 .featuredwrapper{
     width:100%;
     position:absolute;
@@ -278,15 +282,18 @@ body {
 }
 .featuredbox1{
     width:1322px;
-    padding-top:10%;
-    padding-bottom:10%;
+    padding-top:50px;
     
 }
 .album-mc{
     background:url(../img/home/background.png);
     background-repeat:repeat-x;
-    background-size: 100% 100%;
-  
+    background-position:left top;  
+}
+
+.albumgaleria{
+    padding-top:600px;
+    padding-bottom:100px;
 }
 .featuredvideo{
     width:907px;
@@ -308,16 +315,25 @@ body {
     text-align:left;
     font-size: 27pt;
     padding-top:30px;
-    padding-left:20px;
+    padding-left:40px;
 }
 
 .featuredcontent p{
     color:#7fa8ca;
     text-align:left;
-    padding-left:20px;
+    padding-left:40px;
     font-size:17pt;
 }
 
+
+.featuredcontent div p{
+    width:340px;
+    text-align:justify;
+    color:#777777;
+    padding-top:10px;
+    font-size:12pt;
+    margin-left:-65px;
+}
 #carousel-inner{
     background:inherit;
 }
